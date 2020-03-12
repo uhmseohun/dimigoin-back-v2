@@ -1,5 +1,5 @@
-import ErrorHandler from './ErrorHandler';
 import AttachUserInfo from './AttachUserInfo';
+import ErrorHandler from './ErrorHandler';
 
 export {
   ErrorHandler,

@@ -1,7 +1,6 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import App from './App';
-// tslint:disable-next-line
-import dotenv from 'dotenv';
 
 dotenv.config();
 

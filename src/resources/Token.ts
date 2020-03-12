@@ -11,7 +11,7 @@ export default class Token {
   public verify(token: string) {
     try {
       const identity = jwt.verify(token, this.secretKey);
-      return identity
+      return identity;
     } catch (error) {
       throw new TokenVerifyFailException(401, error.message);
     }

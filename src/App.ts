@@ -2,12 +2,12 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import controllers from './controllers';
-import { ErrorHandler, AttachUserInfo } from './middlewares';
+import { AttachUserInfo, ErrorHandler } from './middlewares';
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import helmet from 'helmet';
 import bearerToken from 'express-bearer-token';
+import helmet from 'helmet';
 
 class App {
   public app: express.Application;
@@ -37,7 +37,7 @@ class App {
     this.app.use(bearerToken({
       headerKey: 'Bearer',
       reqKey: 'token',
-    }))
+    }));
     this.app.use(AttachUserInfo);
   }
 
