@@ -5,7 +5,7 @@
   ],
   "jsRules": {},
   "rules": {
-    "interface-name": [
+    "object-literal-sort-keys": [
       false
     ],
     "no-console": [
