@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import dotenv from 'dotenv';
-import { Account, UserIdentity } from '../interfaces/DimiAPI';
+import { IAccount, IUserIdentity } from '../interfaces/DimiAPI';
 
 dotenv.config();
 
@@ -12,7 +12,7 @@ export default class DimiAPI {
   private baseURL = process.env.DIMIAPI_URL;
   private authOption = {
     username: process.env.DIMIAPI_ID,
-    password: process.env.DIMIAPI_PW // tslint:disable-line
+    password: process.env.DIMIAPI_PW,
   };
   private APIClient: AxiosInstance;
 
@@ -20,20 +20,20 @@ export default class DimiAPI {
     this.createAPIClient();
   }
 
-  public async getIdentity(account: Account) {
+  public async getIdentity(account: IAccount) {
     const { data } = await this.APIClient.get(DimiAPIRouter.getIdentity, {
       params: account,
     });
     return data;
   }
 
-  public restructureIdentity(identity: UserIdentity) {
+  public restructureIdentity(identity: IUserIdentity) {
     return {
-      email: identity.email,
       idx: identity.id,
+      nickname: identity.nick,
       username: identity.username,
       name: identity.name,
-      nickname: identity.nick,
+      email: identity.email,
       gender: identity.gender,
       userType: identity.user_type,
       birthdate: identity.birthdate,
@@ -41,7 +41,7 @@ export default class DimiAPI {
       photo: [
         identity.photofile1,
         identity.photofile2,
-      ].filter(v => v),
+      ].filter((v) => v),
     };
   }
 

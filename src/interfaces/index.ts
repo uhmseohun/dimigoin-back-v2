@@ -1,7 +1,7 @@
 import Controller from './Controller';
-import User from './User';
+import IUser from './User';
 
 export {
-  User,
+  IUser,
   Controller,
 };

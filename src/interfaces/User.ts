@@ -1,7 +1,7 @@
 type Gender = 'M' | 'F';
 type UserType = 'S' | 'O' | 'D' | 'T' | 'P';
 
-interface UserIdentity {
+interface IUser {
   idx: number;
   username: string;
   email: string;
@@ -14,4 +14,4 @@ interface UserIdentity {
   photo: [string, string];
 }
 
-export default UserIdentity;
+export default IUser;

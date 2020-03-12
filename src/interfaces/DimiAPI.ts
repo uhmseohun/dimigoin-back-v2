@@ -1,12 +1,12 @@
 type gender = 'M' | 'F';
 type user_type = 'S' | 'O' | 'D' | 'T' | 'P';
 
-export interface Account {
+export interface IAccount {
   username: string;
   password: string;
 }
 
-export interface UserIdentity {
+export interface IUserIdentity {
   id: number;
   username: string;
   email: string;

@@ -1,12 +1,13 @@
 import express from 'express';
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 import controllers from './controllers';
-import { ErrorHandler } from './middlewares';
+import { ErrorHandler, AttachUserInfo } from './middlewares';
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
+import bearerToken from 'express-bearer-token';
 
 class App {
   public app: express.Application;
@@ -32,6 +33,12 @@ class App {
     this.app.use(cors());
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
+
+    this.app.use(bearerToken({
+      headerKey: 'Bearer',
+      reqKey: 'token',
+    }))
+    this.app.use(AttachUserInfo);
   }
 
   private initializeErrorhandlers() {
@@ -50,7 +57,7 @@ class App {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    mongoose.connect(`mongodb://${MONGO_PATH}:${MONGO_PORT}/${MONGO_NAME}`, mongooseOption)
+    mongoose.connect(`mongodb://${MONGO_PATH}:${MONGO_PORT}/${MONGO_NAME}`, mongooseOption);
   }
 }
 
