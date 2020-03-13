@@ -3,6 +3,7 @@ import { Document } from 'mongoose';
 import { CircleNotFoundException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { Controller, ICircle, IStudent } from '../interfaces';
+import { CheckUserType } from '../middlewares';
 import { CircleModel, StudentModel } from '../models';
 
 class CircleController extends Controller {
@@ -15,9 +16,9 @@ class CircleController extends Controller {
   }
 
   private initializeRoutes() {
-    this.router.get('/', this.wrapper(this.getAllCircles));
-    this.router.post('/', this.wrapper(this.createCircle));
-    this.router.delete('/:circleId', this.wrapper(this.removeCircle));
+    this.router.get('/', CheckUserType(['S']), this.wrapper(this.getAllCircles));
+    this.router.post('/', CheckUserType(['T']), this.wrapper(this.createCircle));
+    this.router.delete('/:circleId', CheckUserType(['T']), this.wrapper(this.removeCircle));
   }
 
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
