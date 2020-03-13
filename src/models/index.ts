@@ -5,6 +5,7 @@ import {
 } from './CircleApplication';
 import StudentModel from './Student';
 import UserModel from './User';
+import ConfigModel from './Config';
 
 export {
   UserModel,
@@ -12,4 +13,5 @@ export {
   CircleModel,
   CircleApplicationQuestionModel,
   CircleApplicationFormModel,
+  ConfigModel
 };

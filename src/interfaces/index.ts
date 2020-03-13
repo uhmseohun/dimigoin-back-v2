@@ -6,6 +6,7 @@ import {
 import Controller from './Controller';
 import IStudent from './Student';
 import IUser from './User';
+import IConfig from './Config'
 
 export {
   Controller,
@@ -14,4 +15,5 @@ export {
   IStudent,
   ICircleApplicationQuestion,
   ICircleApplicationForm,
+  IConfig,
 };
