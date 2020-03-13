@@ -56,6 +56,7 @@ class App {
     const mongooseOption = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     };
     mongoose.connect(`mongodb://${MONGO_PATH}:${MONGO_PORT}/${MONGO_NAME}`, mongooseOption);
   }
