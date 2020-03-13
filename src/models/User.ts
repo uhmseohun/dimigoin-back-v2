@@ -48,6 +48,6 @@ const schema = new mongoose.Schema({
 });
 // tslint:enable
 
-const MUser = mongoose.model<IUser & mongoose.Document>('User', schema);
+const UserModel = mongoose.model<IUser & mongoose.Document>('User', schema);
 
-export default MUser;
+export default UserModel;
