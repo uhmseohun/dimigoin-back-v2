@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Controller, IConfig } from '../interfaces';
 import { ConfigModel } from '../models';
-import { ConfigNotFoundException } from '../exceptions/Config';
 
 class ConfigController extends Controller {
   public basePath = '/config';
@@ -13,26 +12,17 @@ class ConfigController extends Controller {
 
   private initializeRoutes() {
     this.router.get('/', this.wrapper(this.getAllConfig));
-    this.router.post('/', this.wrapper(this.createConfig));
-    this.router.put('/:configId', this.wrapper(this.editConfig));
+    this.router.put('/', this.wrapper(this.editConfig));
   }
 
   private getAllConfig = async (req: Request, res: Response, next: NextFunction) => {
-    res.json({ config: this.config });
-  }
-
-  private createConfig = async (req: Request, res: Response, next: NextFunction) => {
-    const config: IConfig = req.body;
-    await ConfigModel.create(config);
-    res.status(204).end();
+    res.json({ config: await this.config });
   }
 
   private editConfig = async (req: Request, res: Response, next: NextFunction) => {
-    const configId = req.params.configId,
-          newValue = req.body.value;
-    const config = await ConfigModel.findById(configId);
-    if (!config) { throw new ConfigNotFoundException(); }
-    config.value = newValue;
+    const newConfig: IConfig = req.body;
+    const config = await ConfigModel.findOne({ key: newConfig.key });
+    config.value = newConfig.value;
     await config.save();
     res.status(204).end();
   }

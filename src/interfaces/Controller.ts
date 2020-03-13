@@ -19,15 +19,16 @@ class Controller {
   public router: Router = Router();
   protected wrapper = asyncWrapper;
   protected getUserIdentity = getUserIdentity;
-  protected config: any = {};
 
-  constructor() {
-    ConfigModel.find({})
-      .then(configs => {
-        configs.forEach(config => {
-          this.config[config.key] = config.value;
-        })
+  get config () {
+    return (async () => {
+      let config: any = {};
+      const configs = await ConfigModel.find({});
+      configs.forEach(v => {
+        config[v.key] = v.value;
       });
+      return config;
+    })();
   }
 }
 
