@@ -12,7 +12,7 @@ const asyncWrapper = (fn: Function) =>
 
 const getUserIdentity = (req: Request): IUser => {
   const { token } = req;
-  const { identity } = TokenManager.verify(token);
+  const identity = TokenManager.verify(token);
   return identity as IUser;
 };
 

@@ -8,10 +8,10 @@ dotenv.config();
 export default class Token {
   private secretKey = process.env.JWT_SECRET;
 
-  public verify(token: string): any {
+  public verify(token: string): IUser {
     try {
-      const identity: any = jwt.verify(token, this.secretKey);
-      return identity.identity;
+      const { identity }: any = jwt.verify(token, this.secretKey);
+      return identity
     } catch (error) {
       throw new TokenVerifyFailException(401, error.message);
     }

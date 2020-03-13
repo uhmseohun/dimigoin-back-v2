@@ -19,9 +19,8 @@ const questionSchema = new mongoose.Schema({
 
 const formSchema = new mongoose.Schema({
   applier: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
-    ref: 'User',
   },
   form: {
     type: Object,
