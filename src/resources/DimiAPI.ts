@@ -50,28 +50,6 @@ export default class DimiAPI {
     };
   }
 
-  public restructureStudentIdentity(identity: IStudentIdentity) {
-    return {
-      idx: identity.user_id,
-      nickname: identity.nick,
-      username: identity.username,
-      name: identity.name,
-      grade: identity.grade,
-      class: identity.class,
-      number: identity.number,
-      serial: identity.serial,
-      email: identity.email,
-      gender: identity.gender,
-      userType: identity.user_type,
-      birthdate: identity.birthdate,
-      phone: identity.phone,
-      photo: [
-        identity.photofile1,
-        identity.photofile2,
-      ].filter((v) => v),
-    };
-  }
-
   public async reloadAllUsers() {
     const { data: users } = await this.APIClient.get(DimiAPIRouter.getAllUsers);
     await UserModel.deleteMany({});

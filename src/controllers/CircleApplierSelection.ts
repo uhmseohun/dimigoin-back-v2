@@ -22,7 +22,7 @@ class CircleApplierSelection extends Controller {
     if (!circle.map((v) => v.chair).includes(user.serial)) { throw new AccessDeniedException(); }
     const form: ICircleApplicationQuestion[] =
       await CircleApplicationQuestionModel.find({
-        chair: user._id,
+        chair: user.idx,
       });
     res.json({ form });
   }

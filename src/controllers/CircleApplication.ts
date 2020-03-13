@@ -3,6 +3,7 @@ import {
   CircleApplicationDeadlineException,
   CircleApplicationLimitException,
   CircleApplicationQuestionException,
+  ConflictedCircleApplicationException,
 } from '../exceptions/Circle';
 import {
   Controller,
@@ -34,7 +35,8 @@ class CircleApplicationController extends Controller {
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req) as IUser;
-    const appliedForm: ICircleApplicationForm[] = await CircleApplicationFormModel.find({ applier: user._id });
+    const appliedForm: ICircleApplicationForm[] =
+      await CircleApplicationFormModel.find({ applier: user.serial });
     const circles: ICircle[] = await CircleModel.find({});
     const appliedCircle: ICircle[] = circles.filter((circle) =>
       appliedForm.map((v) => v.circle.toString()).includes(circle._id.toString()));
@@ -51,12 +53,16 @@ class CircleApplicationController extends Controller {
     const config = (await this.config);
     if (!config[ConfigKeys.circleAppliable]) { throw new CircleApplicationDeadlineException(); }
     const user: IUser = this.getUserIdentity(req) as IUser;
-    const applied: ICircleApplicationForm[] = await CircleApplicationFormModel.find({ applier: user._id });
+    const applied: ICircleApplicationForm[] = await CircleApplicationFormModel.find({ applier: user.serial });
     const form: ICircleApplicationForm = req.body;
-    form.applier = user._id;
+    form.applier = user.serial;
 
     if (applied.length > await this.config[ConfigKeys.circleMaxApply]) {
       throw new CircleApplicationLimitException();
+    }
+
+    if (applied.map(v => v.circle.toString()).includes(form.circle.toString())) {
+      throw new ConflictedCircleApplicationException();
     }
 
     const questions: string[] = Object.keys(form.form).sort();

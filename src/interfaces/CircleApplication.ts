@@ -7,7 +7,7 @@ interface ICircleApplicationQuestion {
 
 interface ICircleApplicationForm {
   circle: Schema.Types.ObjectId;
-  applier: Schema.Types.ObjectId;
+  applier: string;
   form: object;
 }
 

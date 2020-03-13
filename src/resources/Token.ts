@@ -1,25 +1,25 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { TokenVerifyFailException } from '../exceptions/Token';
-import UserIdentity from '../interfaces/User';
+import IUser from '../interfaces/User';
 
 dotenv.config();
 
 export default class Token {
   private secretKey = process.env.JWT_SECRET;
 
-  public verify(token: string) {
+  public verify(token: string): any {
     try {
-      const identity = jwt.verify(token, this.secretKey);
-      return identity;
+      const identity: any = jwt.verify(token, this.secretKey);
+      return identity.identity;
     } catch (error) {
       throw new TokenVerifyFailException(401, error.message);
     }
   }
 
-  public issue(identity: UserIdentity, refresh: boolean) {
+  public issue(identity: IUser, refresh: boolean) {
     if (!refresh) {
-      const token = jwt.sign(identity, process.env.JWT_SECRET, {
+      const token = jwt.sign({ identity }, process.env.JWT_SECRET, {
         algorithm: 'HS256',
         expiresIn: '1w',
       });
