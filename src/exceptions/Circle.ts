@@ -35,3 +35,12 @@ export class CircleApplicationDeadlineException extends HttpException {
     this.message = message;
   }
 }
+
+export class ConflictedCircleApplicationException extends HttpException {
+  constructor(status: number = 409,
+              message: string = '같은 동아리에 두 번 이상 지원할 수 없습니다.') {
+    super(status, message);
+    this.status = status;
+    this.message = message;
+  }
+}

@@ -13,6 +13,11 @@ interface IUser {
   birthdate: string;
   phone: string;
   photo: [string, string];
+
+  grade?: number;
+  class?: number;
+  number?: number;
+  serial?: string;
 }
 
 export default IUser;

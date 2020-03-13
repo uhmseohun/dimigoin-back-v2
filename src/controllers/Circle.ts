@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { Controller, ICircle, IStudent } from '../interfaces';
+import { Controller, ICircle, IUser } from '../interfaces';
 import { CheckUserType } from '../middlewares';
-import { CircleModel, StudentModel } from '../models';
+import { CircleModel, UserModel } from '../models';
 
 class CircleController extends Controller {
   public basePath = '/circle';
@@ -18,11 +18,11 @@ class CircleController extends Controller {
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
     let circles: any[] =
       await CircleModel.find({}) as ICircle[];
-    const students: IStudent[] =
-      await StudentModel.find({}) as IStudent[];
+    const students: IUser[] =
+      await UserModel.find({}) as IUser[];
 
     circles = circles.map((circle) => {
-      const chair: IStudent = students.find((v) => v.idx === circle.chair);
+      const chair: IUser = students.find((v) => v.idx === circle.chair);
       return {
         _id: circle._id,
         name: circle.name,

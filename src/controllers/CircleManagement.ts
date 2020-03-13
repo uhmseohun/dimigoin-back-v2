@@ -4,7 +4,7 @@ import { CircleNotFoundException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { Controller, ICircle } from '../interfaces';
 import { CheckUserType } from '../middlewares';
-import { CircleModel, StudentModel } from '../models';
+import { CircleModel, UserModel } from '../models';
 
 class CircleManagementController extends Controller {
   public basePath = '/circle';
@@ -22,7 +22,7 @@ class CircleManagementController extends Controller {
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
     const circle: ICircle = req.body;
 
-    const chair = await StudentModel.findOne({ serial: circle.chair });
+    const chair = await UserModel.findOne({ serial: circle.chair });
     if (!chair) { throw new StudentNotFoundException(); }
 
     const newCircle = await CircleModel.create({

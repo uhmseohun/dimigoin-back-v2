@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IStudent } from '../interfaces';
+import { IUser } from '../interfaces';
 
 /**
  * 교내 API의 문제로 성별, 별명 등이 Null인 경우가 있어 임시적으로 required를 해제함.
@@ -26,7 +26,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  gender: {
+  gender: { // 도대체 성별이 Null이면 어쩌자는 거지?
     type: String,
     // required: false,
     // enum: ['M', 'F'],
@@ -48,8 +48,21 @@ const schema = new mongoose.Schema({
     type: Array,
     required: true,
   },
+
+  grade: {
+    type: Number,
+  },
+  class: {
+    type: Number,
+  },
+  number: {
+    type: Number,
+  },
+  serial: {
+    type: String,
+  }
 }, { versionKey: false });
 
-const StudentModel = mongoose.model<IStudent & mongoose.Document>('User', schema);
+const UserModel = mongoose.model<IUser & mongoose.Document>('User', schema);
 
-export default StudentModel;
+export default UserModel;

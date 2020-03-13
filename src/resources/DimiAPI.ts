@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import dotenv from 'dotenv';
 import { IAccount, IStudentIdentity, IUserIdentity } from '../interfaces/DimiAPI';
-import { StudentModel, UserModel } from '../models';
+import { UserModel } from '../models';
+import { IUser } from '../interfaces';
 
 dotenv.config();
 
@@ -81,14 +82,20 @@ export default class DimiAPI {
     });
   }
 
-  public async reloadAllStudents() {
-    const { data: students } = await this.APIClient.get(DimiAPIRouter.getAllStudents);
-    await StudentModel.deleteMany({});
-    Object.keys(students).forEach(async (idx) => {
-      students[idx] =
-        this.restructureStudentIdentity(students[idx]);
-      await StudentModel.create(students[idx]).catch((e) => console.error(e));
-    });
+  public async attachStudentInfo() {
+    const { data } = await this.APIClient.get(DimiAPIRouter.getAllStudents);
+    const students: IStudentIdentity[] = data;
+    await Promise.all(
+      students.map(async (student: IStudentIdentity) => {
+        await UserModel.updateOne({ idx: student.user_id }, {
+          grade: student.grade,
+          class: student.class,
+          number: student.number,
+          serial: student.serial,
+        })
+        return student
+      })
+    )
   }
 
   private createAPIClient() {

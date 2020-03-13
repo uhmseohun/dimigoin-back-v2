@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import {
   Controller,
-  ICircleApplicationQuestion,
   ICircleApplicationForm,
+  ICircleApplicationQuestion,
 } from '../interfaces';
 import { CheckUserType } from '../middlewares';
-import { CircleApplicationQuestionModel, CircleApplicationFormModel } from '../models';
+import { CircleApplicationFormModel, CircleApplicationQuestionModel } from '../models';
 
 class CircleApplicationManagementController extends Controller {
   public basePath = '/circle';
