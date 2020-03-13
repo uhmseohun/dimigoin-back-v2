@@ -5,6 +5,7 @@ import {
 } from '../exceptions/Circle';
 import { Controller, ICircleApplicationForm, IUser } from '../interfaces';
 import { CircleApplicationFormModel, CircleApplicationQuestionModel, CircleModel } from '../models';
+import { CheckUserType } from '../middlewares';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
@@ -15,8 +16,8 @@ class CircleApplicationController extends Controller {
   }
 
   private initializeRoutes() {
-    this.router.get('/', this.wrapper(this.getApplicationStatus));
-    this.router.post('/', this.wrapper(this.createApplicationForm));
+    this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplicationStatus));
+    this.router.post('/', CheckUserType(['S']), this.wrapper(this.createApplicationForm));
   }
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
