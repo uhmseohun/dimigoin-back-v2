@@ -18,8 +18,7 @@ class ConfigController extends Controller {
   }
 
   private getAllConfig = async (req: Request, res: Response, next: NextFunction) => {
-    const config = await ConfigModel.find({});
-    res.json({ config });
+    res.json({ config: this.config });
   }
 
   private createConfig = async (req: Request, res: Response, next: NextFunction) => {
