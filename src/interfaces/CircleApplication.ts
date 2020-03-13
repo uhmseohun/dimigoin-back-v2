@@ -9,6 +9,7 @@ interface ICircleApplicationForm {
   circle: Schema.Types.ObjectId;
   applier: Schema.Types.ObjectId;
   form: object;
+  status?: string;
 }
 
 export {

@@ -4,7 +4,8 @@ import {
   CircleApplicationLimitException,
   CircleApplicationQuestionException,
   ConflictedCircleApplicationException,
-} from '../exceptions/Circle';
+  CircleApplicationNotFoundException,
+} from '../exceptions/CircleApplication';
 import {
   Controller,
   ICircle,
@@ -19,6 +20,7 @@ import {
   CircleApplicationQuestionModel,
   CircleModel,
 } from '../models';
+import { Document } from 'mongoose';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
@@ -31,6 +33,7 @@ class CircleApplicationController extends Controller {
   private initializeRoutes() {
     this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplicationStatus));
     this.router.post('/', CheckUserType(['S']), this.wrapper(this.createApplicationForm));
+    this.router.post('/final/:circleId', CheckUserType(['S']), this.wrapper(this.finalSelection));
   }
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
@@ -75,6 +78,20 @@ class CircleApplicationController extends Controller {
     }
 
     await CircleApplicationFormModel.create(form);
+    res.status(204).end();
+  }
+
+  private finalSelection = async (req: Request, res: Response, next: NextFunction) => {
+    const user: IUser = this.getUserIdentity(req) as IUser;
+    const final: ICircleApplicationForm & Document =
+     (await CircleApplicationFormModel.find({ applier: user._id })) // 동아리도 쿼리해야 함.
+      .filter(v => v.circle.toString() === req.params.circleId)[0]; // 코드 리팩토링 필요함.
+    if (!final) {
+      throw new CircleApplicationNotFoundException();
+    }
+
+    final.status = 'final';
+    await final.save();
     res.status(204).end();
   }
 }

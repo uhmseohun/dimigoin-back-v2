@@ -35,8 +35,8 @@ const formSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    default: 'none',
-    enum: ['none', 'applied', 'interview', 'pass', 'final', 'fail'],
+    default: 'applied',
+    enum: ['applied', 'interview', 'pass', 'final', 'fail'],
   },
 }, { versionKey: false });
 
