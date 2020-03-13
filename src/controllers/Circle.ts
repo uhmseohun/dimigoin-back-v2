@@ -24,7 +24,7 @@ class CircleController extends Controller {
       await StudentModel.find({}) as IStudent[];
 
     circles = circles.map((circle) => {
-      const chair: IStudent = students.find((v) => v.idx == circle.chair);
+      const chair: IStudent = students.find((v) => v.idx === circle.chair);
       console.log(chair);
       return {
         name: circle.name,
