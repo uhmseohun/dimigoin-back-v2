@@ -55,7 +55,9 @@ class CircleApplicationController extends Controller {
     const form: ICircleApplicationForm = req.body;
     form.applier = user._id;
 
-    if (applied.length > 3) { throw new CircleApplicationLimitException(); }
+    if (applied.length > await this.config[ConfigKeys.circleMaxApply]) {
+      throw new CircleApplicationLimitException();
+    }
 
     const questions: string[] = Object.keys(form.form).sort();
     const expectedQuestions =
