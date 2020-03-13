@@ -57,7 +57,7 @@ class CircleApplicationController extends Controller {
     const form: ICircleApplicationForm = req.body;
     form.applier = user._id;
 
-    if (applied.length > config[ConfigKeys.circleMaxApply]) {
+    if (applied.length >= config[ConfigKeys.circleMaxApply]) {
       throw new CircleApplicationLimitException();
     }
 
