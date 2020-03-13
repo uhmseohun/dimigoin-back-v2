@@ -5,7 +5,6 @@ import { CircleModel, StudentModel } from '../models';
 
 class CircleController extends Controller {
   public basePath = '/circle';
-  public router = Router();
 
   constructor() {
     super();

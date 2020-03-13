@@ -8,7 +8,6 @@ import { CircleApplicationFormModel, CircleApplicationQuestionModel, CircleModel
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
-  public router = Router();
 
   constructor() {
     super();

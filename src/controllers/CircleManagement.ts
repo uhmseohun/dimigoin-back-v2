@@ -8,7 +8,6 @@ import { CircleModel, StudentModel } from '../models';
 
 class CircleManagementController extends Controller {
   public basePath = '/circle';
-  public router = Router();
 
   constructor() {
     super();

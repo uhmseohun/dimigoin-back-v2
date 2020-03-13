@@ -5,7 +5,6 @@ import DimiAPI from '../resources/DimiAPI';
 
 class UserController extends Controller {
   public basePath = '/user';
-  public router = Router();
 
   private DimiAPIClient = new DimiAPI();
 

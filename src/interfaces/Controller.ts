@@ -15,7 +15,7 @@ const getUserIdentity = (req: Request) => {
 
 class Controller {
   public basePath: string;
-  public router: Router;
+  public router: Router = Router();
   protected wrapper = asyncWrapper;
   protected getUserIdentity = getUserIdentity;
 }

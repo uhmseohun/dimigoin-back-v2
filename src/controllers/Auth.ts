@@ -9,7 +9,6 @@ import Token from '../resources/Token';
 
 class AuthController extends Controller {
   public basePath = '/auth';
-  public router = Router();
 
   private DimiAPIClient = new DimiAPI();
   private TokenManager = new Token();
