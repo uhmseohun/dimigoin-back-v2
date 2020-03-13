@@ -26,3 +26,12 @@ export class CircleApplicationQuestionException extends HttpException {
     this.message = message;
   }
 }
+
+export class CircleApplicationDeadlineException extends HttpException {
+  constructor(status: number = 423,
+              message: string = '동아리 지원 기간이 아닙니다.') {
+    super(status, message);
+    this.status = status;
+    this.message = message;
+  }
+}
