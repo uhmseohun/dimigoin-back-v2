@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-});
+}, { versionKey: false });
 
 const UserModel = mongoose.model<ICircle & mongoose.Document>('Circle', schema);
 

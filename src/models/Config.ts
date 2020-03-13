@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     trim: true,
   },
   value: {},
-});
+}, { versionKey: false });
 
 const ConfigModel = mongoose.model<IConfig & mongoose.Document>('Config', schema);
 

@@ -48,7 +48,7 @@ const schema = new mongoose.Schema({
     type: Array,
     required: true,
   },
-});
+}, { versionKey: false });
 
 const StudentModel = mongoose.model<IStudent & mongoose.Document>('User', schema);
 

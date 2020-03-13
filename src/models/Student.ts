@@ -64,7 +64,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+}, { versionKey: false });
 
 const UserModel = mongoose.model<IStudent & mongoose.Document>('Student', schema);
 

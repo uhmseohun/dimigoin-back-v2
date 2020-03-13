@@ -15,7 +15,7 @@ const questionSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-});
+}, { versionKey: false });
 
 const formSchema = new mongoose.Schema({
   applier: {
@@ -36,7 +36,7 @@ const formSchema = new mongoose.Schema({
     default: 'none',
     enum: ['none', 'applied', 'interview', 'pass', 'final', 'fail'],
   },
-});
+}, { versionKey: false });
 
 const CircleApplicationQuestionModel = mongoose.model<ICircleApplicationQuestion & mongoose.Document>
   ('CircleApplicationQuestion', questionSchema);
