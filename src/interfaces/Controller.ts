@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import Token from '../resources/Token';
+import { ConfigModel } from '../models';
 
 const TokenManager = new Token();
 
@@ -18,6 +19,16 @@ class Controller {
   public router: Router = Router();
   protected wrapper = asyncWrapper;
   protected getUserIdentity = getUserIdentity;
+  protected config: any = {};
+
+  constructor() {
+    ConfigModel.find({})
+      .then(configs => {
+        configs.forEach(config => {
+          this.config[config.key] = config.value;
+        })
+      });
+  }
 }
 
 export default Controller;
