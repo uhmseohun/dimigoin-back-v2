@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { ICircle } from '../interfaces';
 
 const schema = new mongoose.Schema({
@@ -22,8 +22,9 @@ const schema = new mongoose.Schema({
     required: true,
   },
   chair: {
-    type: Number,
+    type: Schema.Types.ObjectId,
     required: true,
+    ref: 'User',
   },
 }, { versionKey: false });
 

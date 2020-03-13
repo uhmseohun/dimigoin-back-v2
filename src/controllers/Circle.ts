@@ -17,20 +17,17 @@ class CircleController extends Controller {
 
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
     let circles: any[] =
-      await CircleModel.find({}) as ICircle[];
-    const students: IUser[] =
-      await UserModel.find({}) as IUser[];
-
+      await CircleModel.find({}).populate('chair');
+ 
     circles = circles.map((circle) => {
-      const chair: IUser = students.find((v) => v.idx === circle.chair);
       return {
         _id: circle._id,
         name: circle.name,
         category: circle.category,
         description: circle.description,
         chair: {
-          name: chair.name,
-          serial: chair.serial,
+          name: circle.chair.name,
+          serial: circle.chair.serial,
         },
       };
     });

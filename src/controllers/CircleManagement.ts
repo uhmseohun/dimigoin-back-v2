@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Document } from 'mongoose';
 import { CircleNotFoundException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
-import { Controller, ICircle } from '../interfaces';
+import { Controller, ICircle, IUser } from '../interfaces';
 import { CheckUserType } from '../middlewares';
 import { CircleModel, UserModel } from '../models';
 
@@ -20,16 +20,16 @@ class CircleManagementController extends Controller {
   }
 
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
-    const circle: ICircle = req.body;
+    const circle = req.body;
 
-    const chair = await UserModel.findOne({ serial: circle.chair });
+    const chair: any = await UserModel.findOne({ serial: circle.chair });
     if (!chair) { throw new StudentNotFoundException(); }
 
     const newCircle = await CircleModel.create({
       name: circle.name,
       category: circle.category,
       description: circle.description,
-      chair: chair.idx,
+      chair: chair._id,
     });
 
     res.json({ circle: newCircle });

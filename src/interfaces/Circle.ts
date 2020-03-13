@@ -6,7 +6,7 @@ interface ICircle {
   name: string;
   category: CircleCategory;
   description: string;
-  chair: string; // serial
+  chair: Schema.Types.ObjectId;
 }
 
 export default ICircle;

@@ -18,8 +18,8 @@ class CircleApplierSelection extends Controller {
 
   private getApplicationForm = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req);
-    const circle: ICircle[] = await CircleModel.find({}).populate('user');
-    if (!circle.map((v) => v.chair).includes(user.serial)) { throw new AccessDeniedException(); }
+    const circle = await CircleModel.find({ chair: user._id }).populate('chair');
+    if (!circle.length) { throw new AccessDeniedException(); }
     const form: ICircleApplicationQuestion[] =
       await CircleApplicationQuestionModel.find({
         chair: user.idx,
