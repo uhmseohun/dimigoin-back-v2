@@ -36,7 +36,7 @@ class CircleApplicationManagementController extends Controller {
 
   private getAllSubmittedForm = async (req: Request, res: Response, next: NextFunction) => {
     const forms: ICircleApplicationForm[] =
-      await CircleApplicationFormModel.find({}).populate(['circle', 'applier']);
+      await CircleApplicationFormModel.find({}).populate(['circle']);
     res.json({ form: forms });
   }
 }
