@@ -60,7 +60,7 @@ const schema = new mongoose.Schema({
   },
   serial: {
     type: String,
-  }
+  },
 }, { versionKey: false });
 
 const UserModel = mongoose.model<IUser & mongoose.Document>('User', schema);

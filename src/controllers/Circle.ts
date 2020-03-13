@@ -18,7 +18,7 @@ class CircleController extends Controller {
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
     let circles: any[] =
       await CircleModel.find({}).populate('chair');
- 
+
     circles = circles.map((circle) => {
       return {
         _id: circle._id,

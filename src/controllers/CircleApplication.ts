@@ -61,7 +61,7 @@ class CircleApplicationController extends Controller {
       throw new CircleApplicationLimitException();
     }
 
-    if (applied.map(v => v.circle.toString()).includes(form.circle.toString())) {
+    if (applied.map((v) => v.circle.toString()).includes(form.circle.toString())) {
       throw new ConflictedCircleApplicationException();
     }
 

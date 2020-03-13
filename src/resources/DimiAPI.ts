@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import dotenv from 'dotenv';
+import { IUser } from '../interfaces';
 import { IAccount, IStudentIdentity, IUserIdentity } from '../interfaces/DimiAPI';
 import { UserModel } from '../models';
-import { IUser } from '../interfaces';
 
 dotenv.config();
 
@@ -70,10 +70,10 @@ export default class DimiAPI {
           class: student.class,
           number: student.number,
           serial: student.serial,
-        })
-        return student
-      })
-    )
+        });
+        return student;
+      }),
+    );
   }
 
   private createAPIClient() {
