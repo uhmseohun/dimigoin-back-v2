@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import { Document } from 'mongoose';
+import { CircleNotFoundException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { Controller, ICircle, IStudent } from '../interfaces';
 import { CircleModel, StudentModel } from '../models';
@@ -15,6 +17,7 @@ class CircleController extends Controller {
   private initializeRoutes() {
     this.router.get('/', this.wrapper(this.getAllCircles));
     this.router.post('/', this.wrapper(this.createCircle));
+    this.router.delete('/:circleId', this.wrapper(this.removeCircle));
   }
 
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
@@ -51,6 +54,13 @@ class CircleController extends Controller {
     });
 
     res.json({ circle: newCircle });
+  }
+
+  private removeCircle = async (req: Request, res: Response, next: NextFunction) => {
+    const circle: ICircle & Document = await CircleModel.findById(req.params.circleId);
+    if (!circle) { throw new CircleNotFoundException(); }
+    await circle.remove();
+    res.status(204).end();
   }
 }
 
