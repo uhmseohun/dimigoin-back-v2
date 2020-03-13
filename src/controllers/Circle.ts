@@ -26,6 +26,7 @@ class CircleController extends Controller {
       return {
         _id: circle._id,
         name: circle.name,
+        category: circle.category,
         description: circle.description,
         chair: {
           name: chair.name,

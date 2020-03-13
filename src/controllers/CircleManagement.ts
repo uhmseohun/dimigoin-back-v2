@@ -27,6 +27,7 @@ class CircleManagementController extends Controller {
 
     const newCircle = await CircleModel.create({
       name: circle.name,
+      category: circle.category,
       description: circle.description,
       chair: chair.idx,
     });
