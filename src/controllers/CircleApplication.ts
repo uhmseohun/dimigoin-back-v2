@@ -2,10 +2,21 @@ import { NextFunction, Request, Response } from 'express';
 import {
   CircleApplicationLimitException,
   CircleApplicationQuestionException,
+  CircleApplicationDeadlineException,
 } from '../exceptions/Circle';
-import { Controller, ICircle, ICircleApplicationForm, ICircleApplicationQuestion, IUser } from '../interfaces';
+import {
+  Controller,
+  ICircle,
+  ICircleApplicationForm,
+  ICircleApplicationQuestion,
+  IUser
+} from '../interfaces';
 import { CheckUserType } from '../middlewares';
-import { CircleApplicationFormModel, CircleApplicationQuestionModel, CircleModel } from '../models';
+import {
+  CircleApplicationFormModel,
+  CircleApplicationQuestionModel,
+  CircleModel
+} from '../models';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
@@ -36,6 +47,7 @@ class CircleApplicationController extends Controller {
   }
 
   private createApplicationForm = async (req: Request, res: Response, next: NextFunction) => {
+    // 중복 지원 X, 데드라인
     const user: IUser = this.getUserIdentity(req) as IUser;
     const applied: ICircleApplicationForm[] = await CircleApplicationFormModel.find({ applier: user._id });
     const form: ICircleApplicationForm = req.body;
