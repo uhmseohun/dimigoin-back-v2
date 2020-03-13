@@ -1,5 +1,7 @@
-type gender = 'M' | 'F';
-type user_type = 'S' | 'O' | 'D' | 'T' | 'P';
+import {
+  Gender as gender,
+  UserType as user_type
+} from './Types';
 
 export interface IAccount {
   username: string;

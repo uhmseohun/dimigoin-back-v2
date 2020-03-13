@@ -1,5 +1,4 @@
-type Gender = 'M' | 'F';
-type UserType = 'S' | 'O' | 'D' | 'T' | 'P';
+import { Gender, UserType } from './Types';
 
 interface IUser {
   idx: number;
