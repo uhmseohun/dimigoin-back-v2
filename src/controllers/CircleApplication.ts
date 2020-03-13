@@ -3,9 +3,9 @@ import {
   CircleApplicationLimitException,
   CircleApplicationQuestionException,
 } from '../exceptions/Circle';
-import { Controller, ICircle, ICircleApplicationForm, IUser, ICircleApplicationQuestion } from '../interfaces';
-import { CircleApplicationFormModel, CircleApplicationQuestionModel, CircleModel } from '../models';
+import { Controller, ICircle, ICircleApplicationForm, ICircleApplicationQuestion, IUser } from '../interfaces';
 import { CheckUserType } from '../middlewares';
+import { CircleApplicationFormModel, CircleApplicationQuestionModel, CircleModel } from '../models';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
@@ -24,8 +24,8 @@ class CircleApplicationController extends Controller {
     const user: IUser = this.getUserIdentity(req) as IUser;
     const appliedForm: ICircleApplicationForm[] = await CircleApplicationFormModel.find({ applier: user._id });
     const circles: ICircle[] = await CircleModel.find({});
-    const appliedCircle: ICircle[] = circles.filter(circle =>
-      appliedForm.map(v => v.circle.toString()).includes(circle._id.toString()));
+    const appliedCircle: ICircle[] = circles.filter((circle) =>
+      appliedForm.map((v) => v.circle.toString()).includes(circle._id.toString()));
     const form: ICircleApplicationQuestion[] = await CircleApplicationQuestionModel.find({});
     res.json({
       maxApplyCount: 3, // 나중에 Config Class로 처리할 거임
