@@ -40,7 +40,7 @@ class CircleApplicationController extends Controller {
       appliedForm.map((v) => v.circle.toString()).includes(circle._id.toString()));
     const form: ICircleApplicationQuestion[] = await CircleApplicationQuestionModel.find({});
     res.json({
-      maxApplyCount: await this.config[ConfigKeys.circleMaxApply],
+      maxApplyCount: (await this.config)[ConfigKeys.circleMaxApply],
       appliedForm,
       appliedCircle,
       form,
@@ -48,7 +48,7 @@ class CircleApplicationController extends Controller {
   }
 
   private createApplicationForm = async (req: Request, res: Response, next: NextFunction) => {
-    const config = await this.config;
+    const config = (await this.config);
     if (!config[ConfigKeys.circleAppliable]) { throw new CircleApplicationDeadlineException(); }
     const user: IUser = this.getUserIdentity(req) as IUser;
     const applied: ICircleApplicationForm[] = await CircleApplicationFormModel.find({ applier: user._id });

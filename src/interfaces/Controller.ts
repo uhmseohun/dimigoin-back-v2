@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { ConfigModel } from '../models';
+import { IConfig } from '../interfaces';
 import Token from '../resources/Token';
 
 const TokenManager = new Token();
@@ -20,9 +21,9 @@ class Controller {
   protected wrapper = asyncWrapper;
   protected getUserIdentity = getUserIdentity;
 
-  get config(): any {
+  get config(): IConfig {
     return (async () => {
-      const config: any = {};
+      const config: IConfig = {};
       const configs = await ConfigModel.find({});
       configs.forEach((v) => {
         config[v.key] = v.value;

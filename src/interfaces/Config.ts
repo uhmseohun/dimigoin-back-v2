@@ -1,6 +1,5 @@
 interface IConfig {
-  key: string;
-  value: any;
+  [key: string]: any;
 }
 
 export default IConfig;
