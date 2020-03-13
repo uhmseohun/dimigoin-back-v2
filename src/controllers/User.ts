@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import HttpException from '../exceptions/HttpException';
 import { Controller } from '../interfaces';
 import DimiAPI from '../resources/DimiAPI';

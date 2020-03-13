@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { AuthFailException } from '../exceptions/DimiAPI';
 import HttpException from '../exceptions/HttpException';
-import { Controller, IUser } from '../interfaces';
+import { Controller } from '../interfaces';
 import { IAccount } from '../interfaces/DimiAPI';
 import { UserModel } from '../models';
 import DimiAPI from '../resources/DimiAPI';
