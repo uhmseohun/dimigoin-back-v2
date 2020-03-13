@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 import { IUser } from '../interfaces';
 
+/**
+ * 교내 API의 문제로 성별, 별명 등이 Null인 경우가 있어 임시적으로 required를 해제함.
+ */
+
 const schema = new mongoose.Schema({
   idx: {
     type: Number,
@@ -12,7 +16,7 @@ const schema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
   },
   name: {
     type: String,
@@ -20,25 +24,25 @@ const schema = new mongoose.Schema({
   },
   nickname: {
     type: String,
-    required: true,
+    required: false,
   },
   gender: {
     type: String,
-    required: true,
-    enum: ['M', 'F'],
+    // required: false,
+    // enum: ['M', 'F'],
   },
   userType: {
     type: String,
-    required: true,
+    required: false,
     enum: ['S', 'O', 'D', 'T', 'P'],
   },
   birthdate: {
     type: String,
-    required: true,
+    required: false,
   },
   phone: {
     type: String,
-    required: true,
+    required: false,
   },
   photo: {
     type: Array,
