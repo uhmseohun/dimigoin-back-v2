@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { IUser } from '../interfaces';
 
-// tslint:disable
 const schema = new mongoose.Schema({
   idx: {
     type: Number,
@@ -46,7 +45,6 @@ const schema = new mongoose.Schema({
     required: true,
   },
 });
-// tslint:enable
 
 const UserModel = mongoose.model<IUser & mongoose.Document>('User', schema);
 
