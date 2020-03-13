@@ -1,6 +1,7 @@
+import { Schema } from 'mongoose';
 import {
   Gender as gender,
-  UserType as user_type
+  UserType as user_type,
 } from './Types';
 
 export interface IAccount {
@@ -9,6 +10,7 @@ export interface IAccount {
 }
 
 export interface IUserIdentity {
+  _id: Schema.Types.ObjectId;
   id: number;
   username: string;
   email: string;

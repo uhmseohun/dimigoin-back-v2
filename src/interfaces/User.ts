@@ -1,6 +1,8 @@
+import { Schema } from 'mongoose';
 import { Gender, UserType } from './Types';
 
 interface IUser {
+  _id: Schema.Types.ObjectId;
   idx: number;
   username: string;
   email: string;

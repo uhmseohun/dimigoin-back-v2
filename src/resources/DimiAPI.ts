@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import dotenv from 'dotenv';
+import { Document } from 'mongoose';
+import { IStudent } from '../interfaces';
 import { IAccount, IStudentIdentity, IUserIdentity } from '../interfaces/DimiAPI';
 import { StudentModel, UserModel } from '../models';
 
@@ -32,6 +34,7 @@ export default class DimiAPI {
 
   public restructureUserIdentity(identity: IUserIdentity) {
     return {
+      _id: identity._id,
       idx: identity.id,
       nickname: identity.nick,
       username: identity.username,

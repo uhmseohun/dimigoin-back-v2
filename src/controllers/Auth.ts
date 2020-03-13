@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { AuthFailException } from '../exceptions/DimiAPI';
 import HttpException from '../exceptions/HttpException';
-import { Controller } from '../interfaces';
+import { Controller, IUser } from '../interfaces';
 import { IAccount } from '../interfaces/DimiAPI';
+import { UserModel } from '../models';
 import DimiAPI from '../resources/DimiAPI';
 import Token from '../resources/Token';
 
@@ -27,6 +28,8 @@ class AuthController extends Controller {
 
     try {
       let identity = await this.DimiAPIClient.getIdentity(account);
+      const mIdentity: any = await UserModel.findOne({ idx: identity.id });
+      identity._id = mIdentity._id;
       identity = this.DimiAPIClient.restructureUserIdentity(identity);
       res.json({
         accessToken: this.TokenManager.issue(identity, false),
