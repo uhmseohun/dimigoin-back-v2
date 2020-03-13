@@ -4,8 +4,8 @@ import CircleController from './Circle';
 import CircleApplicationController from './CircleApplication';
 import CircleApplicationManagementController from './CircleApplicationManagement';
 import CircleManagementController from './CircleManagement';
-import UserController from './User';
 import ConfigController from './Config';
+import UserController from './User';
 
 const controllers: Controller[] = [
   new AuthController(),

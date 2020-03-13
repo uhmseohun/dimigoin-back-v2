@@ -3,10 +3,10 @@ import {
   ICircleApplicationForm,
   ICircleApplicationQuestion,
 } from './CircleApplication';
+import IConfig from './Config';
 import Controller from './Controller';
 import IStudent from './Student';
 import IUser from './User';
-import IConfig from './Config'
 
 export {
   Controller,

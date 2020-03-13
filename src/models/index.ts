@@ -3,9 +3,9 @@ import {
   CircleApplicationFormModel,
   CircleApplicationQuestionModel,
 } from './CircleApplication';
+import ConfigModel from './Config';
 import StudentModel from './Student';
 import UserModel from './User';
-import ConfigModel from './Config';
 
 export {
   UserModel,
@@ -13,5 +13,5 @@ export {
   CircleModel,
   CircleApplicationQuestionModel,
   CircleApplicationFormModel,
-  ConfigModel
+  ConfigModel,
 };
