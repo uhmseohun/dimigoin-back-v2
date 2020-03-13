@@ -1,13 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
 import dotenv from 'dotenv';
-import { IAccount, IUserIdentity } from '../interfaces/DimiAPI';
-import { UserModel } from '../models';
+import { IAccount, IStudentIdentity, IUserIdentity } from '../interfaces/DimiAPI';
+import { StudentModel, UserModel } from '../models';
 
 dotenv.config();
 
 enum DimiAPIRouter {
   getIdentity = '/v1/users/identify',
   getAllUsers = '/v1/users',
+  getAllStudents = '/v1/user-students',
 }
 
 export default class DimiAPI {
@@ -29,7 +30,7 @@ export default class DimiAPI {
     return data;
   }
 
-  public restructureIdentity(identity: IUserIdentity) {
+  public restructureUserIdentity(identity: IUserIdentity) {
     return {
       idx: identity.id,
       nickname: identity.nick,
@@ -47,13 +48,45 @@ export default class DimiAPI {
     };
   }
 
+  public restructureStudentIdentity(identity: IStudentIdentity) {
+    return {
+      idx: identity.user_id,
+      nickname: identity.nick,
+      username: identity.username,
+      name: identity.name,
+      grade: identity.grade,
+      class: identity.class,
+      number: identity.number,
+      serial: identity.serial,
+      email: identity.email,
+      gender: identity.gender,
+      userType: identity.user_type,
+      birthdate: identity.birthdate,
+      phone: identity.phone,
+      photo: [
+        identity.photofile1,
+        identity.photofile2,
+      ].filter((v) => v),
+    };
+  }
+
   public async reloadAllUsers() {
-    const { data: students } = await this.APIClient.get(DimiAPIRouter.getAllUsers);
+    const { data: users } = await this.APIClient.get(DimiAPIRouter.getAllUsers);
     await UserModel.deleteMany({});
+    Object.keys(users).forEach(async (idx) => {
+      users[idx] =
+        this.restructureUserIdentity(users[idx]);
+      await UserModel.create(users[idx]).catch((e) => console.error(e));
+    });
+  }
+
+  public async reloadAllStudents() {
+    const { data: students } = await this.APIClient.get(DimiAPIRouter.getAllStudents);
+    await StudentModel.deleteMany({});
     Object.keys(students).forEach(async (idx) => {
       students[idx] =
-        this.restructureIdentity(students[idx]);
-      await UserModel.create(students[idx]).catch((e) => console.error(e));
+        this.restructureStudentIdentity(students[idx]);
+      await StudentModel.create(students[idx]).catch((e) => console.error(e));
     });
   }
 

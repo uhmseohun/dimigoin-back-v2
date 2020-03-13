@@ -48,8 +48,24 @@ const schema = new mongoose.Schema({
     type: Array,
     required: true,
   },
+  grade: {
+    type: Number,
+    required: true,
+  },
+  class: {
+    type: Number,
+    required: true,
+  },
+  number: {
+    type: Number,
+    required: true,
+  },
+  serial: {
+    type: String,
+    required: true,
+  },
 });
 
-const StudentModel = mongoose.model<IStudent & mongoose.Document>('User', schema);
+const UserModel = mongoose.model<IStudent & mongoose.Document>('Student', schema);
 
-export default StudentModel;
+export default UserModel;

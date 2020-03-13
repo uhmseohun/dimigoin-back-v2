@@ -21,6 +21,7 @@ class UserController extends Controller {
   private reloadUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
       await this.DimiAPIClient.reloadAllUsers();
+      await this.DimiAPIClient.reloadAllStudents();
       res.end();
     } catch (error) {
       throw new HttpException(500, error.message);

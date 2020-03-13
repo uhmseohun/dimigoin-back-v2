@@ -27,7 +27,7 @@ class AuthController extends Controller {
 
     try {
       let identity = await this.DimiAPIClient.getIdentity(account);
-      identity = this.DimiAPIClient.restructureIdentity(identity);
+      identity = this.DimiAPIClient.restructureUserIdentity(identity);
       res.json({
         accessToken: this.TokenManager.issue(identity, false),
         refreshToken: this.TokenManager.issue(identity, true),
