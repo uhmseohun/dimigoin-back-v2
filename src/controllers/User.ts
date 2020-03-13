@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { Controller } from '../interfaces';
 import HttpException from '../exceptions/HttpException';
+import { Controller } from '../interfaces';
 import DimiAPI from '../resources/DimiAPI';
 
 class UserController extends Controller {

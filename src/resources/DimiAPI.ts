@@ -1,13 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
 import dotenv from 'dotenv';
 import { IAccount, IUserIdentity } from '../interfaces/DimiAPI';
-import { UserModel } from '../models'
+import { UserModel } from '../models';
 
 dotenv.config();
 
 enum DimiAPIRouter {
   getIdentity = '/v1/users/identify',
-  getAllUsers = '/v1/users'
+  getAllUsers = '/v1/users',
 }
 
 export default class DimiAPI {
@@ -48,12 +48,12 @@ export default class DimiAPI {
   }
 
   public async reloadAllUsers() {
-    let { data: students } = await this.APIClient.get(DimiAPIRouter.getAllUsers);
+    const { data: students } = await this.APIClient.get(DimiAPIRouter.getAllUsers);
     await UserModel.deleteMany({});
-    Object.keys(students).forEach(async idx => {
+    Object.keys(students).forEach(async (idx) => {
       students[idx] =
         this.restructureIdentity(students[idx]);
-      await UserModel.create(students[idx]).catch(e => console.error(e))
+      await UserModel.create(students[idx]).catch((e) => console.error(e));
     });
   }
 
