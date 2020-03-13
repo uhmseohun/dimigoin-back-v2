@@ -40,7 +40,7 @@ class CircleApplicationController extends Controller {
       appliedForm.map((v) => v.circle.toString()).includes(circle._id.toString()));
     const form: ICircleApplicationQuestion[] = await CircleApplicationQuestionModel.find({});
     res.json({
-      maxApplyCount: 3, // 나중에 Config Class로 처리할 거임
+      maxApplyCount: await this.config[ConfigKeys.circleMaxApply],
       appliedForm,
       appliedCircle,
       form,

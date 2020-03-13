@@ -20,7 +20,7 @@ class Controller {
   protected wrapper = asyncWrapper;
   protected getUserIdentity = getUserIdentity;
 
-  get config() {
+  get config(): any {
     return (async () => {
       const config: any = {};
       const configs = await ConfigModel.find({});
