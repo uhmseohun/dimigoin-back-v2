@@ -21,6 +21,7 @@ const formSchema = new mongoose.Schema({
   applier: {
     type: Schema.Types.ObjectId,
     required: true,
+    ref: 'User',
   },
   form: {
     type: Object,
@@ -29,6 +30,7 @@ const formSchema = new mongoose.Schema({
   circle: {
     type: Schema.Types.ObjectId,
     required: true,
+    ref: 'Circle',
   },
   status: {
     type: String,

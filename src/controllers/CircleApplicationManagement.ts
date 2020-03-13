@@ -2,12 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import {
   Controller,
   ICircleApplicationQuestion,
+  ICircleApplicationForm,
 } from '../interfaces';
 import { CheckUserType } from '../middlewares';
-import { CircleApplicationQuestionModel } from '../models';
+import { CircleApplicationQuestionModel, CircleApplicationFormModel } from '../models';
 
 class CircleApplicationManagementController extends Controller {
-  public basePath = '/circle/application/form';
+  public basePath = '/circle';
 
   constructor() {
     super();
@@ -15,8 +16,9 @@ class CircleApplicationManagementController extends Controller {
   }
 
   private initializeRoutes() {
-    this.router.get('/', CheckUserType(['T']), this.wrapper(this.getApplicationForm));
-    this.router.post('/', CheckUserType(['T']), this.wrapper(this.updateApplicationForm));
+    this.router.get('/application/form', CheckUserType(['T']), this.wrapper(this.getApplicationForm));
+    this.router.post('/application/form', CheckUserType(['T']), this.wrapper(this.updateApplicationForm));
+    this.router.get('/applier', CheckUserType(['T']), this.wrapper(this.getAllSubmittedForm));
   }
 
   private getApplicationForm = async (req: Request, res: Response, next: NextFunction) => {
@@ -30,6 +32,12 @@ class CircleApplicationManagementController extends Controller {
     await CircleApplicationQuestionModel.deleteMany({});
     await CircleApplicationQuestionModel.create(form);
     res.status(204).end();
+  }
+
+  private getAllSubmittedForm = async (req: Request, res: Response, next: NextFunction) => {
+    const forms: ICircleApplicationForm[] =
+      await CircleApplicationFormModel.find({}).populate(['circle', 'applier']);
+    res.json({ form: forms });
   }
 }
 
