@@ -12,7 +12,7 @@ class CircleController extends Controller {
   }
 
   private initializeRoutes() {
-    this.router.get('/', CheckUserType(['S']), this.wrapper(this.getAllCircles));
+    this.router.get('/', CheckUserType(['S', 'T']), this.wrapper(this.getAllCircles));
   }
 
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
