@@ -3,7 +3,7 @@ import {
   CircleApplicationLimitException,
   CircleApplicationQuestionException,
 } from '../exceptions/Circle';
-import { Controller, ICircleApplicationForm, IUser } from '../interfaces';
+import { Controller, ICircle, ICircleApplicationForm, IUser } from '../interfaces';
 import { CircleApplicationFormModel, CircleApplicationQuestionModel, CircleModel } from '../models';
 import { CheckUserType } from '../middlewares';
 
@@ -22,16 +22,16 @@ class CircleApplicationController extends Controller {
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
     const user = this.getUserIdentity(req) as IUser;
-    const applied = await CircleApplicationFormModel.find({ applier: user._id });
-    const circles: any[] = [];
-    applied.forEach((form) => {
-      const circle = CircleModel.findById(form.circle);
-      circles.push(circle);
-    });
-
+    const appliedForm = await CircleApplicationFormModel.find({ applier: user._id });
+    const circles: ICircle[] = await CircleModel.find({});
+    const appliedCircle: ICircle[] = circles.filter(circle =>
+      appliedForm.map(v => v.circle.toString()).includes(circle._id.toString()));
+    const form = await CircleApplicationQuestionModel.find({});
     res.json({
       maxApplyCount: 3, // 나중에 Config Class로 처리할 거임
-      appliedCircle: circles,
+      appliedForm,
+      appliedCircle,
+      form,
     });
   }
 
@@ -46,7 +46,7 @@ class CircleApplicationController extends Controller {
     const questions: string[] = Object.keys(form.form).sort();
     const expectedQuestions =
       (await CircleApplicationQuestionModel.find({}))
-        .map((v) => v.question)
+        .map((v) => String(v._id))
         .sort();
     if (JSON.stringify(questions) !== JSON.stringify(expectedQuestions)) {
       throw new CircleApplicationQuestionException();

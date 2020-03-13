@@ -26,6 +26,10 @@ const formSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  circle: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
   status: {
     type: String,
     required: true,
