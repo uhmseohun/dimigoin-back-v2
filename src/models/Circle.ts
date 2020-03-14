@@ -1,5 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import { ICircle } from '../interfaces';
+import { ConfigKeys } from '../interfaces/Types';
+import ConfigModel from './Config';
 
 const schema = new mongoose.Schema({
   name: {
@@ -14,11 +16,14 @@ const schema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: [
-      'IT(보안)', 'IT(로봇)', 'IT(인공지능)', 'IT(프로젝트)', 'IT(알고리즘)', 'IT(개발)',
-      'IT(게임개발)', 'IT(코딩교육)', 'IT(스마트팜)', '강연', '영상', '그래픽', '상업(경제)',
-      '상업(기업)', '작곡', '평론', '언어', '수학(미적분)',
-    ],
+    validate: {
+      validator: async (value: string) => {
+        const { value: category } =
+          await ConfigModel.findOne({ key: ConfigKeys.circleCategory });
+        return category.includes(value);
+      },
+      message: '유효하지 않은 동아리 분류입니다.',
+    }
   },
   description: {
     type: String,
