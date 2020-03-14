@@ -40,14 +40,10 @@ class CircleApplicationController extends Controller {
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req) as IUser;
     const applications: ICircleApplication[] =
-      await CircleApplicationModel.find({ applier: user._id });
-    const circles: ICircle[] = await CircleModel.find({
-      _id: { $in: applications.map((v) => v.circle) },
-    });
+      await CircleApplicationModel.find({ applier: user._id }).populate('circle');
     res.json({
       maxApplyCount: (await this.config)[ConfigKeys.circleMaxApply],
       applications,
-      circles,
     });
   }
 
