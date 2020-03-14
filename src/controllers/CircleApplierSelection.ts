@@ -1,20 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
+import { Document } from 'mongoose';
+import { CircleApplicationNotFoundException } from '../exceptions/CircleApplication';
+import {
+  AlreadyFailedApplierException,
+  AlreadyInterviewerException,
+  AlreadyPassedApplierException,
+  AlreadySelectedApplierException,
+  NeedGraduallyStatusSet,
+} from '../exceptions/CircleApplierSelection';
 import { AccessDeniedException } from '../exceptions/Permission';
-import { Controller, IUser, ICircleApplicationForm } from '../interfaces';
+import { StudentNotFoundException } from '../exceptions/Student';
+import { Controller, ICircleApplicationForm, IUser } from '../interfaces';
+import { CircleApplicationStatus } from '../interfaces/Types';
 import { CheckUserType } from '../middlewares';
 import { CircleApplicationFormModel, CircleModel } from '../models';
 import { UserModel } from '../models';
-import { StudentNotFoundException } from '../exceptions/Student';
-import { CircleApplicationNotFoundException } from '../exceptions/CircleApplication';
-import { CircleApplicationStatus } from '../interfaces/Types'
-import {
-  AlreadySelectedApplierException,
-  AlreadyFailedApplierException,
-  AlreadyPassedApplierException,
-  AlreadyInterviewerException,
-  NeedGraduallyStatusSet,
-} from '../exceptions/CircleSelection';
-import { Document } from 'mongoose';
 
 class CircleApplierSelection extends Controller {
   public basePath = '/circle/selection';
@@ -39,7 +39,7 @@ class CircleApplierSelection extends Controller {
         .find({ circle: circle._id })
         .populate(['applier', 'circle']);
 
-    res.json({ form });
+    res.json({ applications: form });
   }
 
   private setApplierStatus = async (req: Request, res: Response, next: NextFunction) => {
@@ -50,7 +50,7 @@ class CircleApplierSelection extends Controller {
       await CircleApplicationFormModel.findOne({ applier: applier._id });
     if (!application) { throw new CircleApplicationNotFoundException(); }
 
-    const status: CircleApplicationStatus = req.body.status
+    const status: CircleApplicationStatus = req.body.status;
 
     if (application.status === 'applied') {
       if (['interview', 'fail'].includes(status)) {

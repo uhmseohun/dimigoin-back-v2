@@ -1,4 +1,4 @@
-import HttpException from '../exceptions/HttpException';
+import HttpException from './HttpException';
 
 export class AlreadySelectedApplierException extends HttpException {
   constructor(status: number = 409,

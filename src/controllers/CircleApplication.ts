@@ -5,6 +5,7 @@ import {
   CircleApplicationQuestionException,
   ConflictedCircleApplicationException,
   CircleApplicationNotFoundException,
+  NotPassedCircleSelectionException
 } from '../exceptions/CircleApplication';
 import {
   Controller,
@@ -21,6 +22,7 @@ import {
   CircleModel,
 } from '../models';
 import { Document } from 'mongoose';
+import { AlreadySelectedApplierException } from '../exceptions/CircleApplierSelection';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
@@ -42,7 +44,7 @@ class CircleApplicationController extends Controller {
       await CircleApplicationFormModel.find({ applier: user._id });
     const circles: ICircle[] = await CircleModel.find({});
     const appliedCircle: ICircle[] = circles.filter((circle) =>
-      appliedForm.map((v) => v.circle.toString()).includes(circle._id.toString()));
+      appliedForm.map(v => v.circle.toString()).includes(circle._id.toString()));
     const form: ICircleApplicationQuestion[] = await CircleApplicationQuestionModel.find({});
     res.json({
       maxApplyCount: (await this.config)[ConfigKeys.circleMaxApply],
@@ -60,18 +62,22 @@ class CircleApplicationController extends Controller {
     const form: ICircleApplicationForm = req.body;
     form.applier = user._id;
 
+    if (applied.find(v => v.status === 'final')) {
+      throw new AlreadySelectedApplierException();
+    }
+
     if (applied.length >= config[ConfigKeys.circleMaxApply]) {
       throw new CircleApplicationLimitException();
     }
 
-    if (applied.map((v) => v.circle.toString()).includes(form.circle.toString())) {
+    if (applied.map(v => v.circle.toString()).includes(form.circle.toString())) {
       throw new ConflictedCircleApplicationException();
     }
 
     const questions: string[] = Object.keys(form.form).sort();
     const expectedQuestions =
       (await CircleApplicationQuestionModel.find({}))
-        .map((v) => v._id.toString())
+        .map(v => v._id.toString())
         .sort();
     if (JSON.stringify(questions) !== JSON.stringify(expectedQuestions)) {
       throw new CircleApplicationQuestionException();
@@ -83,11 +89,22 @@ class CircleApplicationController extends Controller {
 
   private finalSelection = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req) as IUser;
-    const final: ICircleApplicationForm & Document =
-     (await CircleApplicationFormModel.find({ applier: user._id })) // 동아리도 쿼리해야 함.
-      .filter(v => v.circle.toString() === req.params.circleId)[0]; // 코드 리팩토링 필요함.
+    const applied: (ICircleApplicationForm & Document)[] =
+      await CircleApplicationFormModel.find({ applier: user._id });
+
+    if (applied.filter(v => v.status === 'final').length > 0) {
+      throw new AlreadySelectedApplierException();
+    }
+
+    const final: (ICircleApplicationForm & Document) =
+      applied.find(v => v.circle.toString() === req.params.circleId);
+    
     if (!final) {
       throw new CircleApplicationNotFoundException();
+    }
+
+    if (final.status !== 'pass') {
+      throw new NotPassedCircleSelectionException();
     }
 
     final.status = 'final';

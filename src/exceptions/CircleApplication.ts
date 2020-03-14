@@ -44,3 +44,12 @@ export class ConflictedCircleApplicationException extends HttpException {
     this.message = message;
   }
 }
+
+export class NotPassedCircleSelectionException extends HttpException {
+  constructor(status: number = 403,
+              message: string = '합격한 동아리에만 최종 선택을 할 수 있습니다.') {
+    super(status, message);
+    this.status = status;
+    this.message = message;
+  }
+}
