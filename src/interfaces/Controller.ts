@@ -6,7 +6,7 @@ import IUser from './User';
 
 const TokenManager = new Token();
 
-const asyncWrapper = (fn: Function) =>
+const asyncWrapper = (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
   (req: Request, res: Response, next: NextFunction) =>
     fn(req, res, next).catch(next);
 

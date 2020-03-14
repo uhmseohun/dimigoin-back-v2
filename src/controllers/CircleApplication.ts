@@ -90,7 +90,7 @@ class CircleApplicationController extends Controller {
 
   private finalSelection = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req) as IUser;
-    const applied: (ICircleApplicationForm & Document)[] =
+    const applied: Array<ICircleApplicationForm & Document> =
       await CircleApplicationFormModel.find({ applier: user._id });
 
     if (applied.filter((v) => v.status === 'final').length > 0) {
