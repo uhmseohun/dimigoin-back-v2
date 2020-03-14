@@ -11,7 +11,6 @@ import {
 import { AlreadySelectedApplierException } from '../exceptions/CircleApplierSelection';
 import {
   Controller,
-  ICircle,
   ICircleApplication,
   IUser,
 } from '../interfaces';

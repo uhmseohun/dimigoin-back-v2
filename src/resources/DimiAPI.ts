@@ -34,18 +34,9 @@ export default class DimiAPI {
     return {
       _id: identity._id,
       idx: identity.id,
-      nickname: identity.nick,
       username: identity.username,
       name: identity.name,
-      email: identity.email,
-      gender: identity.gender,
       userType: identity.user_type,
-      birthdate: identity.birthdate,
-      phone: identity.phone,
-      photo: [
-        identity.photofile1,
-        identity.photofile2,
-      ].filter((v) => v),
     };
   }
 

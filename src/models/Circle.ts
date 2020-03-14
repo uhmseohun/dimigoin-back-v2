@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { ICircle } from '../interfaces';
 import { ConfigKeys } from '../interfaces/Types';
 import ConfigModel from './Config';
-const a = 1;
+
 const schema = new mongoose.Schema({
   name: {
     type: String,

@@ -21,12 +21,12 @@ class ConfigController extends Controller {
 
   private editConfig = async (req: Request, res: Response, next: NextFunction) => {
     const newConfig: IConfig = req.body;
-    const config = await ConfigModel.findOne({ key: newConfig.key });
+    let config = await ConfigModel.findOne({ key: newConfig.key });
     if (config) {
       config.value = newConfig.value;
       await config.save();
     } else {
-      await ConfigModel.create(newConfig);
+      config = await ConfigModel.create(newConfig);
     }
     res.json({
       key: config.key,
