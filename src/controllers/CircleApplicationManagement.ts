@@ -16,8 +16,10 @@ class CircleApplicationManagementController extends Controller {
   }
 
   private initializeRoutes() {
-    this.router.get('/application/form', CheckUserType(['S', 'T']), this.wrapper(this.getApplicationForm));
-    this.router.post('/application/form', CheckUserType(['T']), this.wrapper(this.updateApplicationForm));
+    this.router.get('/application/form', CheckUserType(['S', 'T']),this.wrapper(this.getApplicationForm));
+    this.router.post('/application/form', CheckUserType(['T']),
+      this.validator(this.requiredKeys.updateApplicationForm),
+      this.wrapper(this.updateApplicationForm));
     this.router.get('/applier', CheckUserType(['T']), this.wrapper(this.getAllApplications));
   }
 

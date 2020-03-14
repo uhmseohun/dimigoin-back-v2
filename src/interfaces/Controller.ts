@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import { BodyValidationFailException } from '../exceptions/Validation';
 import { IConfig } from '../interfaces';
 import { ConfigModel } from '../models';
 import Token from '../resources/Token';
@@ -16,11 +17,33 @@ const getUserIdentity = (req: Request): IUser => {
   return identity as IUser;
 };
 
+const validator = (requiredKeys: string) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const invalidKeys = requiredKeys.split(', ').filter(key => {
+      return !req.body.hasOwnProperty(key);
+    })
+    if (invalidKeys.length > 0) {
+      throw new BodyValidationFailException(invalidKeys);
+    } else next();
+  };
+}
+
+enum requiredKeys {
+  identifyUser = 'username, password',
+  createApplication = 'circle, form',
+  updateApplicationForm = 'form',
+  setApplierStatus = 'status',
+  createCircle = 'name, category, description, chair',
+  editConfig = 'key, value',
+};
+
 class Controller {
   public basePath: string;
   public router: Router = Router();
   protected wrapper = asyncWrapper;
   protected getUserIdentity = getUserIdentity;
+  protected validator = validator;
+  protected requiredKeys = requiredKeys;
 
   get config(): IConfig {
     return (async () => {

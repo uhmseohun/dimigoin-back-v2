@@ -32,7 +32,9 @@ class CircleApplicationController extends Controller {
 
   private initializeRoutes() {
     this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplicationStatus));
-    this.router.post('/', CheckUserType(['S']), this.wrapper(this.createApplication));
+    this.router.post('/', CheckUserType(['S']),
+      this.validator(this.requiredKeys.createApplication),
+      this.wrapper(this.createApplication));
     this.router.post('/final/:circleId', CheckUserType(['S']), this.wrapper(this.finalSelection));
   }
 

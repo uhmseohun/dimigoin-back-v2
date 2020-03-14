@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Controller, IConfig } from '../interfaces';
 import { ConfigModel } from '../models';
+import { CheckUserType } from '../middlewares';
 
 class ConfigController extends Controller {
   public basePath = '/config';
@@ -12,7 +13,9 @@ class ConfigController extends Controller {
 
   private initializeRoutes() {
     this.router.get('/', this.wrapper(this.getAllConfig));
-    this.router.put('/', this.wrapper(this.editConfig));
+    this.router.put('/', CheckUserType(['T']),
+      this.validator(this.requiredKeys.editConfig),
+      this.wrapper(this.editConfig));
   }
 
   private getAllConfig = async (req: Request, res: Response, next: NextFunction) => {
