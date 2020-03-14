@@ -1,6 +1,6 @@
 import CircleModel from './Circle';
 import {
-  CircleApplicationFormModel,
+  CircleApplicationModel,
   CircleApplicationQuestionModel,
 } from './CircleApplication';
 import ConfigModel from './Config';
@@ -10,6 +10,6 @@ export {
   UserModel,
   CircleModel,
   CircleApplicationQuestionModel,
-  CircleApplicationFormModel,
+  CircleApplicationModel,
   ConfigModel,
 };

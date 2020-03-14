@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose';
 import {
-  ICircleApplicationForm,
+  ICircleApplication,
   ICircleApplicationQuestion,
 } from '../interfaces';
 
@@ -18,7 +18,7 @@ const questionSchema = new mongoose.Schema({
   },
 }, { versionKey: false });
 
-const formSchema = new mongoose.Schema({
+const applicationSchema = new mongoose.Schema({
   applier: {
     type: ObjectId,
     required: true,
@@ -43,10 +43,10 @@ const formSchema = new mongoose.Schema({
 
 const CircleApplicationQuestionModel = mongoose.model<ICircleApplicationQuestion & mongoose.Document>
   ('CircleApplicationQuestion', questionSchema);
-const CircleApplicationFormModel = mongoose.model<ICircleApplicationForm & mongoose.Document>
-  ('CircleApplicationForm', formSchema);
+const CircleApplicationModel = mongoose.model<ICircleApplication & mongoose.Document>
+  ('CircleApplication', applicationSchema);
 
 export {
   CircleApplicationQuestionModel,
-  CircleApplicationFormModel,
+  CircleApplicationModel,
 };

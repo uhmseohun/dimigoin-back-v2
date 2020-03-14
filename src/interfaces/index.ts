@@ -1,6 +1,6 @@
 import ICircle from './Circle';
 import {
-  ICircleApplicationForm,
+  ICircleApplication,
   ICircleApplicationQuestion,
 } from './CircleApplication';
 import IConfig from './Config';
@@ -12,6 +12,6 @@ export {
   IUser,
   ICircle,
   ICircleApplicationQuestion,
-  ICircleApplicationForm,
+  ICircleApplication,
   IConfig,
 };
