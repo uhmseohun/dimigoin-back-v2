@@ -28,7 +28,10 @@ class ConfigController extends Controller {
     } else {
       await ConfigModel.create(newConfig);
     }
-    res.status(204).end();
+    res.json({
+      key: config.key,
+      value: config.value,
+    });
   }
 }
 

@@ -44,7 +44,7 @@ class CircleManagementController extends Controller {
     const circle: ICircle & Document = await CircleModel.findById(req.params.circleId);
     if (!circle) { throw new CircleNotFoundException(); }
     await circle.remove();
-    res.status(204).end();
+    res.json({ circle });
   }
 
   private putCircleImage = async (req: Request, res: Response, next: NextFunction) => {
@@ -71,7 +71,7 @@ class CircleManagementController extends Controller {
     }
     circle.imageKey = key;
     await circle.save();
-    res.status(204).end();
+    res.json({ key });
   }
 }
 

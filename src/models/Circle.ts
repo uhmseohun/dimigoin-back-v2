@@ -1,7 +1,7 @@
+import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose';
 import { ICircle } from '../interfaces';
 import { ConfigKeys } from '../interfaces/Types';
-import { ObjectId } from 'mongodb';
 import ConfigModel from './Config';
 const a = 1;
 const schema = new mongoose.Schema({

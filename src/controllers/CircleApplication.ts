@@ -23,7 +23,6 @@ import {
   CircleApplicationQuestionModel,
   CircleModel,
 } from '../models';
-import { ObjectId } from 'mongodb';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
@@ -44,7 +43,7 @@ class CircleApplicationController extends Controller {
     const appliedForm: ICircleApplicationForm[] =
       await CircleApplicationFormModel.find({ applier: user._id });
     const appliedCircle: ICircle[] = await CircleModel.find({
-      _id: { $in: appliedForm.map(v => v.circle) }
+      _id: { $in: appliedForm.map((v) => v.circle) },
     });
     const form: ICircleApplicationQuestion[] = await CircleApplicationQuestionModel.find({});
     res.json({
@@ -86,7 +85,7 @@ class CircleApplicationController extends Controller {
     }
 
     await CircleApplicationFormModel.create(form);
-    res.status(204).end();
+    res.json({ application: form });
   }
 
   private finalSelection = async (req: Request, res: Response, next: NextFunction) => {
@@ -111,7 +110,7 @@ class CircleApplicationController extends Controller {
 
     final.status = 'final';
     await final.save();
-    res.status(204).end();
+    res.json({ application: final });
   }
 }
 

@@ -17,7 +17,7 @@ import { CircleApplicationFormModel, CircleModel } from '../models';
 import { UserModel } from '../models';
 
 class CircleApplierSelection extends Controller {
-  public basePath = '/circle/selection';
+  public basePath = '/circle/selection/applier';
 
   constructor() {
     super();
@@ -72,7 +72,7 @@ class CircleApplierSelection extends Controller {
       throw new AlreadyFailedApplierException();
     }
     await application.save();
-    res.status(204).end();
+    res.json({ application });
   }
 }
 

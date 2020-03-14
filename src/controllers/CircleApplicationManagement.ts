@@ -31,13 +31,13 @@ class CircleApplicationManagementController extends Controller {
     const form: ICircleApplicationQuestion[] = req.body.form;
     await CircleApplicationQuestionModel.deleteMany({});
     await CircleApplicationQuestionModel.create(form);
-    res.status(204).end();
+    res.json({ form });
   }
 
   private getAllSubmittedForm = async (req: Request, res: Response, next: NextFunction) => {
-    const forms: ICircleApplicationForm[] =
+    const applications: ICircleApplicationForm[] =
       await CircleApplicationFormModel.find({}).populate(['circle']);
-    res.json({ form: forms });
+    res.json({ applications });
   }
 }
 
