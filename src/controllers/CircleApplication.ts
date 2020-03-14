@@ -6,20 +6,19 @@ import {
   CircleApplicationNotFoundException,
   CircleApplicationQuestionException,
   ConflictedCircleApplicationException,
-  NotPassedCircleSelectionException
+  NotPassedCircleSelectionException,
 } from '../exceptions/CircleApplication';
 import { AlreadySelectedApplierException } from '../exceptions/CircleApplierSelection';
 import {
   Controller,
   ICircle,
-  ICircleApplicationForm,
-  ICircleApplicationQuestion,
+  ICircleApplication,
   IUser,
 } from '../interfaces';
 import { ConfigKeys } from '../interfaces/Types';
 import { CheckUserType } from '../middlewares';
 import {
-  CircleApplicationFormModel,
+  CircleApplicationModel,
   CircleApplicationQuestionModel,
   CircleModel,
 } from '../models';
@@ -34,34 +33,32 @@ class CircleApplicationController extends Controller {
 
   private initializeRoutes() {
     this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplicationStatus));
-    this.router.post('/', CheckUserType(['S']), this.wrapper(this.createApplicationForm));
+    this.router.post('/', CheckUserType(['S']), this.wrapper(this.createApplication));
     this.router.post('/final/:circleId', CheckUserType(['S']), this.wrapper(this.finalSelection));
   }
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req) as IUser;
-    const appliedForm: ICircleApplicationForm[] =
-      await CircleApplicationFormModel.find({ applier: user._id });
-    const appliedCircle: ICircle[] = await CircleModel.find({
-      _id: { $in: appliedForm.map((v) => v.circle) },
+    const applications: ICircleApplication[] =
+      await CircleApplicationModel.find({ applier: user._id });
+    const circles: ICircle[] = await CircleModel.find({
+      _id: { $in: applications.map((v) => v.circle) },
     });
-    const form: ICircleApplicationQuestion[] = await CircleApplicationQuestionModel.find({});
     res.json({
       maxApplyCount: (await this.config)[ConfigKeys.circleMaxApply],
-      appliedForm,
-      appliedCircle,
-      form,
+      applications,
+      circles,
     });
   }
 
-  private createApplicationForm = async (req: Request, res: Response, next: NextFunction) => {
+  private createApplication = async (req: Request, res: Response, next: NextFunction) => {
     const config = await this.config;
     if (!config[ConfigKeys.circleAppliable]) { throw new CircleApplicationDeadlineException(); }
     const user: IUser = this.getUserIdentity(req) as IUser;
-    const applied: ICircleApplicationForm[] =
-      await CircleApplicationFormModel.find({ applier: user._id });
-    const form: ICircleApplicationForm = req.body;
-    form.applier = user._id;
+    const applied: ICircleApplication[] =
+      await CircleApplicationModel.find({ applier: user._id });
+    const application: ICircleApplication = req.body;
+    application.applier = user._id;
 
     if (applied.find((v) => v.status === 'final')) {
       throw new AlreadySelectedApplierException();
@@ -71,11 +68,11 @@ class CircleApplicationController extends Controller {
       throw new CircleApplicationLimitException();
     }
 
-    if (applied.map((v) => v.circle.toString()).includes(form.circle.toString())) {
+    if (applied.map((v) => v.circle.toString()).includes(application.circle.toString())) {
       throw new ConflictedCircleApplicationException();
     }
 
-    const answeredIds: string[] = Object.keys(form.form).sort();
+    const answeredIds: string[] = Object.keys(application.form).sort();
     const questions = await CircleApplicationQuestionModel.find({});
     const questionIds = questions.map((v) => v._id.toString()).sort();
     if (JSON.stringify(answeredIds) !== JSON.stringify(questionIds)) {
@@ -84,27 +81,27 @@ class CircleApplicationController extends Controller {
 
     const invalidAnswers = questions.filter((question) => {
       const id: string = question._id.toString();
-      const answer: string = form.form[id];
+      const answer: string = application.form[id];
       return question.maxLength < answer.length || answer.length === 0;
-    })
+    });
     if (invalidAnswers.length > 0) {
       throw new CircleApplicationQuestionException();
     }
 
-    await CircleApplicationFormModel.create(form);
-    res.json({ application: form });
+    await CircleApplicationModel.create(application);
+    res.json({ application });
   }
 
   private finalSelection = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req) as IUser;
-    const applied: Array<ICircleApplicationForm & Document> =
-      await CircleApplicationFormModel.find({ applier: user._id });
+    const applied: Array<ICircleApplication & Document> =
+      await CircleApplicationModel.find({ applier: user._id });
 
     if (applied.filter((v) => v.status === 'final').length > 0) {
       throw new AlreadySelectedApplierException();
     }
 
-    const final: (ICircleApplicationForm & Document) =
+    const final: (ICircleApplication & Document) =
       applied.find((v) => v.circle.toString() === req.params.circleId);
 
     if (!final) {

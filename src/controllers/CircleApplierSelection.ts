@@ -10,10 +10,10 @@ import {
 } from '../exceptions/CircleApplierSelection';
 import { AccessDeniedException } from '../exceptions/Permission';
 import { StudentNotFoundException } from '../exceptions/Student';
-import { Controller, ICircleApplicationForm, IUser } from '../interfaces';
+import { Controller, ICircleApplication, IUser } from '../interfaces';
 import { CircleApplicationStatus } from '../interfaces/Types';
 import { CheckUserType } from '../middlewares';
-import { CircleApplicationFormModel, CircleModel } from '../models';
+import { CircleApplicationModel, CircleModel } from '../models';
 import { UserModel } from '../models';
 
 class CircleApplierSelection extends Controller {
@@ -25,29 +25,29 @@ class CircleApplierSelection extends Controller {
   }
 
   private initializeRoutes() {
-    this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplicationForm));
+    this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplications));
     this.router.put('/:applierId', CheckUserType(['S']), this.wrapper(this.setApplierStatus));
   }
 
-  private getApplicationForm = async (req: Request, res: Response, next: NextFunction) => {
+  private getApplications = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req);
     const circle = await CircleModel.findOne({ chair: user._id });
     if (!circle) { throw new AccessDeniedException(); }
 
-    const form =
-      await CircleApplicationFormModel
+    const applications =
+      await CircleApplicationModel
         .find({ circle: circle._id })
         .populate(['applier', 'circle']);
 
-    res.json({ applications: form });
+    res.json({ applications });
   }
 
   private setApplierStatus = async (req: Request, res: Response, next: NextFunction) => {
     const applier: IUser = await UserModel.findById(req.params.applierId);
     if (!applier) { throw new StudentNotFoundException(); }
 
-    const application: ICircleApplicationForm & Document =
-      await CircleApplicationFormModel.findOne({ applier: applier._id });
+    const application: ICircleApplication & Document =
+      await CircleApplicationModel.findOne({ applier: applier._id });
     if (!application) { throw new CircleApplicationNotFoundException(); }
 
     const status: CircleApplicationStatus = req.body.status;

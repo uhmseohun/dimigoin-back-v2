@@ -6,13 +6,18 @@ interface ICircleApplicationQuestion {
 }
 
 interface ICircleApplicationForm {
+  [key: string]: string;
+}
+
+interface ICircleApplication {
   circle: ObjectId;
   applier: ObjectId;
-  form: any;
+  form: ICircleApplicationForm;
   status?: string;
 }
 
 export {
   ICircleApplicationQuestion,
+  ICircleApplication,
   ICircleApplicationForm,
 };
