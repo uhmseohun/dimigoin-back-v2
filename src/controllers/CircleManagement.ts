@@ -63,7 +63,7 @@ class CircleManagementController extends Controller {
     if (!(await this.config)[ConfigKeys.imageExtension].includes(ext)) {
       throw new NotAllowedExtensionException();
     }
-    const key = `[CIRCLE] ${circle.name} ${Date.now().toString()}${ext}`;
+    const key = `CIRCLE_PROFILE/${circle.name}${ext}`;
     try {
       await this.UploadClient.upload(key, image.data);
     } catch (error) {
