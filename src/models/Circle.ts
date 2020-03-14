@@ -8,6 +8,9 @@ const schema = new mongoose.Schema({
     trim: true,
     unique: true,
   },
+  imageKey: {
+    type: String,
+  },
   category: {
     type: String,
     required: true,

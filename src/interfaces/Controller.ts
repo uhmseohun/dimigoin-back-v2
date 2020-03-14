@@ -26,7 +26,7 @@ class Controller {
     return (async () => {
       const config: IConfig = {};
       const configs = await ConfigModel.find({});
-      configs.forEach(v => {
+      configs.forEach((v) => {
         config[v.key] = v.value;
       });
       return config;

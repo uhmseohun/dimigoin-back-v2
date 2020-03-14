@@ -1,13 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import { Document } from 'mongoose';
-import { CircleNotFoundException } from '../exceptions/Circle';
+import { CircleNotFoundException, ImageNotAttachedException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
-import { Controller, ICircle, IUser } from '../interfaces';
+import { NotAllowedExtensionException, S3UploadFailException } from '../exceptions/Upload';
+import { Controller, ICircle } from '../interfaces';
+import { ConfigKeys } from '../interfaces/Types';
 import { CheckUserType } from '../middlewares';
 import { CircleModel, UserModel } from '../models';
+import Upload from '../resources/Upload';
 
 class CircleManagementController extends Controller {
   public basePath = '/circle';
+  private UploadClient = new Upload();
 
   constructor() {
     super();
@@ -17,6 +21,7 @@ class CircleManagementController extends Controller {
   private initializeRoutes() {
     this.router.post('/', CheckUserType(['T']), this.wrapper(this.createCircle));
     this.router.delete('/:circleId', CheckUserType(['T']), this.wrapper(this.removeCircle));
+    this.router.post('/image/:circleId', this.wrapper(this.putCircleImage));
   }
 
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
@@ -39,6 +44,27 @@ class CircleManagementController extends Controller {
     const circle: ICircle & Document = await CircleModel.findById(req.params.circleId);
     if (!circle) { throw new CircleNotFoundException(); }
     await circle.remove();
+    res.status(204).end();
+  }
+
+  private putCircleImage = async (req: Request, res: Response, next: NextFunction) => {
+    const { circleId } = req.params;
+    const circle = await CircleModel.findById(circleId);
+    if (!circle) { throw new CircleNotFoundException(); }
+    const { image }: any = req.files;
+    if (!image) { throw new ImageNotAttachedException(); }
+    const ext = this.UploadClient.fileExtension(image.name);
+    if (!(await this.config)[ConfigKeys.imageExtension].includes(ext)) {
+      throw new NotAllowedExtensionException();
+    }
+    const key = `[CIRCLE] ${circle.name} ${Date.now().toString()}${ext}`;
+    try {
+      await this.UploadClient.upload(key, image.data);
+    } catch (error) {
+      throw new S3UploadFailException();
+    }
+    circle.imageKey = key;
+    await circle.save();
     res.status(204).end();
   }
 }

@@ -8,3 +8,12 @@ export class CircleNotFoundException extends HttpException {
     this.message = message;
   }
 }
+
+export class ImageNotAttachedException extends HttpException {
+  constructor(status: number = 400,
+              message: string = '동아리의 이미지가 첨부되지 않았습니다.') {
+    super(status, message);
+    this.status = status;
+    this.message = message;
+  }
+}

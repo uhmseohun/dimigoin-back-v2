@@ -10,4 +10,5 @@ export type CircleCategory =
 export enum ConfigKeys {
   circleAppliable = 'CIRCLE_APPLIABLE',
   circleMaxApply = 'CIRCLE_MAX_APPLY',
+  imageExtension = 'IMAGE_EXTENSION',
 }

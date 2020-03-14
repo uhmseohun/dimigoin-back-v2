@@ -7,6 +7,7 @@ import { AttachUserInfo, ErrorHandler } from './middlewares';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import bearerToken from 'express-bearer-token';
+import fileUpload from 'express-fileupload';
 import helmet from 'helmet';
 
 class App {
@@ -33,6 +34,7 @@ class App {
     this.app.use(cors());
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
+    this.app.use(fileUpload());
 
     this.app.use(bearerToken({
       headerKey: 'Bearer',

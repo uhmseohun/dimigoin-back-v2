@@ -46,7 +46,7 @@ export default class DimiAPI {
       photo: [
         identity.photofile1,
         identity.photofile2,
-      ].filter(v => v),
+      ].filter((v) => v),
     };
   }
 
