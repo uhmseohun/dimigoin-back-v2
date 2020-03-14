@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb';
-import { Schema } from 'mongoose';
 
 interface ICircle {
   _id: ObjectId;

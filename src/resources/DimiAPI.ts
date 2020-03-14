@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
 import dotenv from 'dotenv';
-import { IUser } from '../interfaces';
 import { IAccount, IStudentIdentity, IUserIdentity } from '../interfaces/DimiAPI';
 import { UserModel } from '../models';
 
