@@ -21,7 +21,7 @@ class CircleManagementController extends Controller {
   private initializeRoutes() {
     this.router.post('/', CheckUserType(['T']), this.wrapper(this.createCircle));
     this.router.delete('/:circleId', CheckUserType(['T']), this.wrapper(this.removeCircle));
-    this.router.post('/image/:circleId', CheckUserType(['T']), this.wrapper(this.putCircleImage));
+    this.router.post('/image/:circleId', this.wrapper(this.putCircleImage));
   }
 
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
@@ -51,8 +51,14 @@ class CircleManagementController extends Controller {
     const { circleId } = req.params;
     const circle = await CircleModel.findById(circleId);
     if (!circle) { throw new CircleNotFoundException(); }
+
+    try { // 더 깔끔하게 짤 수 있을까?
+      const _ = req.files.image;
+    } catch (error) {
+      throw new ImageNotAttachedException();
+    }
+
     const { image }: any = req.files;
-    if (!image) { throw new ImageNotAttachedException(); }
     const ext = this.UploadClient.fileExtension(image.name);
     if (!(await this.config)[ConfigKeys.imageExtension].includes(ext)) {
       throw new NotAllowedExtensionException();
