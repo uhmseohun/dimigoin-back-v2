@@ -23,7 +23,7 @@ class CircleManagementController extends Controller {
       this.validator(this.requiredKeys.createCircle),
       this.wrapper(this.createCircle));
     this.router.delete('/:circleId', CheckUserType(['T']), this.wrapper(this.removeCircle));
-    this.router.put('/image/:circleId', this.wrapper(this.putCircleImage));
+    this.router.put('/:circleId/image', this.wrapper(this.putCircleImage));
   }
 
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
