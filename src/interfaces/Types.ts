@@ -11,4 +11,5 @@ export enum ConfigKeys {
   circleAppliable = 'CIRCLE_APPLIABLE',
   circleMaxApply = 'CIRCLE_MAX_APPLY',
   imageExtension = 'IMAGE_EXTENSION',
+  bucketURL = 'AWS_BUCKET_URL',
 }
