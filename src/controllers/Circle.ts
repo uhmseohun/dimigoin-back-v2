@@ -19,11 +19,12 @@ class CircleController extends Controller {
     let circles: any[] =
       await CircleModel.find({}).populate('chair');
     circles = circles.map(circle => {
-      circle.chair = {
-        serial: circle.chair.serial,
-        name: circle.chair.name,
-      }
-      return circle;
+      return Object.assign(circle, {
+        chair: {
+          name: circle.chair.name,
+          serial: circle.chair.serial,
+        }
+      });
     });
     res.json({ circles });
   }
