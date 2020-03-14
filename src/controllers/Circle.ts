@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { Controller, ICircle, IUser } from '../interfaces';
+import { Controller } from '../interfaces';
 import { CheckUserType } from '../middlewares';
-import { CircleModel, UserModel } from '../models';
+import { CircleModel } from '../models';
 
 class CircleController extends Controller {
   public basePath = '/circle';
