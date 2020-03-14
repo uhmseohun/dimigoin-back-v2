@@ -18,12 +18,12 @@ class CircleController extends Controller {
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
     let circles: any[] =
       await CircleModel.find({}).populate('chair');
-    circles = circles.map(circle => {
+    circles = circles.map((circle) => {
       return Object.assign(circle, {
         chair: {
           name: circle.chair.name,
           serial: circle.chair.serial,
-        }
+        },
       });
     });
     res.json({ circles });

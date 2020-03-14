@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import { ICircle } from '../interfaces';
 import { ConfigKeys } from '../interfaces/Types';
 import ConfigModel from './Config';
-
+const a = 1;
 const schema = new mongoose.Schema({
   name: {
     type: String,
@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
         return category.includes(value);
       },
       message: '유효하지 않은 동아리 분류입니다.',
-    }
+    },
   },
   description: {
     type: String,

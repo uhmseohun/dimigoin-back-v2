@@ -20,7 +20,7 @@ export default class Upload {
       Key: key,
       Body: body,
     }, (error, data) => {
-      if (error) throw error;
+      if (error) { throw error; }
       return data;
     });
   }
