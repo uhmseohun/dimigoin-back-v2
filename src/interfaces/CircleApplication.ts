@@ -8,7 +8,7 @@ interface ICircleApplicationQuestion {
 interface ICircleApplicationForm {
   circle: ObjectId;
   applier: ObjectId;
-  form: object;
+  form: any;
   status?: string;
 }
 

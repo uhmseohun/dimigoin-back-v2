@@ -7,6 +7,7 @@ import {
   CircleApplicationQuestionException,
   ConflictedCircleApplicationException,
   NotPassedCircleSelectionException,
+  MaxLengthOverFormException
 } from '../exceptions/CircleApplication';
 import { AlreadySelectedApplierException } from '../exceptions/CircleApplierSelection';
 import {
@@ -75,13 +76,19 @@ class CircleApplicationController extends Controller {
       throw new ConflictedCircleApplicationException();
     }
 
-    const questions: string[] = Object.keys(form.form).sort();
-    const expectedQuestions =
-      (await CircleApplicationQuestionModel.find({}))
-        .map((v) => v._id.toString())
-        .sort();
-    if (JSON.stringify(questions) !== JSON.stringify(expectedQuestions)) {
+    const answeredIds: string[] = Object.keys(form.form).sort();
+    const questions = await CircleApplicationQuestionModel.find({});
+    const questionIds = questions.map((v) => v._id.toString()).sort();
+    if (JSON.stringify(answeredIds) !== JSON.stringify(questionIds)) {
       throw new CircleApplicationQuestionException();
+    }
+
+    const invalidAnswers = questions.filter((question) => {
+      const id: string = question._id.toString();
+      return question.maxLength < form.form[id].length;
+    })
+    if (invalidAnswers.length > 0) {
+      throw new MaxLengthOverFormException();
     }
 
     await CircleApplicationFormModel.create(form);

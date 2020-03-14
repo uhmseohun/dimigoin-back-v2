@@ -53,3 +53,12 @@ export class NotPassedCircleSelectionException extends HttpException {
     this.message = message;
   }
 }
+
+export class MaxLengthOverFormException extends HttpException {
+  constructor(status: number = 400,
+              message: string = '지원서 최대 글자 제한을 초과했습니다.') {
+    super(status, message);
+    this.status = status;
+    this.message = message;
+  }
+}
