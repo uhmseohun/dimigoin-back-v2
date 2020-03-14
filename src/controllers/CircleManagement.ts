@@ -21,7 +21,7 @@ class CircleManagementController extends Controller {
   private initializeRoutes() {
     this.router.post('/', CheckUserType(['T']), this.wrapper(this.createCircle));
     this.router.delete('/:circleId', CheckUserType(['T']), this.wrapper(this.removeCircle));
-    this.router.post('/image/:circleId', this.wrapper(this.putCircleImage));
+    this.router.post('/image/:circleId', CheckUserType(['T']), this.wrapper(this.putCircleImage));
   }
 
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
