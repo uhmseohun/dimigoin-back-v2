@@ -32,7 +32,7 @@ export interface IStudentIdentity {
   grade: number;
   class: number;
   number: number;
-  serial: string;
+  serial: number;
   nick: string;
   gender: gender;
   user_type: user_type;

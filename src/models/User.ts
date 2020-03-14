@@ -30,7 +30,7 @@ const schema = new mongoose.Schema({
     type: Number,
   },
   serial: {
-    type: String,
+    type: Number,
   },
 }, { versionKey: false });
 

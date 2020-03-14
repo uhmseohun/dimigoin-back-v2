@@ -11,7 +11,7 @@ interface IUser {
   grade?: number;
   class?: number;
   number?: number;
-  serial?: string;
+  serial?: number;
 }
 
 export default IUser;

@@ -59,7 +59,7 @@ export default class DimiAPI {
           grade: student.grade,
           class: student.class,
           number: student.number,
-          serial: student.serial,
+          serial: Number(student.serial),
         });
         return student;
       }),
