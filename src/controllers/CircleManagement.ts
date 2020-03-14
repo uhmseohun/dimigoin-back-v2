@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import { CircleNotFoundException, ImageNotAttachedException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { NotAllowedExtensionException, S3UploadFailException } from '../exceptions/Upload';
-import { Controller, ICircle } from '../interfaces';
+import { Controller, ICircle, IUser } from '../interfaces';
 import { ConfigKeys } from '../interfaces/Types';
 import { CheckUserType } from '../middlewares';
 import { CircleModel, UserModel } from '../models';
@@ -27,7 +27,7 @@ class CircleManagementController extends Controller {
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
     const circle = req.body;
 
-    const chair: any = await UserModel.findOne({ serial: circle.chair });
+    const chair: IUser = await UserModel.findOne({ serial: circle.chair });
     if (!chair) { throw new StudentNotFoundException(); }
 
     const newCircle = await CircleModel.create({

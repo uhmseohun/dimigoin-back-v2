@@ -10,6 +10,7 @@ export type CircleCategory =
 export enum ConfigKeys {
   circleAppliable = 'CIRCLE_APPLIABLE',
   circleMaxApply = 'CIRCLE_MAX_APPLY',
+  circleCategory = 'CIRCLE_CATEGORY',
   imageExtension = 'IMAGE_EXTENSION',
   bucketURL = 'AWS_BUCKET_URL',
 }
