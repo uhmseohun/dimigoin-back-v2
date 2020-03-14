@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Controller, IConfig } from '../interfaces';
-import { ConfigModel } from '../models';
 import { CheckUserType } from '../middlewares';
+import { ConfigModel } from '../models';
 
 class ConfigController extends Controller {
   public basePath = '/config';

@@ -19,23 +19,23 @@ const getUserIdentity = (req: Request): IUser => {
 
 const validator = (requiredKeys: string) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const invalidKeys = requiredKeys.split(', ').filter(key => {
+    const invalidKeys = requiredKeys.split(', ').filter((key) => {
       return !req.body.hasOwnProperty(key);
-    })
+    });
     if (invalidKeys.length > 0) {
       throw new BodyValidationFailException(invalidKeys);
-    } else next();
+    } else { next(); }
   };
-}
+};
 
-enum requiredKeys {
+enum requiredKeys_ {
   identifyUser = 'username, password',
   createApplication = 'circle, form',
   updateApplicationForm = 'form',
   setApplierStatus = 'status',
   createCircle = 'name, category, description, chair',
   editConfig = 'key, value',
-};
+}
 
 class Controller {
   public basePath: string;
@@ -43,7 +43,7 @@ class Controller {
   protected wrapper = asyncWrapper;
   protected getUserIdentity = getUserIdentity;
   protected validator = validator;
-  protected requiredKeys = requiredKeys;
+  protected requiredKeys = requiredKeys_;
 
   get config(): IConfig {
     return (async () => {

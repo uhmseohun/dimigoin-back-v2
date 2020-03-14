@@ -25,7 +25,7 @@ class CircleApplierSelection extends Controller {
   }
 
   private initializeRoutes() {
-    this.router.get('/', CheckUserType(['S']),this.wrapper(this.getApplications));
+    this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplications));
     this.router.put('/:applierId', CheckUserType(['S']),
       this.validator(this.requiredKeys.setApplierStatus),
       this.wrapper(this.setApplierStatus));
