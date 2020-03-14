@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
 import {
   ICircleApplicationForm,
   ICircleApplicationQuestion,
@@ -19,7 +20,7 @@ const questionSchema = new mongoose.Schema({
 
 const formSchema = new mongoose.Schema({
   applier: {
-    type: Schema.Types.ObjectId,
+    type: ObjectId,
     required: true,
     ref: 'User',
   },
@@ -28,7 +29,7 @@ const formSchema = new mongoose.Schema({
     required: true,
   },
   circle: {
-    type: Schema.Types.ObjectId,
+    type: ObjectId,
     required: true,
     ref: 'Circle',
   },

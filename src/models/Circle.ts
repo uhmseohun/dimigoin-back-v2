@@ -1,6 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import { ICircle } from '../interfaces';
 import { ConfigKeys } from '../interfaces/Types';
+import { ObjectId } from 'mongodb';
 import ConfigModel from './Config';
 const a = 1;
 const schema = new mongoose.Schema({
@@ -30,7 +31,7 @@ const schema = new mongoose.Schema({
     required: true,
   },
   chair: {
-    type: Schema.Types.ObjectId,
+    type: ObjectId,
     required: true,
     ref: 'User',
   },

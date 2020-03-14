@@ -23,6 +23,7 @@ import {
   CircleApplicationQuestionModel,
   CircleModel,
 } from '../models';
+import { ObjectId } from 'mongodb';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
@@ -42,9 +43,9 @@ class CircleApplicationController extends Controller {
     const user: IUser = this.getUserIdentity(req) as IUser;
     const appliedForm: ICircleApplicationForm[] =
       await CircleApplicationFormModel.find({ applier: user._id });
-    const circles: ICircle[] = await CircleModel.find({});
-    const appliedCircle: ICircle[] = circles.filter((circle) =>
-      appliedForm.map((v) => v.circle.toString()).includes(circle._id.toString()));
+    const appliedCircle: ICircle[] = await CircleModel.find({
+      _id: { $in: appliedForm.map(v => v.circle) }
+    });
     const form: ICircleApplicationQuestion[] = await CircleApplicationQuestionModel.find({});
     res.json({
       maxApplyCount: (await this.config)[ConfigKeys.circleMaxApply],
@@ -58,7 +59,8 @@ class CircleApplicationController extends Controller {
     const config = await this.config;
     if (!config[ConfigKeys.circleAppliable]) { throw new CircleApplicationDeadlineException(); }
     const user: IUser = this.getUserIdentity(req) as IUser;
-    const applied: ICircleApplicationForm[] = await CircleApplicationFormModel.find({ applier: user._id });
+    const applied: ICircleApplicationForm[] =
+      await CircleApplicationFormModel.find({ applier: user._id });
     const form: ICircleApplicationForm = req.body;
     form.applier = user._id;
 

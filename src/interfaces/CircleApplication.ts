@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 interface ICircleApplicationQuestion {
   question: string;
@@ -6,8 +6,8 @@ interface ICircleApplicationQuestion {
 }
 
 interface ICircleApplicationForm {
-  circle: Schema.Types.ObjectId;
-  applier: Schema.Types.ObjectId;
+  circle: ObjectId;
+  applier: ObjectId;
   form: object;
   status?: string;
 }

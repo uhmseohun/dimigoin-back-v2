@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { ObjectId } from 'mongodb';
 import {
   Gender as gender,
   UserType as user_type,
@@ -10,7 +10,7 @@ export interface IAccount {
 }
 
 export interface IUserIdentity {
-  _id: Schema.Types.ObjectId;
+  _id: ObjectId;
   id: number;
   username: string;
   email: string;

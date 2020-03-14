@@ -1,12 +1,13 @@
 import { Schema } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 interface ICircle {
-  _id: Schema.Types.ObjectId;
+  _id: ObjectId;
   name: string;
   imageKey?: string;
   category: string;
   description: string;
-  chair: Schema.Types.ObjectId;
+  chair: ObjectId;
 }
 
 export default ICircle;
