@@ -1,6 +1,9 @@
 import { createSchema, Type, typedModel, ExtractDoc } from 'ts-mongoose';
 import { userSchema } from '../models/User';
-import { ClassValues, GradeValues, AfterschoolTimeValues, DayValues } from '../types';
+import {
+  ClassValues, GradeValues,
+  AfterschoolTime, AfterschoolTimeValues,
+  Day, DayValues } from '../types';
 
 const afterschoolSchema = createSchema({
   name: Type.string({ required: true }),
@@ -22,6 +25,9 @@ type AfterschoolDoc = ExtractDoc<typeof afterschoolSchema>;
 const AfterschoolModel = typedModel('Afterschool', afterschoolSchema, undefined, undefined, {
   findByKey (key: string): AfterschoolDoc {
     return this.find({ key });
+  },
+  findByDayTime (day: Day, time: AfterschoolTime) {
+    return this.find({ day, time });
   }
 });
 
