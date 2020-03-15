@@ -5,8 +5,8 @@ import { userSchema } from '../models/User';
 const afterschoolSchema = createSchema({
   name: Type.string({ required: true }),
   description: Type.string({ required: true }),
-  grade: Type.number({ required: true, enum: GradeValues }),
-  class: Type.number({ required: true, enum: ClassValues }),
+  grade: Type.array().of(Type.number({ required: true, enum: GradeValues })),
+  class: Type.array().of(Type.number({ required: true, enum: ClassValues })),
   key: Type.string(),
   teacher: Type.ref(Type.objectId()).to('User', userSchema),
   capacity: Type.number({ required: true }),
