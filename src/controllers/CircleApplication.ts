@@ -11,7 +11,6 @@ import { AlreadySelectedApplierException } from '../exceptions/CircleApplierSele
 import {
   Controller,
   ICircleApplication,
-  IUser,
 } from '../interfaces';
 import { CheckUserType } from '../middlewares';
 import {

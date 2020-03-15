@@ -35,6 +35,8 @@ enum requiredKeys_ {
   setApplierStatus = 'status',
   createCircle = 'name, category, description, chair',
   editConfig = 'key, value',
+  createAfterschool = 'name, description, grade, ' +
+    'class, teacher, capacity',
 }
 
 class Controller {
