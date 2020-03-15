@@ -7,6 +7,7 @@ import CircleManagementController from './CircleManagement';
 import ConfigController from './Config';
 import UserController from './User';
 import AfterschoolController from './Afterschool';
+import AfterschoolManagementController from './AfterschoolManagement';
 
 const controllers = [
   new AuthController(),
@@ -18,6 +19,7 @@ const controllers = [
   new CircleApplierSelection(),
   new ConfigController(),
   new AfterschoolController(),
+  new AfterschoolManagementController(),
 ];
 
 export default controllers;
