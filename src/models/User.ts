@@ -18,6 +18,9 @@ const UserModel = typedModel('User', userSchema, undefined, undefined, {
   findByIdx (idx: number): UserDoc {
     return this.find({ idx });
   },
+  findBySerial (serial: number): UserDoc {
+    return this.find({ serial });
+  },
   findByUserType (userType: UserType[]): UserDoc[] {
     return this.find({ userType: { $in: userType } });
   },

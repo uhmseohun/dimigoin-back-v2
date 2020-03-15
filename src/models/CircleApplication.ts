@@ -28,6 +28,9 @@ const CircleApplicationModel =
   typedModel('CircleApplication', circleApplicationSchema, undefined, undefined, {
     findByApplier (applier: ObjectId): CircleApplicationDoc[]  {
       return this.find({ applier });
+    },
+    findByCircleAndApplier (circle: ObjectId, applier: ObjectId): CircleApplicationDoc {
+      return this.find({ circle, applier });
     }
   });
 

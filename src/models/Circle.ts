@@ -1,7 +1,8 @@
-import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { createSchema, Type, typedModel, ExtractDoc } from 'ts-mongoose';
 import { ConfigKeys } from '../types';
 import { ConfigModel } from './Config';
 import { userSchema } from './User';
+import { ObjectId } from 'mongodb';
 
 const circleSchema = createSchema({
   name: Type.string({ required: true, unique: true, trim: true }),
@@ -22,7 +23,13 @@ const circleSchema = createSchema({
   },
 }, { versionKey: false, timestamps: true });
 
-const CircleModel = typedModel('Circle', circleSchema);
+type CircleDoc = ExtractDoc<typeof circleSchema>;
+
+const CircleModel = typedModel('Circle', circleSchema, undefined, undefined, {
+  findByChair (chair: ObjectId): CircleDoc {
+    return this.findOne({ chair });
+  }
+});
 
 export {
   circleSchema,
