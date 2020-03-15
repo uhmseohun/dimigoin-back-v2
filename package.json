@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "cross-env NODE_ENV=develop tsc-watch --onSuccess 'node dist/index.js'",
+    "dev": "cross-env NODE_ENV=develop tsc-watch . --onSuccess 'node dist/index.js'",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint --fix src/**/*.ts"
   },
