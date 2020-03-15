@@ -6,6 +6,7 @@ import {
 import IConfig from './Config';
 import Controller from './Controller';
 import IUser from './User';
+import IAfterschool from './Afterschool';
 
 export {
   Controller,
@@ -14,4 +15,5 @@ export {
   ICircleApplicationQuestion,
   ICircleApplication,
   IConfig,
+  IAfterschool,
 };
