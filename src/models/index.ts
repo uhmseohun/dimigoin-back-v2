@@ -1,9 +1,9 @@
-import CircleModel from './Circle';
+import { CircleModel } from './Circle';
 import {
   CircleApplicationModel,
   CircleApplicationQuestionModel,
 } from './CircleApplication';
-import ConfigModel from './Config';
+import { ConfigModel } from './Config';
 import { UserModel } from './User';
 
 export {

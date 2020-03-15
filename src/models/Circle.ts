@@ -24,4 +24,7 @@ const circleSchema = createSchema({
 
 const CircleModel = typedModel('Circle', circleSchema);
 
-export default CircleModel;
+export {
+  circleSchema,
+  CircleModel,
+};
