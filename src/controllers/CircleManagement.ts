@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { Document } from 'mongoose';
 import { CircleNotFoundException, ImageNotAttachedException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { NotAllowedExtensionException, S3UploadFailException } from '../exceptions/Upload';
-import { Controller, ICircle, IUser } from '../interfaces';
+import { Controller, IUser } from '../interfaces';
 import { ConfigKeys } from '../Types';
 import { CheckUserType } from '../middlewares';
 import { CircleModel, UserModel } from '../models';

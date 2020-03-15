@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Document } from 'mongoose';
 import { CircleApplicationNotFoundException } from '../exceptions/CircleApplication';
 import {
   AlreadyFailedApplierException,
@@ -10,7 +9,7 @@ import {
 } from '../exceptions/CircleApplierSelection';
 import { AccessDeniedException } from '../exceptions/Permission';
 import { StudentNotFoundException } from '../exceptions/Student';
-import { Controller, ICircleApplication, IUser } from '../interfaces';
+import { Controller, IUser } from '../interfaces';
 import { CircleApplicationStatus } from '../Types';
 import { CheckUserType } from '../middlewares';
 import { CircleApplicationModel, CircleModel } from '../models';

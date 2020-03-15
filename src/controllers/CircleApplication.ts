@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Document } from 'mongoose';
 import {
   CircleApplicationDeadlineException,
   CircleApplicationLimitException,
@@ -19,7 +18,6 @@ import { CheckUserType } from '../middlewares';
 import {
   CircleApplicationModel,
   CircleApplicationQuestionModel,
-  CircleModel,
 } from '../models';
 
 class CircleApplicationController extends Controller {
