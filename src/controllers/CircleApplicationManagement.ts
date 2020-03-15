@@ -35,7 +35,7 @@ class CircleApplicationManagementController extends Controller {
   }
 
   private getAllApplications = async (req: Request, res: Response, next: NextFunction) => {
-    const applications = await CircleApplicationModel.find({}).populate(['circle', 'applier']);
+    const applications = await CircleApplicationModel.find().populate(['circle', 'applier']);
     res.json({ applications });
   }
 }

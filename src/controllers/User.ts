@@ -23,7 +23,7 @@ class UserController extends Controller {
   }
 
   private getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-    const users = await UserModel.find({});
+    const users = await UserModel.find();
     res.json({ users });
   }
 
