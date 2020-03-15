@@ -28,13 +28,12 @@ class UserController extends Controller {
   }
 
   private getAllStudents = async (req: Request, res: Response, next: NextFunction) => {
-    // userType 'S'에는 졸업생도 포함되어 있어서 학년으로 재학생을 찾아야 함.
-    const students = await UserModel.find({ grade: { $gte: 1, $lte: 3 } });
+    const students = await UserModel.findStudents();
     res.json({ students });
   }
 
   private getAllTeachers = async (req: Request, res: Response, next: NextFunction) => {
-    const teachers = await UserModel.find({ userType: { $in: ['T', 'D'] } });
+    const teachers = await UserModel.findTeachers();
     res.json({ teachers });
   }
 
