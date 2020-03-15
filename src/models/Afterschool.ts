@@ -10,7 +10,7 @@ const afterschoolSchema = createSchema({
   key: Type.string(),
   teacher: Type.ref(Type.objectId()).to('User', userSchema),
   capacity: Type.number({ required: true }),
-})
+}, { versionKey: false, timestamps: true });
 
 const AfterschoolModel = typedModel('Afterschool', afterschoolSchema);
 
