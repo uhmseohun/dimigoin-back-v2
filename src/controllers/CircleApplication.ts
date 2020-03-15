@@ -11,7 +11,6 @@ import { AlreadySelectedApplierException } from '../exceptions/CircleApplierSele
 import {
   Controller,
   ICircleApplication,
-  IUser,
 } from '../interfaces';
 import { CheckUserType } from '../middlewares';
 import {
@@ -94,7 +93,8 @@ class CircleApplicationController extends Controller {
       throw new AlreadySelectedApplierException();
     }
 
-    const final = applied.find((v) => v.circle.toString() === req.params.circleId);
+    const final =
+      applied.find((v) => v.circle.toString() === req.params.circleId);
 
     if (!final) {
       throw new CircleApplicationNotFoundException();
