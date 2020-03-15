@@ -1,7 +1,7 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
 import { userSchema } from './User';
 import { circleSchema } from './Circle';
-import { CircleApplicationStatusValues } from '../interfaces/Types'
+import { CircleApplicationStatusValues } from '../Types'
 
 const circleApplicationQuestionSchema = createSchema({
   question: Type.string({ required: true, trim: true, unique: true }),

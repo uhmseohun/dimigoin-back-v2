@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { UserType } from './Types';
+import { UserType } from '../Types';
 
 interface IUser {
   _id: ObjectId;

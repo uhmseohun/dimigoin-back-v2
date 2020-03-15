@@ -14,7 +14,7 @@ import {
   ICircleApplication,
   IUser,
 } from '../interfaces';
-import { ConfigKeys } from '../interfaces/Types';
+import { ConfigKeys } from '../Types';
 import { CheckUserType } from '../middlewares';
 import {
   CircleApplicationModel,

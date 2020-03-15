@@ -11,7 +11,7 @@ import {
 import { AccessDeniedException } from '../exceptions/Permission';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { Controller, ICircleApplication, IUser } from '../interfaces';
-import { CircleApplicationStatus } from '../interfaces/Types';
+import { CircleApplicationStatus } from '../Types';
 import { CheckUserType } from '../middlewares';
 import { CircleApplicationModel, CircleModel } from '../models';
 import { UserModel } from '../models';

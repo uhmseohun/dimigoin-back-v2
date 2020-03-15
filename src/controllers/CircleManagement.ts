@@ -4,7 +4,7 @@ import { CircleNotFoundException, ImageNotAttachedException } from '../exception
 import { StudentNotFoundException } from '../exceptions/Student';
 import { NotAllowedExtensionException, S3UploadFailException } from '../exceptions/Upload';
 import { Controller, ICircle, IUser } from '../interfaces';
-import { ConfigKeys } from '../interfaces/Types';
+import { ConfigKeys } from '../Types';
 import { CheckUserType } from '../middlewares';
 import { CircleModel, UserModel } from '../models';
 import Upload from '../resources/Upload';
