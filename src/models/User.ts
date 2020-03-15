@@ -1,39 +1,17 @@
-import mongoose from 'mongoose';
-import { IUser } from '../interfaces';
+import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { UserTypeValues, GradeValues, ClassValues } from '../interfaces/Types';
 
-const schema = new mongoose.Schema({
-  idx: {
-    type: Number,
-    required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  userType: {
-    type: String,
-    required: false,
-    enum: ['S', 'O', 'D', 'T', 'P'],
-  },
+const userSchema = createSchema({
+  idx: Type.number({ required: true, unique: true }),
+  username: Type.string({ required: true, unique: true }),
+  name: Type.string({ required: true }),
+  userType: Type.string({ required: true, enum: UserTypeValues }),
+  grade: Type.number({ required: true, enum: GradeValues }),
+  class: Type.number({ required: true, enum: ClassValues }),
+  number: Type.number(),
+  serial: Type.number(),
+}, { versionKey: false, timestamps: { createdAt: true } });
 
-  grade: {
-    type: Number,
-  },
-  class: {
-    type: Number,
-  },
-  number: {
-    type: Number,
-  },
-  serial: {
-    type: Number,
-  },
-}, { versionKey: false });
-
-const UserModel = mongoose.model<IUser & mongoose.Document>('User', schema);
+const UserModel = typedModel('User', userSchema);
 
 export default UserModel;
