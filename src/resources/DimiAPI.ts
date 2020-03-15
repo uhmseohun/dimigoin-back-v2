@@ -32,7 +32,6 @@ export default class DimiAPI {
 
   public restructureUserIdentity(identity: IUserIdentity) {
     return {
-      _id: identity._id,
       idx: identity.id,
       username: identity.username,
       name: identity.name,
@@ -42,11 +41,15 @@ export default class DimiAPI {
 
   public async reloadAllUsers() {
     const { data: users } = await this.APIClient.get(DimiAPIRouter.getAllUsers);
-    await UserModel.deleteMany({});
     Object.keys(users).forEach(async (idx) => {
       users[idx] =
         this.restructureUserIdentity(users[idx]);
-      await UserModel.create(users[idx]).catch((e) => console.error(e));
+      const user = await UserModel.findOne({ idx: users[idx].idx });
+      if (!user) {
+        await UserModel.create(users[idx]).catch((e) => console.error(e));
+      } else {
+        await UserModel.updateOne({ idx: users[idx].idx }, users[idx]);
+      }
     });
   }
 
