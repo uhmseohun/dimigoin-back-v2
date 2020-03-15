@@ -10,7 +10,7 @@ const checkUserType = (userType: UserType[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.token) { throw new AccessDeniedException(); }
     const { token } = req;
-    const identity: IUser = TokenManager.verify(token);
+    const identity = TokenManager.verify(token);
     if (userType.includes(identity.userType)) { next(); } else { throw new AccessDeniedException(); }
   };
 };

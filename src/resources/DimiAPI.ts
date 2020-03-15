@@ -54,7 +54,7 @@ export default class DimiAPI {
     const { data } = await this.APIClient.get(DimiAPIRouter.getAllStudents);
     const students: IStudentIdentity[] = data;
     await Promise.all(
-      students.map(async (student: IStudentIdentity) => {
+      students.map(async (student) => {
         await UserModel.updateOne({ idx: student.user_id }, {
           grade: student.grade,
           class: student.class,

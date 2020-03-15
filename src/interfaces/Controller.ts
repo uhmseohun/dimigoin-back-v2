@@ -11,7 +11,7 @@ const asyncWrapper = (fn: (req: Request, res: Response, next: NextFunction) => P
   (req: Request, res: Response, next: NextFunction) =>
     fn(req, res, next).catch(next);
 
-const getUserIdentity = (req: Request): IUser => {
+const getUserIdentity = (req: Request) => {
   const { token } = req;
   const identity = TokenManager.verify(token);
   return identity as IUser;
@@ -45,7 +45,7 @@ class Controller {
   protected validator = validator;
   protected requiredKeys = requiredKeys_;
 
-  get config(): IConfig {
+  get config() {
     return (async () => {
       const config: IConfig = {};
       const configs = await ConfigModel.find({});
