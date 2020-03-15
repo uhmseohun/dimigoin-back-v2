@@ -1,3 +1,4 @@
+import { AfterschoolModel } from './Afterschool';
 import { CircleModel } from './Circle';
 import {
   CircleApplicationModel,
@@ -12,4 +13,5 @@ export {
   CircleApplicationQuestionModel,
   CircleApplicationModel,
   ConfigModel,
+  AfterschoolModel,
 };

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { CircleNotFoundException, ImageNotAttachedException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { NotAllowedExtensionException, S3UploadFailException } from '../exceptions/Upload';
-import { Controller, IUser } from '../interfaces';
+import { Controller } from '../interfaces';
 import { CheckUserType } from '../middlewares';
 import { CircleModel, UserModel } from '../models';
 import Upload from '../resources/Upload';
