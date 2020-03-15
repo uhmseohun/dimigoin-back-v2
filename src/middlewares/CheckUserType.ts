@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { AccessDeniedException } from '../exceptions/Permission';
-import { IUser } from '../interfaces';
 import Token from '../resources/Token';
 import { UserType } from '../types';
 
