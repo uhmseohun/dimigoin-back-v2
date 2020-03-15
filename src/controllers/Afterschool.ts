@@ -15,7 +15,7 @@ class AfterschoolController extends Controller {
   private initializeRoutes() {
     this.router.get('/', CheckUserType(['T']),
       this.wrapper(this.getAllAfterschools));
-    this.router.get('/:grade', CheckUserType(['S', 'T']),
+    this.router.get('/grade/:grade', CheckUserType(['S', 'T']),
       this.wrapper(this.getAfterschoolsByGrade));
   }
 
