@@ -1,6 +1,6 @@
+import { ObjectId } from 'mongodb';
 import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose';
 import { ClassValues, GradeValues, UserType, UserTypeValues } from '../types';
-import { ObjectId } from 'mongodb';
 
 const userSchema = createSchema({
   idx: Type.number({ required: true, unique: true }),
@@ -22,8 +22,8 @@ const UserModel = typedModel('User', userSchema, undefined, undefined, {
   findBySerial(serial: number): UserDoc {
     return this.findOne({ serial });
   },
-  findStudentById(_id: ObjectId): UserDoc {
-    return this.findOne({ userType: 'S', _id });
+  findStudentById(id: ObjectId): UserDoc {
+    return this.findOne({ userType: 'S', _id: id });
   },
   findByUserType(userType: UserType[]): UserDoc[] {
     return this.find({ userType: { $in: userType } });
