@@ -28,15 +28,10 @@ class CircleManagementController extends Controller {
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
     const circle = req.body;
 
-    const chair = await UserModel.findOne({ serial: circle.chair });
+    const chair = await UserModel.findById(circle.chair);
     if (!chair) { throw new StudentNotFoundException(); }
 
-    const newCircle = await CircleModel.create({
-      name: circle.name,
-      category: circle.category,
-      description: circle.description,
-      chair: chair._id,
-    });
+    const newCircle = await CircleModel.create(circle);
 
     res.json({ circle: newCircle });
   }
