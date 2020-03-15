@@ -6,8 +6,8 @@ const userSchema = createSchema({
   username: Type.string({ required: true, unique: true }),
   name: Type.string({ required: true }),
   userType: Type.string({ required: true, enum: UserTypeValues }),
-  grade: Type.number({ required: true, enum: GradeValues }),
-  class: Type.number({ required: true, enum: ClassValues }),
+  grade: Type.number({ enum: GradeValues }),
+  class: Type.number({ enum: ClassValues }),
   number: Type.number(),
   serial: Type.number(),
 }, { versionKey: false, timestamps: { createdAt: true } });
