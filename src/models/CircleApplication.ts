@@ -29,7 +29,7 @@ const CircleApplicationModel =
     findByApplier (applier: ObjectId): CircleApplicationDoc[]  {
       return this.find({ applier });
     },
-    findByCircleAndApplier (circle: ObjectId, applier: ObjectId): CircleApplicationDoc {
+    findByCircleApplier (circle: ObjectId, applier: ObjectId): CircleApplicationDoc {
       return this.find({ circle, applier });
     }
   });

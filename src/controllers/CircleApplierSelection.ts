@@ -51,7 +51,7 @@ class CircleApplierSelection extends Controller {
     const circle = await CircleModel.findByChair(user._id);
 
     const application =
-      await CircleApplicationModel.findByCircleAndApplier(circle._id, applier._id);
+      await CircleApplicationModel.findByCircleApplier(circle._id, applier._id);
     if (!application) { throw new CircleApplicationNotFoundException(); }
 
     const status: CircleApplicationStatus = req.body.status;
