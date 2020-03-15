@@ -14,4 +14,4 @@ const userSchema = createSchema({
 
 const UserModel = typedModel('User', userSchema);
 
-export default UserModel;
+export { userSchema, UserModel };

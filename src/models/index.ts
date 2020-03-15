@@ -4,7 +4,7 @@ import {
   CircleApplicationQuestionModel,
 } from './CircleApplication';
 import ConfigModel from './Config';
-import UserModel from './User';
+import { UserModel } from './User';
 
 export {
   UserModel,
