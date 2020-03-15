@@ -1,6 +1,6 @@
-import { createSchema, Type, typedModel } from 'ts-mongoose';
-import { userSchema } from '../models/User';
-import { ClassValues, GradeValues } from '../types';
+import { createSchema, Type, typedModel } from 'ts-mongoose'
+import { userSchema } from '../models/User'
+import { ClassValues, GradeValues } from '../types'
 
 const afterschoolSchema = createSchema({
   name: Type.string({ required: true }),
@@ -9,12 +9,12 @@ const afterschoolSchema = createSchema({
   class: Type.array().of(Type.number({ required: true, enum: ClassValues })),
   key: Type.string(),
   teacher: Type.ref(Type.objectId()).to('User', userSchema),
-  capacity: Type.number({ required: true }),
-}, { versionKey: false, timestamps: true });
+  capacity: Type.number({ required: true })
+}, { versionKey: false, timestamps: true })
 
-const AfterschoolModel = typedModel('Afterschool', afterschoolSchema);
+const AfterschoolModel = typedModel('Afterschool', afterschoolSchema)
 
 export {
   afterschoolSchema,
-  AfterschoolModel,
-};
+  AfterschoolModel
+}

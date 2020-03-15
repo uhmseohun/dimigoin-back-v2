@@ -1,7 +1,7 @@
-import { ObjectID } from 'mongodb';
-import { Class, Grade } from '../types';
+import { ObjectID } from 'mongodb'
+import { Class, Grade } from '../types'
 
-interface IAfterschool {
+export default interface IAfterschool {
   _id: ObjectID;
   name: string;
   description: string;
@@ -11,5 +11,3 @@ interface IAfterschool {
   teacher: ObjectID;
   capacity: number;
 }
-
-export default IAfterschool;

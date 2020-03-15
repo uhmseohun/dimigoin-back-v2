@@ -1,23 +1,17 @@
-import { ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb'
 
-interface ICircleApplicationQuestion {
+export interface ICircleApplicationQuestion {
   question: string;
   maxLength: number;
 }
 
-interface ICircleApplicationForm {
+export interface ICircleApplicationForm {
   [key: string]: string;
 }
 
-interface ICircleApplication {
+export interface ICircleApplication {
   circle: ObjectId;
   applier: ObjectId;
   form: ICircleApplicationForm;
   status?: string;
 }
-
-export {
-  ICircleApplicationQuestion,
-  ICircleApplication,
-  ICircleApplicationForm,
-};

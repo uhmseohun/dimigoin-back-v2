@@ -1,6 +1,6 @@
-import { ObjectId } from 'mongodb';
-import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose';
-import { ClassValues, GradeValues, UserType, UserTypeValues } from '../types';
+import { ObjectId } from 'mongodb'
+import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose'
+import { ClassValues, GradeValues, UserType, UserTypeValues } from '../types'
 
 const userSchema = createSchema({
   idx: Type.number({ required: true, unique: true }),
@@ -10,31 +10,31 @@ const userSchema = createSchema({
   grade: Type.number({ enum: GradeValues }),
   class: Type.number({ enum: ClassValues }),
   number: Type.number(),
-  serial: Type.number(),
-}, { versionKey: false, timestamps: true });
+  serial: Type.number()
+}, { versionKey: false, timestamps: true })
 
 type UserDoc = ExtractDoc<typeof userSchema>;
 
 const UserModel = typedModel('User', userSchema, undefined, undefined, {
-  findByIdx(idx: number): UserDoc {
-    return this.findOne({ idx });
+  findByIdx (idx: number): UserDoc {
+    return this.findOne({ idx })
   },
-  findBySerial(serial: number): UserDoc {
-    return this.findOne({ serial });
+  findBySerial (serial: number): UserDoc {
+    return this.findOne({ serial })
   },
-  findStudentById(id: ObjectId): UserDoc {
-    return this.findOne({ userType: 'S', _id: id });
+  findStudentById (id: ObjectId): UserDoc {
+    return this.findOne({ userType: 'S', _id: id })
   },
-  findByUserType(userType: UserType[]): UserDoc[] {
-    return this.find({ userType: { $in: userType } });
+  findByUserType (userType: UserType[]): UserDoc[] {
+    return this.find({ userType: { $in: userType } })
   },
-  findStudents(): UserDoc[] {
+  findStudents (): UserDoc[] {
     // userType 'S'에는 졸업생도 포함되어 있어서 학년으로 재학생을 찾아야 함.
-    return this.find({ grade: { $gte: 1, $lte: 3 } });
+    return this.find({ grade: { $gte: 1, $lte: 3 } })
   },
-  findTeachers(): UserDoc[] {
-    return this.findByUserType(['D', 'T']);
-  },
-});
+  findTeachers (): UserDoc[] {
+    return this.findByUserType(['D', 'T'])
+  }
+})
 
-export { userSchema, UserModel };
+export { userSchema, UserModel }

@@ -1,7 +1,7 @@
-import { ObjectId } from 'mongodb';
-import { UserType } from '../types';
+import { ObjectId } from 'mongodb'
+import { UserType } from '../types'
 
-interface IUser {
+export default interface IUser {
   _id: ObjectId;
   idx: number;
   username: string;
@@ -13,5 +13,3 @@ interface IUser {
   number?: number;
   serial?: number;
 }
-
-export default IUser;

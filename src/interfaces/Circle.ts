@@ -1,6 +1,6 @@
-import { ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb'
 
-interface ICircle {
+export default interface ICircle {
   _id: ObjectId;
   name: string;
   imageKey?: string;
@@ -8,5 +8,3 @@ interface ICircle {
   description: string;
   chair: ObjectId;
 }
-
-export default ICircle;

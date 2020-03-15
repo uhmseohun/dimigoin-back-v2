@@ -1,12 +1,12 @@
-import IAfterschool from './Afterschool';
-import ICircle from './Circle';
+import IAfterschool from './Afterschool'
+import ICircle from './Circle'
 import {
   ICircleApplication,
-  ICircleApplicationQuestion,
-} from './CircleApplication';
-import IConfig from './Config';
-import Controller from './Controller';
-import IUser from './User';
+  ICircleApplicationQuestion
+} from './CircleApplication'
+import IConfig from './Config'
+import Controller from './Controller'
+import IUser from './User'
 
 export {
   Controller,
@@ -15,5 +15,5 @@ export {
   ICircleApplicationQuestion,
   ICircleApplication,
   IConfig,
-  IAfterschool,
-};
+  IAfterschool
+}

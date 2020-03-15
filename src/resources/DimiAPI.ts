@@ -1,9 +1,9 @@
-import axios, { AxiosInstance } from 'axios';
-import dotenv from 'dotenv';
-import { IAccount, IStudentIdentity, IUserIdentity } from '../interfaces/DimiAPI';
-import { UserModel } from '../models';
+import axios, { AxiosInstance } from 'axios'
+import dotenv from 'dotenv'
+import { IAccount, IStudentIdentity, IUserIdentity } from '../interfaces/DimiAPI'
+import { UserModel } from '../models'
 
-dotenv.config();
+dotenv.config()
 
 enum DimiAPIRouter {
   getIdentity = '/v1/users/identify',
@@ -15,64 +15,65 @@ export default class DimiAPI {
   private baseURL = process.env.DIMIAPI_URL;
   private authOption = {
     username: process.env.DIMIAPI_ID,
-    password: process.env.DIMIAPI_PW,
+    password: process.env.DIMIAPI_PW
   };
+
   private APIClient: AxiosInstance;
 
-  constructor() {
-    this.createAPIClient();
+  constructor () {
+    this.createAPIClient()
   }
 
-  public async getIdentity(account: IAccount) {
+  public async getIdentity (account: IAccount) {
     const { data } = await this.APIClient.get(DimiAPIRouter.getIdentity, {
-      params: account,
-    });
-    return data;
+      params: account
+    })
+    return data
   }
 
-  public restructureUserIdentity(identity: IUserIdentity) {
+  public restructureUserIdentity (identity: IUserIdentity) {
     return {
       idx: identity.id,
       username: identity.username,
       name: identity.name,
-      userType: identity.user_type,
-    };
+      userType: identity.user_type
+    }
   }
 
-  public async reloadAllUsers() {
-    const { data: users } = await this.APIClient.get(DimiAPIRouter.getAllUsers);
+  public async reloadAllUsers () {
+    const { data: users } = await this.APIClient.get(DimiAPIRouter.getAllUsers)
     Object.keys(users).forEach(async (idx) => {
       users[idx] =
-        this.restructureUserIdentity(users[idx]);
-      const user = await UserModel.findOne({ idx: users[idx].idx });
+        this.restructureUserIdentity(users[idx])
+      const user = await UserModel.findOne({ idx: users[idx].idx })
       if (!user) {
-        await UserModel.create(users[idx]).catch((e) => console.error(e));
+        await UserModel.create(users[idx]).catch((e) => console.error(e))
       } else {
-        await UserModel.updateOne({ idx: users[idx].idx }, users[idx]);
+        await UserModel.updateOne({ idx: users[idx].idx }, users[idx])
       }
-    });
+    })
   }
 
-  public async attachStudentInfo() {
-    const { data } = await this.APIClient.get(DimiAPIRouter.getAllStudents);
-    const students: IStudentIdentity[] = data;
+  public async attachStudentInfo () {
+    const { data } = await this.APIClient.get(DimiAPIRouter.getAllStudents)
+    const students: IStudentIdentity[] = data
     await Promise.all(
       students.map(async (student) => {
         await UserModel.updateOne({ idx: student.user_id }, {
           grade: student.grade,
           class: student.class,
           number: student.number,
-          serial: Number(student.serial),
-        });
-        return student;
-      }),
-    );
+          serial: Number(student.serial)
+        })
+        return student
+      })
+    )
   }
 
-  private createAPIClient() {
+  private createAPIClient () {
     this.APIClient = axios.create({
       auth: this.authOption,
-      baseURL: this.baseURL,
-    });
+      baseURL: this.baseURL
+    })
   }
 }
