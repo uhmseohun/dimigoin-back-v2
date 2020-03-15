@@ -7,7 +7,7 @@ interface IAfterschool {
   description: string;
   grade: Grade[];
   class: Class[];
-  key: string; // 동시 수강 강좌 처리
+  key?: string; // 동시 수강 강좌 처리
   teacher: ObjectID;
   capacity: number;
 };
