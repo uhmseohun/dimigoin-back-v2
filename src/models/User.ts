@@ -1,5 +1,5 @@
-import { createSchema, Type, typedModel } from 'ts-mongoose';
-import { ClassValues, GradeValues, UserTypeValues } from '../types';
+import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose';
+import { ClassValues, GradeValues, UserType, UserTypeValues } from '../types';
 
 const userSchema = createSchema({
   idx: Type.number({ required: true, unique: true }),
@@ -12,6 +12,25 @@ const userSchema = createSchema({
   serial: Type.number(),
 }, { versionKey: false, timestamps: true });
 
-const UserModel = typedModel('User', userSchema);
+type UserDoc = ExtractDoc<typeof userSchema>;
+
+const UserModel = typedModel('User', userSchema, undefined, undefined, {
+  findByIdx(idx: number): UserDoc {
+    return this.find({ idx });
+  },
+  findBySerial(serial: number): UserDoc {
+    return this.find({ serial });
+  },
+  findByUserType(userType: UserType[]): UserDoc[] {
+    return this.find({ userType: { $in: userType } });
+  },
+  findStudents(): UserDoc[] {
+    // userType 'S'에는 졸업생도 포함되어 있어서 학년으로 재학생을 찾아야 함.
+    return this.find({ grade: { $gte: 1, $lte: 3 } });
+  },
+  findTeachers(): UserDoc[] {
+    return this.findByUserType(['D', 'T']);
+  },
+});
 
 export { userSchema, UserModel };

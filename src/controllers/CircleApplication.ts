@@ -38,7 +38,7 @@ class CircleApplicationController extends Controller {
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
     const user = this.getUserIdentity(req);
     const applications =
-      await CircleApplicationModel.find({ applier: user._id }).populate('circle');
+      await CircleApplicationModel.findByApplier(user._id);
     res.json({
       maxApplyCount: (await this.config)[ConfigKeys.circleMaxApply],
       applications,
@@ -49,7 +49,7 @@ class CircleApplicationController extends Controller {
     const config = await this.config;
     if (!config[ConfigKeys.circleAppliable]) { throw new CircleApplicationDeadlineException(); }
     const user = this.getUserIdentity(req);
-    const applied = await CircleApplicationModel.find({ applier: user._id });
+    const applied = await CircleApplicationModel.findByApplier(user._id);
     const application: ICircleApplication = req.body;
     application.applier = user._id;
 
@@ -66,7 +66,7 @@ class CircleApplicationController extends Controller {
     }
 
     const answeredIds: string[] = Object.keys(application.form).sort();
-    const questions = await CircleApplicationQuestionModel.find({});
+    const questions = await CircleApplicationQuestionModel.find();
     const questionIds = questions.map((v) => v._id.toString()).sort();
     if (JSON.stringify(answeredIds) !== JSON.stringify(questionIds)) {
       throw new CircleApplicationQuestionException();
@@ -87,13 +87,14 @@ class CircleApplicationController extends Controller {
 
   private finalSelection = async (req: Request, res: Response, next: NextFunction) => {
     const user = this.getUserIdentity(req);
-    const applied = await CircleApplicationModel.find({ applier: user._id });
+    const applied = await CircleApplicationModel.findByApplier(user._id);
 
     if (applied.filter((v) => v.status === 'final').length > 0) {
       throw new AlreadySelectedApplierException();
     }
 
-    const final = applied.find((v) => v.circle.toString() === req.params.circleId);
+    const final =
+      applied.find((v) => v.circle.toString() === req.params.circleId);
 
     if (!final) {
       throw new CircleApplicationNotFoundException();
