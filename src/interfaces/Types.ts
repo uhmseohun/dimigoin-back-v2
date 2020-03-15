@@ -1,8 +1,3 @@
-export type Gender = 'M' | 'F';
-export type UserType = 'S' | 'O' | 'D' | 'T' | 'P';
-export type CircleApplicationStatus =
-  'applied' | 'interview' | 'pass' | 'final' | 'fail';
-  // 지원 완료 | 면접 대상 | 최종 합격 | 최종 선택 | 탈락
 export enum ConfigKeys {
   circleAppliable = 'CIRCLE_APPLIABLE',
   circleMaxApply = 'CIRCLE_MAX_APPLY',
@@ -10,3 +5,15 @@ export enum ConfigKeys {
   imageExtension = 'IMAGE_EXTENSION',
   bucketURL = 'AWS_BUCKET_URL',
 }
+
+export const GenderValues = ['M', 'F'] as const;
+export type Gender = typeof GenderValues[number];
+
+export const UserTypeValues = ['S', 'O', 'D', 'T', 'P'] as const;
+export type UserType = typeof UserTypeValues[number];
+
+export const CircleApplicationStatusValues =
+  ['applied', 'interview', 'pass', 'final', 'fail'] as const;
+// 지원 완료 | 면접 대상 | 최종 합격 | 최종 선택 | 탈락
+export type CircleApplicationStatus =
+  typeof CircleApplicationStatusValues[number];
