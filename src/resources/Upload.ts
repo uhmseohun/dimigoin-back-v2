@@ -16,7 +16,7 @@ export default class Upload {
 
   public async upload (key: string, body: string) {
     await this.client.putObject({
-      Bucket: 'dimigoin',
+      Bucket: process.env.AWS_BUCKET_NAME,
       Key: key,
       Body: body
     }, (error, data) => {
