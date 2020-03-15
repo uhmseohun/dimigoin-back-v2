@@ -12,6 +12,12 @@ export type Gender = typeof GenderValues[number];
 export const UserTypeValues = ['S', 'O', 'D', 'T', 'P'] as const;
 export type UserType = typeof UserTypeValues[number];
 
+export const DayValues = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
+export type Day = typeof DayValues[number];
+
+export const AfterschoolTimeValues = [1, 2] as const;
+export type AfterschoolTime = typeof AfterschoolTimeValues[number];
+
 export const GradeValues = [1, 2, 3] as const;
 export type Grade = typeof GradeValues[number];
 
