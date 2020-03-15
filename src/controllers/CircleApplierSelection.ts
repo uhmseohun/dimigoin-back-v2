@@ -37,8 +37,7 @@ class CircleApplierSelection extends Controller {
 
     const applications =
       await CircleApplicationModel
-        .find({ circle: circle._id })
-        .populate(['applier', 'circle']);
+        .findPopulatedByCircle(circle._id);
 
     res.json({ applications });
   }
