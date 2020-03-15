@@ -1,7 +1,8 @@
-import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { createSchema, Type, typedModel, ExtractDoc } from 'ts-mongoose';
 import { CircleApplicationStatusValues } from '../types';
 import { circleSchema } from './Circle';
 import { userSchema } from './User';
+import { ObjectId } from 'mongodb';
 
 const circleApplicationQuestionSchema = createSchema({
   question: Type.string({ required: true, trim: true, unique: true }),
@@ -19,10 +20,16 @@ const circleApplicationSchema = createSchema({
   }),
 }, { versionKey: false, timestamps: true });
 
+type CircleApplicationDoc = ExtractDoc<typeof circleApplicationSchema>;
+
 const CircleApplicationQuestionModel =
   typedModel('CircleApplicationQuestion', circleApplicationQuestionSchema);
 const CircleApplicationModel =
-  typedModel('CircleApplication', circleApplicationSchema);
+  typedModel('CircleApplication', circleApplicationSchema, undefined, undefined, {
+    findByApplier (applier: ObjectId): CircleApplicationDoc[]  {
+      return this.find({ applier });
+    }
+  });
 
 export {
   circleApplicationQuestionSchema,
