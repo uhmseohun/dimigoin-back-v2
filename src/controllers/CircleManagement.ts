@@ -1,13 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import { Document } from 'mongoose';
 import { CircleNotFoundException, ImageNotAttachedException } from '../exceptions/Circle';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { NotAllowedExtensionException, S3UploadFailException } from '../exceptions/Upload';
-import { Controller, ICircle, IUser } from '../interfaces';
-import { ConfigKeys } from '../interfaces/Types';
+import { Controller, IUser } from '../interfaces';
 import { CheckUserType } from '../middlewares';
 import { CircleModel, UserModel } from '../models';
 import Upload from '../resources/Upload';
+import { ConfigKeys } from '../types';
 
 class CircleManagementController extends Controller {
   public basePath = '/circle';
@@ -29,7 +28,7 @@ class CircleManagementController extends Controller {
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
     const circle = req.body;
 
-    const chair: IUser = await UserModel.findOne({ serial: circle.chair });
+    const chair = await UserModel.findOne({ serial: circle.chair });
     if (!chair) { throw new StudentNotFoundException(); }
 
     const newCircle = await CircleModel.create({
@@ -43,7 +42,7 @@ class CircleManagementController extends Controller {
   }
 
   private removeCircle = async (req: Request, res: Response, next: NextFunction) => {
-    const circle: ICircle & Document = await CircleModel.findById(req.params.circleId);
+    const circle = await CircleModel.findById(req.params.circleId);
     if (!circle) { throw new CircleNotFoundException(); }
     await circle.remove();
     res.json({ circle });

@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { Document } from 'mongoose';
 import { CircleApplicationNotFoundException } from '../exceptions/CircleApplication';
 import {
   AlreadyFailedApplierException,
@@ -10,11 +9,11 @@ import {
 } from '../exceptions/CircleApplierSelection';
 import { AccessDeniedException } from '../exceptions/Permission';
 import { StudentNotFoundException } from '../exceptions/Student';
-import { Controller, ICircleApplication, IUser } from '../interfaces';
-import { CircleApplicationStatus } from '../interfaces/Types';
+import { Controller, IUser } from '../interfaces';
 import { CheckUserType } from '../middlewares';
 import { CircleApplicationModel, CircleModel } from '../models';
 import { UserModel } from '../models';
+import { CircleApplicationStatus } from '../types';
 
 class CircleApplierSelection extends Controller {
   public basePath = '/circle/selection/applier';
@@ -48,8 +47,7 @@ class CircleApplierSelection extends Controller {
     const applier: IUser = await UserModel.findById(req.params.applierId);
     if (!applier) { throw new StudentNotFoundException(); }
 
-    const application: ICircleApplication & Document =
-      await CircleApplicationModel.findOne({ applier: applier._id });
+    const application = await CircleApplicationModel.findOne({ applier: applier._id });
     if (!application) { throw new CircleApplicationNotFoundException(); }
 
     const status: CircleApplicationStatus = req.body.status;

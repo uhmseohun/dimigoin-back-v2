@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import {
   Controller,
-  ICircleApplication,
   ICircleApplicationQuestion,
 } from '../interfaces';
 import { CheckUserType } from '../middlewares';
@@ -24,8 +23,7 @@ class CircleApplicationManagementController extends Controller {
   }
 
   private getApplicationForm = async (req: Request, res: Response, next: NextFunction) => {
-    const form: ICircleApplicationQuestion[] =
-      await CircleApplicationQuestionModel.find();
+    const form = await CircleApplicationQuestionModel.find();
     res.json({ form });
   }
 
@@ -37,8 +35,7 @@ class CircleApplicationManagementController extends Controller {
   }
 
   private getAllApplications = async (req: Request, res: Response, next: NextFunction) => {
-    const applications: ICircleApplication[] =
-      await CircleApplicationModel.find({}).populate(['circle', 'applier']);
+    const applications = await CircleApplicationModel.find({}).populate(['circle', 'applier']);
     res.json({ applications });
   }
 }

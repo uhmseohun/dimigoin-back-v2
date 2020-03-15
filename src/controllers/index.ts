@@ -1,4 +1,3 @@
-import { Controller } from '../interfaces';
 import AuthController from './Auth';
 import CircleController from './Circle';
 import CircleApplicationController from './CircleApplication';
@@ -8,7 +7,7 @@ import CircleManagementController from './CircleManagement';
 import ConfigController from './Config';
 import UserController from './User';
 
-const controllers: Controller[] = [
+const controllers = [
   new AuthController(),
   new UserController(),
   new CircleController(),

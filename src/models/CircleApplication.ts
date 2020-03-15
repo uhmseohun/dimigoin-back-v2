@@ -1,52 +1,32 @@
-import { ObjectId } from 'mongodb';
-import mongoose from 'mongoose';
-import {
-  ICircleApplication,
-  ICircleApplicationQuestion,
-} from '../interfaces';
+import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { CircleApplicationStatusValues } from '../types';
+import { circleSchema } from './Circle';
+import { userSchema } from './User';
 
-const questionSchema = new mongoose.Schema({
-  question: {
-    type: String,
-    required: true,
-    trim: true,
-    unique: true,
-  },
-  maxLength: {
-    type: Number,
-    required: true,
-  },
-}, { versionKey: false });
+const circleApplicationQuestionSchema = createSchema({
+  question: Type.string({ required: true, trim: true, unique: true }),
+  maxLength: Type.number({ required: true }),
+}, { versionKey: false, timestamps: true });
 
-const applicationSchema = new mongoose.Schema({
-  applier: {
-    type: ObjectId,
-    required: true,
-    ref: 'User',
-  },
-  form: {
-    type: Object,
-    required: true,
-  },
-  circle: {
-    type: ObjectId,
-    required: true,
-    ref: 'Circle',
-  },
-  status: {
-    type: String,
+const circleApplicationSchema = createSchema({
+  applier: Type.ref(Type.objectId()).to('User', userSchema),
+  form: Type.mixed({ required: true }),
+  circle: Type.ref(Type.objectId()).to('Circle', circleSchema),
+  status: Type.string({
     required: true,
     default: 'applied',
-    enum: ['applied', 'interview', 'pass', 'final', 'fail'],
-  },
-}, { versionKey: false });
+    enum: CircleApplicationStatusValues,
+  }),
+}, { versionKey: false, timestamps: true });
 
-const CircleApplicationQuestionModel = mongoose.model<ICircleApplicationQuestion & mongoose.Document>
-  ('CircleApplicationQuestion', questionSchema);
-const CircleApplicationModel = mongoose.model<ICircleApplication & mongoose.Document>
-  ('CircleApplication', applicationSchema);
+const CircleApplicationQuestionModel =
+  typedModel('CircleApplicationQuestion', circleApplicationQuestionSchema);
+const CircleApplicationModel =
+  typedModel('CircleApplication', circleApplicationSchema);
 
 export {
+  circleApplicationQuestionSchema,
+  circleApplicationSchema,
   CircleApplicationQuestionModel,
   CircleApplicationModel,
 };
