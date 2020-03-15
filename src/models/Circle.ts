@@ -1,5 +1,5 @@
 import { ConfigKeys } from '../interfaces/Types';
-import ConfigModel from './Config';
+import { ConfigModel } from './Config';
 import { createSchema, Type, typedModel } from 'ts-mongoose';
 import { userSchema } from './User';
 

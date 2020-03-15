@@ -1,15 +1,13 @@
-import mongoose from 'mongoose';
-import { IConfig } from '../interfaces';
+import { createSchema, Type, typedModel } from 'ts-mongoose';
 
-const schema = new mongoose.Schema({
-  key: {
-    type: String,
-    unique: true,
-    trim: true,
-  },
-  value: {},
+const configSchema = createSchema({
+  key: Type.string({ required: true, trim: true, unique: true }),
+  value: Type.mixed(),
 }, { versionKey: false });
 
-const ConfigModel = mongoose.model<IConfig & mongoose.Document>('Config', schema);
+const ConfigModel = typedModel('Config', configSchema);
 
-export default ConfigModel;
+export {
+  configSchema,
+  ConfigModel,
+};
