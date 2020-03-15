@@ -39,7 +39,7 @@ class CircleApplicationController extends Controller {
   }
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
-    const user: IUser = this.getUserIdentity(req) as IUser;
+    const user: IUser = this.getUserIdentity(req);
     const applications: ICircleApplication[] =
       await CircleApplicationModel.find({ applier: user._id }).populate('circle');
     res.json({
@@ -51,7 +51,7 @@ class CircleApplicationController extends Controller {
   private createApplication = async (req: Request, res: Response, next: NextFunction) => {
     const config = await this.config;
     if (!config[ConfigKeys.circleAppliable]) { throw new CircleApplicationDeadlineException(); }
-    const user: IUser = this.getUserIdentity(req) as IUser;
+    const user: IUser = this.getUserIdentity(req);
     const applied: ICircleApplication[] =
       await CircleApplicationModel.find({ applier: user._id });
     const application: ICircleApplication = req.body;
@@ -90,7 +90,7 @@ class CircleApplicationController extends Controller {
   }
 
   private finalSelection = async (req: Request, res: Response, next: NextFunction) => {
-    const user: IUser = this.getUserIdentity(req) as IUser;
+    const user: IUser = this.getUserIdentity(req);
     const applied: Array<ICircleApplication & Document> =
       await CircleApplicationModel.find({ applier: user._id });
 
