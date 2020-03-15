@@ -1,4 +1,5 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { ObjectId } from 'mongodb';
 import { afterschoolSchema } from './Afterschool';
 import { userSchema } from './User';
 
@@ -8,7 +9,11 @@ const afterschoolApplicationSchema = createSchema({
 }, { versionKey: false, timestamps: true });
 
 const AfterschoolApplicationModel =
-  typedModel('AfterschoolApplication', afterschoolSchema);
+  typedModel('AfterschoolApplication', afterschoolSchema, undefined, undefined, {
+    findByApplier (applier: ObjectId) {
+      return this.find({ applier });
+    }
+  });
 
 export {
   afterschoolApplicationSchema,
