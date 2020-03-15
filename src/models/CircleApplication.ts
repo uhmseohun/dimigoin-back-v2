@@ -16,7 +16,7 @@ const circleApplicationSchema = createSchema({
     default: 'applied',
     enum: CircleApplicationStatusValues
   }),
-}, { versionKey: false });
+}, { versionKey: false, timestamps: true });
 
 const CircleApplicationQuestionModel =
   typedModel('CircleApplicationQuestion', circleApplicationQuestionSchema);
