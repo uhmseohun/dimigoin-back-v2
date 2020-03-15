@@ -18,7 +18,7 @@ import {
   CircleApplicationModel,
   CircleApplicationQuestionModel,
 } from '../models';
-import { ConfigKeys } from '../Types';
+import { ConfigKeys } from '../types';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';

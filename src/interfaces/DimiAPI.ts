@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb';
 import {
   Gender as gender,
   UserType as user_type,
-} from '../Types';
+} from '../types';
 
 export interface IAccount {
   username: string;

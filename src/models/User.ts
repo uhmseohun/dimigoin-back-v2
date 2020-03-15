@@ -1,5 +1,5 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
-import { ClassValues, GradeValues, UserTypeValues } from '../Types';
+import { ClassValues, GradeValues, UserTypeValues } from '../types';
 
 const userSchema = createSchema({
   idx: Type.number({ required: true, unique: true }),

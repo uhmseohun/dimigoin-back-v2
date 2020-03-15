@@ -1,5 +1,5 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
-import { ConfigKeys } from '../Types';
+import { ConfigKeys } from '../types';
 import { ConfigModel } from './Config';
 import { userSchema } from './User';
 

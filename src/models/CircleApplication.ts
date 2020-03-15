@@ -1,5 +1,5 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
-import { CircleApplicationStatusValues } from '../Types';
+import { CircleApplicationStatusValues } from '../types';
 import { circleSchema } from './Circle';
 import { userSchema } from './User';
 

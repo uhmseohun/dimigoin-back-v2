@@ -13,7 +13,7 @@ import { Controller, IUser } from '../interfaces';
 import { CheckUserType } from '../middlewares';
 import { CircleApplicationModel, CircleModel } from '../models';
 import { UserModel } from '../models';
-import { CircleApplicationStatus } from '../Types';
+import { CircleApplicationStatus } from '../types';
 
 class CircleApplierSelection extends Controller {
   public basePath = '/circle/selection/applier';
