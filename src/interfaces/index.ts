@@ -1,4 +1,5 @@
 import IAfterschool from './Afterschool';
+import IAfterschoolApplication from './AfterschoolApplication';
 import ICircle from './Circle';
 import {
   ICircleApplication,
@@ -16,4 +17,5 @@ export {
   ICircleApplication,
   IConfig,
   IAfterschool,
+  IAfterschoolApplication,
 };
