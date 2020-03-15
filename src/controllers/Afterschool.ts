@@ -1,7 +1,7 @@
-import { Controller } from '../interfaces';
-import { Request, Response, NextFunction } from 'express';
-import { CheckUserType } from '../middlewares';
+import { NextFunction, Request, Response } from 'express';
 import { AccessDeniedException } from '../exceptions/Permission';
+import { Controller } from '../interfaces';
+import { CheckUserType } from '../middlewares';
 import { AfterschoolModel } from '../models';
 
 class AfterschoolController extends Controller {

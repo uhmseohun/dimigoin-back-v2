@@ -1,9 +1,9 @@
+import { NextFunction, Request, Response } from 'express';
+import { TeacherNotFoundException } from '../exceptions/User';
 import { Controller } from '../interfaces';
-import { Request, Response, NextFunction } from 'express';
+import { IAfterschool } from '../interfaces';
 import { CheckUserType } from '../middlewares';
 import { AfterschoolModel, UserModel } from '../models';
-import { IAfterschool } from '../interfaces';
-import { TeacherNotFoundException } from '../exceptions/User';
 
 class AfterschoolManagementController extends Controller {
   public basePath = '/afterschool';

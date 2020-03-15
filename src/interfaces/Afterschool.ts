@@ -1,5 +1,5 @@
 import { ObjectID } from 'mongodb';
-import { Grade, Class } from '../types'
+import { Class, Grade } from '../types';
 
 interface IAfterschool {
   _id: ObjectID;
@@ -10,6 +10,6 @@ interface IAfterschool {
   key?: string; // 동시 수강 강좌 처리
   teacher: ObjectID;
   capacity: number;
-};
+}
 
 export default IAfterschool;

@@ -1,3 +1,5 @@
+import AfterschoolController from './Afterschool';
+import AfterschoolManagementController from './AfterschoolManagement';
 import AuthController from './Auth';
 import CircleController from './Circle';
 import CircleApplicationController from './CircleApplication';
@@ -6,8 +8,6 @@ import CircleApplierSelection from './CircleApplierSelection';
 import CircleManagementController from './CircleManagement';
 import ConfigController from './Config';
 import UserController from './User';
-import AfterschoolController from './Afterschool';
-import AfterschoolManagementController from './AfterschoolManagement';
 
 const controllers = [
   new AuthController(),

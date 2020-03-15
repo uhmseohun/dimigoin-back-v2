@@ -20,4 +20,3 @@ export class StudentNotFoundException extends HttpException {
     super(status, message);
   }
 }
-
