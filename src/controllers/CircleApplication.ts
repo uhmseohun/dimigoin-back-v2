@@ -39,8 +39,8 @@ class CircleApplicationController extends Controller {
   }
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
-    const user: IUser = this.getUserIdentity(req);
-    const applications: ICircleApplication[] =
+    const user = this.getUserIdentity(req);
+    const applications =
       await CircleApplicationModel.find({ applier: user._id }).populate('circle');
     res.json({
       maxApplyCount: (await this.config)[ConfigKeys.circleMaxApply],
@@ -51,9 +51,8 @@ class CircleApplicationController extends Controller {
   private createApplication = async (req: Request, res: Response, next: NextFunction) => {
     const config = await this.config;
     if (!config[ConfigKeys.circleAppliable]) { throw new CircleApplicationDeadlineException(); }
-    const user: IUser = this.getUserIdentity(req);
-    const applied: ICircleApplication[] =
-      await CircleApplicationModel.find({ applier: user._id });
+    const user = this.getUserIdentity(req);
+    const applied = await CircleApplicationModel.find({ applier: user._id });
     const application: ICircleApplication = req.body;
     application.applier = user._id;
 
@@ -91,15 +90,13 @@ class CircleApplicationController extends Controller {
 
   private finalSelection = async (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = this.getUserIdentity(req);
-    const applied: Array<ICircleApplication & Document> =
-      await CircleApplicationModel.find({ applier: user._id });
+    const applied = await CircleApplicationModel.find({ applier: user._id });
 
     if (applied.filter((v) => v.status === 'final').length > 0) {
       throw new AlreadySelectedApplierException();
     }
 
-    const final: (ICircleApplication & Document) =
-      applied.find((v) => v.circle.toString() === req.params.circleId);
+    const final = applied.find((v) => v.circle.toString() === req.params.circleId);
 
     if (!final) {
       throw new CircleApplicationNotFoundException();

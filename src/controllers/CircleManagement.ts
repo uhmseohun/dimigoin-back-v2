@@ -43,7 +43,7 @@ class CircleManagementController extends Controller {
   }
 
   private removeCircle = async (req: Request, res: Response, next: NextFunction) => {
-    const circle: ICircle & Document = await CircleModel.findById(req.params.circleId);
+    const circle = await CircleModel.findById(req.params.circleId);
     if (!circle) { throw new CircleNotFoundException(); }
     await circle.remove();
     res.json({ circle });

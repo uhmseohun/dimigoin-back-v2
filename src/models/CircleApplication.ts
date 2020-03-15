@@ -1,5 +1,6 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
 import { userSchema } from './User';
+import { circleSchema } from './Circle';
 import { CircleApplicationStatusValues } from '../interfaces/Types'
 
 const circleApplicationQuestionSchema = createSchema({
@@ -9,7 +10,7 @@ const circleApplicationQuestionSchema = createSchema({
 
 const circleApplicationSchema = createSchema({
   applier: Type.ref(Type.objectId()).to('User', userSchema),
-  form: Type.object({ required: true }),
+  form: Type.mixed({ required: true }),
   circle: Type.ref(Type.objectId()).to('Circle', circleSchema),
   status: Type.string({
     required: true,
@@ -20,7 +21,8 @@ const circleApplicationSchema = createSchema({
 
 const CircleApplicationQuestionModel =
   typedModel('CircleApplicationQuestion', circleApplicationQuestionSchema);
-const CircleApplicationModel = typedModel('CircleApplication', circleApplicationSchema);
+const CircleApplicationModel =
+  typedModel('CircleApplication', circleApplicationSchema);
 
 export {
   circleApplicationQuestionSchema,
