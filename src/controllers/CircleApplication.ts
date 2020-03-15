@@ -13,12 +13,12 @@ import {
   ICircleApplication,
   IUser,
 } from '../interfaces';
-import { ConfigKeys } from '../Types';
 import { CheckUserType } from '../middlewares';
 import {
   CircleApplicationModel,
   CircleApplicationQuestionModel,
 } from '../models';
+import { ConfigKeys } from '../Types';
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';

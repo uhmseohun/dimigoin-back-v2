@@ -3,10 +3,10 @@ import { CircleNotFoundException, ImageNotAttachedException } from '../exception
 import { StudentNotFoundException } from '../exceptions/Student';
 import { NotAllowedExtensionException, S3UploadFailException } from '../exceptions/Upload';
 import { Controller, IUser } from '../interfaces';
-import { ConfigKeys } from '../Types';
 import { CheckUserType } from '../middlewares';
 import { CircleModel, UserModel } from '../models';
 import Upload from '../resources/Upload';
+import { ConfigKeys } from '../Types';
 
 class CircleManagementController extends Controller {
   public basePath = '/circle';

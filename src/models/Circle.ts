@@ -1,6 +1,6 @@
+import { createSchema, Type, typedModel } from 'ts-mongoose';
 import { ConfigKeys } from '../Types';
 import { ConfigModel } from './Config';
-import { createSchema, Type, typedModel } from 'ts-mongoose';
 import { userSchema } from './User';
 
 const circleSchema = createSchema({

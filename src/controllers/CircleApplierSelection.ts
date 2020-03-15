@@ -10,10 +10,10 @@ import {
 import { AccessDeniedException } from '../exceptions/Permission';
 import { StudentNotFoundException } from '../exceptions/Student';
 import { Controller, IUser } from '../interfaces';
-import { CircleApplicationStatus } from '../Types';
 import { CheckUserType } from '../middlewares';
 import { CircleApplicationModel, CircleModel } from '../models';
 import { UserModel } from '../models';
+import { CircleApplicationStatus } from '../Types';
 
 class CircleApplierSelection extends Controller {
   public basePath = '/circle/selection/applier';
