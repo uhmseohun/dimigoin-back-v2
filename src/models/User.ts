@@ -10,7 +10,7 @@ const userSchema = createSchema({
   class: Type.number({ enum: ClassValues }),
   number: Type.number(),
   serial: Type.number(),
-}, { versionKey: false, timestamps: { createdAt: true } });
+}, { versionKey: false, timestamps: true });
 
 const UserModel = typedModel('User', userSchema);
 
