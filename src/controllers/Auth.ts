@@ -26,8 +26,8 @@ class AuthController extends Controller {
     const account: IAccount = req.body;
 
     try {
-      const { id } = await this.DimiAPIClient.getIdentity(account);
-      const identity = await UserModel.findOne({ idx: id });
+      const { id: idx } = await this.DimiAPIClient.getIdentity(account);
+      const identity = await UserModel.findByIdx(idx);
 
       res.json({
         accessToken: this.TokenManager.issue(identity, false),

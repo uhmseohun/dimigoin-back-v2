@@ -12,6 +12,10 @@ const userSchema = createSchema({
   serial: Type.number(),
 }, { versionKey: false, timestamps: true });
 
-const UserModel = typedModel('User', userSchema);
+const UserModel = typedModel('User', userSchema, undefined, undefined, {
+  findByIdx (idx: number) {
+    return this.find({ idx });
+  }
+});
 
 export { userSchema, UserModel };
