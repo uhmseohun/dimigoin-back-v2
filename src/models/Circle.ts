@@ -9,14 +9,18 @@ const circleSchema = createSchema({
   imageKey: Type.string(),
   description: Type.string({ required: true }),
   chair: Type.ref(Type.objectId()).to('User', userSchema),
-  category: Type.string({
+  category: {
+    type: String,
     required: true,
-    validate: async (value: string) => {
-      const { value: category } =
-      await ConfigModel.findOne({ key: ConfigKeys.circleCategory })
-      return category.includes(value)
+    validate: {
+      validator: async (value: string) => {
+        const { value: category } =
+          await ConfigModel.findOne({ key: ConfigKeys.circleCategory })
+        return category.includes(value)
+      },
+      message: '유효하지 않은 동아리 분류입니다.'
     }
-  })
+  }
 }, { versionKey: false, timestamps: true })
 
 type CircleDoc = ExtractDoc<typeof circleSchema>;
