@@ -30,7 +30,7 @@ class CircleApplicationController extends Controller {
       Route(['S'], this.requiredKeys.none, this.getApplicationStatus))
     this.router.post('/',
       Route(['S'], this.requiredKeys.createAfterschool, this.createApplication))
-    this.router.post('/final/:circleId',
+    this.router.patch('/final/:circleId',
       Route(['S'], this.requiredKeys.none, this.finalSelection))
   }
 

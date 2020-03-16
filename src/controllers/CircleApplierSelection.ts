@@ -24,7 +24,7 @@ class CircleApplierSelection extends Controller {
 
   private initializeRoutes () {
     this.router.get('/', Route(['S'], this.requiredKeys.none, this.getApplications))
-    this.router.put('/:applierId',
+    this.router.patch('/:applierId',
       Route(['S'], this.requiredKeys.setApplierStatus, this.setApplierStatus))
   }
 

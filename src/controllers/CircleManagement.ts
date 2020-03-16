@@ -22,7 +22,7 @@ class CircleManagementController extends Controller {
       Route(['T'], this.requiredKeys.createCircle, this.createCircle))
     this.router.delete('/:circleId',
       Route(['T'], this.requiredKeys.none, this.removeCircle))
-    this.router.put('/:circleId/image',
+    this.router.patch('/:circleId/image',
       Route(['T'], this.requiredKeys.none, this.putCircleImage))
   }
 

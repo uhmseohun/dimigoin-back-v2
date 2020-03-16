@@ -15,7 +15,7 @@ class CircleApplicationManagementController extends Controller {
   private initializeRoutes () {
     this.router.get('/application/form',
       Route(['S', 'T'], this.requiredKeys.none, this.getApplicationForm))
-    this.router.post('/application/form',
+    this.router.put('/application/form',
       Route(['T'], this.requiredKeys.updateApplicationForm, this.updateApplicationForm))
     this.router.get('/applier',
       Route(['T'], this.requiredKeys.none, this.getAllApplications))

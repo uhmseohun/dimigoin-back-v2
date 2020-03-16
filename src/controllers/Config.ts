@@ -14,7 +14,7 @@ class ConfigController extends Controller {
 
   private initializeRoutes () {
     this.router.get('/', Route(['A'], '', this.getAllConfig))
-    this.router.put('/', Route(['T'], this.requiredKeys.editConfig, this.editConfig))
+    this.router.patch('/', Route(['T'], this.requiredKeys.editConfig, this.editConfig))
   }
 
   private getAllConfig = async (req: Request, res: Response, next: NextFunction) => {
