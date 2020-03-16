@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
-import {
-  Controller,
-  ICircleApplicationQuestion
-} from '../interfaces'
-import { CheckUserType } from '../middlewares'
+import { ICircleApplicationQuestion } from '../interfaces'
+import { Controller } from '../classes'
 import { CircleApplicationModel, CircleApplicationQuestionModel } from '../models'
+import Route from '../resources/RouteGenerator'
 
 class CircleApplicationManagementController extends Controller {
   public basePath = '/circle';
@@ -15,11 +13,12 @@ class CircleApplicationManagementController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.get('/application/form', CheckUserType(['S', 'T']), this.wrapper(this.getApplicationForm))
-    this.router.post('/application/form', CheckUserType(['T']),
-      this.validator(this.requiredKeys.updateApplicationForm),
-      this.wrapper(this.updateApplicationForm))
-    this.router.get('/applier', CheckUserType(['T']), this.wrapper(this.getAllApplications))
+    this.router.get('/application/form',
+      Route(['S', 'T'], this.requiredKeys.none, this.getApplicationForm))
+    this.router.post('/application/form',
+      Route(['T'], this.requiredKeys.updateApplicationForm, this.updateApplicationForm))
+    this.router.get('/applier',
+      Route(['T'], this.requiredKeys.none, this.getAllApplications))
   }
 
   private getApplicationForm = async (req: Request, res: Response, next: NextFunction) => {

@@ -2,11 +2,11 @@ import { NextFunction, Request, Response } from 'express'
 import { CircleNotFoundException, ImageNotAttachedException } from '../exceptions/Circle'
 import { StudentNotFoundException } from '../exceptions/Student'
 import { NotAllowedExtensionException, S3UploadFailException } from '../exceptions/Upload'
-import { Controller } from '../interfaces'
-import { CheckUserType } from '../middlewares'
+import { Controller } from '../classes'
 import { CircleModel, UserModel } from '../models'
 import Upload from '../resources/Upload'
 import { ConfigKeys } from '../types'
+import Route from '../resources/RouteGenerator'
 
 class CircleManagementController extends Controller {
   public basePath = '/circle';
@@ -18,11 +18,12 @@ class CircleManagementController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.post('/', CheckUserType(['T']),
-      this.validator(this.requiredKeys.createCircle),
-      this.wrapper(this.createCircle))
-    this.router.delete('/:circleId', CheckUserType(['T']), this.wrapper(this.removeCircle))
-    this.router.put('/:circleId/image', this.wrapper(this.putCircleImage))
+    this.router.post('/',
+      Route(['T'], this.requiredKeys.createCircle, this.createCircle))
+    this.router.delete('/:circleId',
+      Route(['T'], this.requiredKeys.none, this.removeCircle))
+    this.router.put('/:circleId/image',
+      Route(['T'], this.requiredKeys.none, this.putCircleImage))
   }
 
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {

@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from 'express'
+
 export enum ConfigKeys {
   circleAppliable = 'CIRCLE_APPLIABLE',
   circleMaxApply = 'CIRCLE_MAX_APPLY',
@@ -23,3 +25,6 @@ export const CircleApplicationStatusValues =
 // 지원 완료 | 면접 대상 | 최종 합격 | 최종 선택 | 탈락
 export type CircleApplicationStatus =
   typeof CircleApplicationStatusValues[number];
+
+export type Middleware =
+  (req: Request, res: Response, next: NextFunction) => Promise<void>

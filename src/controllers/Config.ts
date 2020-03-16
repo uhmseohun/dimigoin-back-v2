@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
-import { Controller, IConfig } from '../interfaces'
-import { CheckUserType } from '../middlewares'
+import { IConfig } from '../interfaces'
+import { Controller } from '../classes'
 import { ConfigModel } from '../models'
+import Route from '../resources/RouteGenerator'
 
 class ConfigController extends Controller {
   public basePath = '/config';
@@ -12,10 +13,8 @@ class ConfigController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.get('/', this.wrapper(this.getAllConfig))
-    this.router.put('/', CheckUserType(['T']),
-      this.validator(this.requiredKeys.editConfig),
-      this.wrapper(this.editConfig))
+    this.router.get('/', Route(['A'], '', this.getAllConfig))
+    this.router.put('/', Route(['T'], this.requiredKeys.editConfig, this.editConfig))
   }
 
   private getAllConfig = async (req: Request, res: Response, next: NextFunction) => {

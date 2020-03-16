@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { AccessDeniedException } from '../exceptions/Permission'
-import { Controller } from '../interfaces'
-import { CheckUserType } from '../middlewares'
+import { Controller } from '../classes'
 import { AfterschoolModel } from '../models'
+import Route from '../resources/RouteGenerator'
 
 class AfterschoolController extends Controller {
   public basePath = '/afterschool';
@@ -13,10 +13,9 @@ class AfterschoolController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.get('/', CheckUserType(['T']),
-      this.wrapper(this.getAllAfterschools))
-    this.router.get('/grade/:grade', CheckUserType(['S', 'T']),
-      this.wrapper(this.getAfterschoolsByGrade))
+    this.router.get('/', Route(['T'], this.requiredKeys.none, this.getAllAfterschools))
+    this.router.get('/grade/:grade',
+      Route(['S', 'T'], this.requiredKeys.none, this.getAfterschoolsByGrade))
   }
 
   private getAllAfterschools = async (req: Request, res: Response, next: NextFunction) => {

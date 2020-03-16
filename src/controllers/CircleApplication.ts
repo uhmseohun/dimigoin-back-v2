@@ -8,16 +8,14 @@ import {
   NotPassedCircleSelectionException
 } from '../exceptions/CircleApplication'
 import { AlreadySelectedApplierException } from '../exceptions/CircleApplierSelection'
-import {
-  Controller,
-  ICircleApplication
-} from '../interfaces'
-import { CheckUserType } from '../middlewares'
+import { ICircleApplication } from '../interfaces'
+import { Controller } from '../classes'
 import {
   CircleApplicationModel,
   CircleApplicationQuestionModel
 } from '../models'
 import { ConfigKeys } from '../types'
+import Route from '../resources/RouteGenerator'
 
 class CircleApplicationController extends Controller {
   public basePath = '/circle/application';
@@ -28,11 +26,12 @@ class CircleApplicationController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplicationStatus))
-    this.router.post('/', CheckUserType(['S']),
-      this.validator(this.requiredKeys.createApplication),
-      this.wrapper(this.createApplication))
-    this.router.post('/final/:circleId', CheckUserType(['S']), this.wrapper(this.finalSelection))
+    this.router.get('/',
+      Route(['S'], this.requiredKeys.none, this.getApplicationStatus))
+    this.router.post('/',
+      Route(['S'], this.requiredKeys.createAfterschool, this.createApplication))
+    this.router.post('/final/:circleId',
+      Route(['S'], this.requiredKeys.none, this.finalSelection))
   }
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {

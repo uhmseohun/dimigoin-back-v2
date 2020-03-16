@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { TeacherNotFoundException } from '../exceptions/User'
-import { Controller, IAfterschool } from '../interfaces'
-
-import { CheckUserType } from '../middlewares'
+import { IAfterschool } from '../interfaces'
+import { Controller } from '../classes'
+import Route from '../resources/RouteGenerator'
 import { AfterschoolModel, UserModel } from '../models'
 
 class AfterschoolManagementController extends Controller {
@@ -14,9 +14,8 @@ class AfterschoolManagementController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.post('/', CheckUserType(['T']),
-      this.validator(this.requiredKeys.createAfterschool),
-      this.wrapper(this.createAfterschool))
+    this.router.post('/',
+      Route(['T'], this.requiredKeys.createAfterschool, this.createAfterschool))
   }
 
   private createAfterschool = async (req: Request, res: Response, next: NextFunction) => {

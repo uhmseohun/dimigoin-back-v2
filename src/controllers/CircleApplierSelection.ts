@@ -9,10 +9,9 @@ import {
 } from '../exceptions/CircleApplierSelection'
 import { AccessDeniedException } from '../exceptions/Permission'
 import { StudentNotFoundException } from '../exceptions/Student'
-import { Controller } from '../interfaces'
-import { CheckUserType } from '../middlewares'
+import { Controller } from '../classes'
 import { CircleApplicationModel, CircleModel, UserModel } from '../models'
-
+import Route from '../resources/RouteGenerator'
 import { CircleApplicationStatus } from '../types'
 
 class CircleApplierSelection extends Controller {
@@ -24,10 +23,9 @@ class CircleApplierSelection extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.get('/', CheckUserType(['S']), this.wrapper(this.getApplications))
-    this.router.put('/:applierId', CheckUserType(['S']),
-      this.validator(this.requiredKeys.setApplierStatus),
-      this.wrapper(this.setApplierStatus))
+    this.router.get('/', Route(['S'], this.requiredKeys.none, this.getApplications))
+    this.router.put('/:applierId',
+      Route(['S'], this.requiredKeys.setApplierStatus, this.setApplierStatus))
   }
 
   private getApplications = async (req: Request, res: Response, next: NextFunction) => {

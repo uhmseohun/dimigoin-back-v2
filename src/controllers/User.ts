@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import HttpException from '../exceptions/HttpException'
-import { Controller } from '../interfaces'
-import { CheckUserType } from '../middlewares'
+import { Controller } from '../classes'
 import { UserModel } from '../models'
 import DimiAPI from '../resources/DimiAPI'
+import Route from '../resources/RouteGenerator'
 
 class UserController extends Controller {
   public basePath = '/user';
@@ -16,10 +16,10 @@ class UserController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.get('/', CheckUserType(['T']), this.wrapper(this.getAllUsers))
-    this.router.get('/student', CheckUserType(['T']), this.wrapper(this.getAllStudents))
-    this.router.get('/teacher', CheckUserType(['T']), this.wrapper(this.getAllTeachers))
-    this.router.get('/reload', this.wrapper(this.reloadUsers))
+    this.router.get('/', Route(['T'], this.requiredKeys.none, this.getAllUsers))
+    this.router.get('/student', Route(['T'], this.requiredKeys.none, this.getAllStudents))
+    this.router.get('/teacher', Route(['T'], this.requiredKeys.none, this.getAllTeachers))
+    this.router.get('/reload', Route(['T'], this.requiredKeys.none, this.reloadUsers))
   }
 
   private getAllUsers = async (req: Request, res: Response, next: NextFunction) => {

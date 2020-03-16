@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
 import { AuthFailException } from '../exceptions/DimiAPI'
-import { Controller } from '../interfaces'
+import { Controller } from '../classes'
 import { IAccount } from '../interfaces/DimiAPI'
 import { UserModel } from '../models'
 import DimiAPI from '../resources/DimiAPI'
 import Token from '../resources/Token'
+import Route from '../resources/RouteGenerator'
 
 class AuthController extends Controller {
   public basePath = '/auth';
@@ -18,8 +19,7 @@ class AuthController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.post('/', this.validator(this.requiredKeys.identifyUser),
-      this.wrapper(this.identifyUser))
+    this.router.post('/', Route(['U'], this.requiredKeys.identifyUser, this.identifyUser))
   }
 
   private identifyUser = async (req: Request, res: Response, next: NextFunction) => {
