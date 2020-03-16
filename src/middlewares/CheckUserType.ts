@@ -7,7 +7,7 @@ const TokenManager = new Token()
 
 const checkUserType = (userType: (UserType[] | 'U' | 'A')) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    if (userType === 'U') return next() // Route for UnAuthorized
+    if (userType === 'U') return next() // Route for UnAuthorized + Authorized
     if (!req.token) throw new AccessDeniedException()
     const { token } = req
     const identity = TokenManager.verify(token)
