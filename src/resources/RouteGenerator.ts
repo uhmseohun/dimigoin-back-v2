@@ -8,7 +8,7 @@ const asyncWrapper = (fn: Middleware) =>
 
 // UserType 'U' => UnAuthorized
 // UserType 'A' => All Users ('S', 'O', 'D', 'T', 'P')
-export default (allowedUserType: (UserType | ('U' | 'A'))[],
+export default (allowedUserType: (UserType[] | 'U' | 'A'),
   requiredKeys: string,
   action: Middleware) => {
   return [

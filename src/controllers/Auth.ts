@@ -19,7 +19,7 @@ class AuthController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.post('/', Route(['U'], this.requiredKeys.identifyUser, this.identifyUser))
+    this.router.post('/', Route('U', this.requiredKeys.identifyUser, this.identifyUser))
   }
 
   private identifyUser = async (req: Request, res: Response, next: NextFunction) => {

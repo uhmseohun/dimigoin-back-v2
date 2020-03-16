@@ -13,7 +13,7 @@ class ConfigController extends Controller {
   }
 
   private initializeRoutes () {
-    this.router.get('/', Route(['A'], '', this.getAllConfig))
+    this.router.get('/', Route('A', '', this.getAllConfig))
     this.router.patch('/', Route(['T'], this.requiredKeys.editConfig, this.editConfig))
   }
 
