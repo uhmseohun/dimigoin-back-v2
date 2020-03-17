@@ -30,7 +30,7 @@ const CircleApplicationModel =
       return this.find({ applier })
     },
     findPopulatedByCircle (circle: ObjectId): CircleApplicationDoc[] {
-      return this.find({ circle }).populate('applier')
+      return this.find({ circle }).populate('applier', ['name', 'serial', 'photo'])
     },
     findByCircle (circle: ObjectId): CircleApplicationDoc[] {
       return this.find({ circle })

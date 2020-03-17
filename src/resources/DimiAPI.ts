@@ -36,7 +36,13 @@ export default class DimiAPI {
       idx: identity.id,
       username: identity.username,
       name: identity.name,
-      userType: identity.user_type
+      userType: identity.user_type,
+      gender: identity.gender,
+      phone: identity.phone,
+      photo: [
+        identity.photofile1,
+        identity.photofile2
+      ].filter(v => v)
     }
   }
 

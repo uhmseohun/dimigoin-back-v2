@@ -1,16 +1,19 @@
 import { ObjectId } from 'mongodb'
 import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose'
-import { ClassValues, GradeValues, UserType, UserTypeValues } from '../types'
+import { ClassValues, GradeValues, UserType, UserTypeValues, GenderValues } from '../types'
 
 const userSchema = createSchema({
   idx: Type.number({ required: true, unique: true }),
   username: Type.string({ required: true, unique: true }),
   name: Type.string({ required: true }),
+  gender: Type.string({ enum: [...GenderValues, null] }),
+  phone: Type.string(),
   userType: Type.string({ required: true, enum: UserTypeValues }),
   grade: Type.number({ enum: GradeValues }),
   class: Type.number({ enum: ClassValues }),
   number: Type.number(),
-  serial: Type.number()
+  serial: Type.number(),
+  photo: Type.array().of(Type.string())
 }, { versionKey: false, timestamps: true })
 
 type UserDoc = ExtractDoc<typeof userSchema>;

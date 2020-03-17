@@ -6,6 +6,7 @@ import { UserModel } from '../models'
 import DimiAPI from '../resources/DimiAPI'
 import Token from '../resources/Token'
 import Route from '../resources/RouteGenerator'
+import { IUser } from '../interfaces'
 
 class AuthController extends Controller {
   public basePath = '/auth';
@@ -27,7 +28,7 @@ class AuthController extends Controller {
 
     try {
       const { id: idx } = await this.DimiAPIClient.getIdentity(account)
-      const identity = await UserModel.findByIdx(idx)
+      const identity = await UserModel.findByIdx(idx) as IUser
 
       res.json({
         accessToken: this.TokenManager.issue(identity, false),
