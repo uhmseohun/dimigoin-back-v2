@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
 import {
-  CircleApplicationDeadlineException,
   CircleApplicationLimitException,
   CircleApplicationNotFoundException,
   CircleApplicationQuestionException,
   ConflictedCircleApplicationException,
-  NotPassedCircleSelectionException
+  NotPassedCircleSelectionException,
+  NoCircleApplicationPeriod
 } from '../exceptions/CircleApplication'
 import { AlreadySelectedApplierException } from '../exceptions/CircleApplierSelection'
 import { ICircleApplication } from '../interfaces'
@@ -14,7 +14,7 @@ import {
   CircleApplicationModel,
   CircleApplicationQuestionModel
 } from '../models'
-import { ConfigKeys } from '../types'
+import { ConfigKeys, CirclePeriod } from '../types'
 import Route from '../resources/RouteGenerator'
 
 class CircleApplicationController extends Controller {
@@ -35,26 +35,35 @@ class CircleApplicationController extends Controller {
   }
 
   private getApplicationStatus = async (req: Request, res: Response, next: NextFunction) => {
+    const period = (await this.config)[ConfigKeys.circlePeriod]
     const user = this.getUserIdentity(req)
-    const applications =
-      await CircleApplicationModel.findByApplier(user._id)
+    const applications = await CircleApplicationModel.findByApplier(user._id)
+    const mappedApplications = await Promise.all(
+      applications.map(application => {
+        if (period === CirclePeriod.application) application.status = 'applied'
+        else if (period === CirclePeriod.interview &&
+                application.status.includes('interview')) {
+          application.status = 'document-pass'
+        }
+        return application
+      }))
     res.json({
       maxApplyCount: (await this.config)[ConfigKeys.circleMaxApply],
-      applications
+      applications: mappedApplications
     })
   }
 
   private createApplication = async (req: Request, res: Response, next: NextFunction) => {
     const config = await this.config
-    if (!config[ConfigKeys.circleAppliable]) throw new CircleApplicationDeadlineException()
+
+    if (config[ConfigKeys.circlePeriod] !== 'APPLICATION') {
+      throw new NoCircleApplicationPeriod()
+    }
+
     const user = this.getUserIdentity(req)
     const applied = await CircleApplicationModel.findByApplier(user._id)
     const application: ICircleApplication = req.body
     application.applier = user._id
-
-    if (applied.find((v) => v.status === 'final')) {
-      throw new AlreadySelectedApplierException()
-    }
 
     if (applied.length >= config[ConfigKeys.circleMaxApply]) {
       throw new CircleApplicationLimitException()
@@ -92,14 +101,13 @@ class CircleApplicationController extends Controller {
       throw new AlreadySelectedApplierException()
     }
 
-    const final =
-      applied.find((v) => v.circle.toString() === req.params.circleId)
+    const final = applied.find((v) => v.circle.toString() === req.params.circleId)
 
-    if (!final) {
-      throw new CircleApplicationNotFoundException()
-    }
+    if (!final) throw new CircleApplicationNotFoundException()
 
-    if (final.status !== 'pass') {
+    const period = (await this.config)[ConfigKeys.circlePeriod]
+
+    if (period !== CirclePeriod.final || final.status !== 'interview-pass') {
       throw new NotPassedCircleSelectionException()
     }
 
