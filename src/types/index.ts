@@ -1,11 +1,17 @@
 import { NextFunction, Request, Response } from 'express'
 
 export enum ConfigKeys {
-  circleAppliable = 'CIRCLE_APPLIABLE',
+  circlePeriod = 'CIRCLE_PERIOD',
   circleMaxApply = 'CIRCLE_MAX_APPLY',
   circleCategory = 'CIRCLE_CATEGORY',
   imageExtension = 'IMAGE_EXTENSION',
   bucketURL = 'AWS_BUCKET_URL',
+}
+
+export enum CirclePeriod {
+  application = 'APPLICATION',
+  interview = 'INTERVIEW',
+  final = 'FINAL',
 }
 
 export const GenderValues = ['M', 'F'] as const
@@ -21,8 +27,8 @@ export const ClassValues = [1, 2, 3, 4, 5, 6] as const
 export type Class = typeof ClassValues[number];
 
 export const CircleApplicationStatusValues =
-  ['applied', 'interview', 'pass', 'final', 'fail'] as const
-// 지원 완료 | 면접 대상 | 최종 합격 | 최종 선택 | 탈락
+  ['applied', 'document-fail', 'document-pass', 'interview-fail', 'interview-pass', 'final'] as const
+// 지원 완료 | 서류 탈락 | 서류 합격 | 면접 탈락 | 면접 합격 | 최종 선택
 export type CircleApplicationStatus =
   typeof CircleApplicationStatusValues[number];
 

@@ -1,18 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
 import { CircleApplicationNotFoundException } from '../exceptions/CircleApplication'
-import {
-  AlreadyFailedApplierException,
-  AlreadyInterviewerException,
-  AlreadyPassedApplierException,
-  AlreadySelectedApplierException,
-  NeedGraduallyStatusSet
-} from '../exceptions/CircleApplierSelection'
+import { CircleApplicationStatusException } from '../exceptions/CircleApplierSelection'
 import { AccessDeniedException } from '../exceptions/Permission'
 import { StudentNotFoundException } from '../exceptions/Student'
 import { Controller } from '../classes'
 import { CircleApplicationModel, CircleModel, UserModel } from '../models'
 import Route from '../resources/RouteGenerator'
-import { CircleApplicationStatus } from '../types'
+import { CircleApplicationStatus, ConfigKeys, CirclePeriod } from '../types'
 
 class CircleApplierSelection extends Controller {
   public basePath = '/circle/selection/applier';
@@ -52,26 +46,14 @@ class CircleApplierSelection extends Controller {
     if (!application) throw new CircleApplicationNotFoundException()
 
     const status: CircleApplicationStatus = req.body.status
+    const period = (await this.config)[ConfigKeys.circlePeriod]
 
-    if (application.status === 'applied') {
-      if (['interview', 'fail'].includes(status)) {
-        application.status = status
-      } else {
-        throw new NeedGraduallyStatusSet()
-      }
-    } else if (application.status === 'interview') {
-      if (['pass', 'fail'].includes(status)) {
-        application.status = status
-      } else {
-        throw new AlreadyInterviewerException()
-      }
-    } else if (application.status === 'pass') {
-      throw new AlreadyPassedApplierException()
-    } else if (application.status === 'final') {
-      throw new AlreadySelectedApplierException()
-    } else if (application.status === 'fail') {
-      throw new AlreadyFailedApplierException()
+    if ((period === CirclePeriod.application && !status.includes('document')) ||
+        (period === CirclePeriod.interview && !status.includes('interview')) ||
+        (period === CirclePeriod.final)) {
+      throw new CircleApplicationStatusException()
     }
+    application.status = status
     await application.save()
     res.json({ application })
   }

@@ -36,7 +36,7 @@ const CircleApplicationModel =
       return this.find({ circle })
     },
     findByCircleApplier (circle: ObjectId, applier: ObjectId): CircleApplicationDoc {
-      return this.find({ circle, applier })
+      return this.findOne({ circle, applier })
     }
   })
 

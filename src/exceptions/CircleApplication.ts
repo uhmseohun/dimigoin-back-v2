@@ -41,3 +41,10 @@ export class NotPassedCircleSelectionException extends HttpException {
     super(status, message)
   }
 }
+
+export class NoCircleApplicationPeriod extends HttpException {
+  constructor (status: number = 403,
+    message: string = '동아리 지원 기간이 아닙니다.') {
+    super(status, message)
+  }
+}
