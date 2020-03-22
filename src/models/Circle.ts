@@ -9,6 +9,7 @@ const circleSchema = createSchema({
   imageKey: Type.string(),
   description: Type.string({ required: true }),
   chair: Type.ref(Type.objectId()).to('User', userSchema),
+  viceChair: Type.ref(Type.objectId()).to('User', userSchema),
   category: Type.string({
     required: true,
     validate: async (value: string) => {
@@ -24,6 +25,13 @@ type CircleDoc = ExtractDoc<typeof circleSchema>;
 const CircleModel = typedModel('Circle', circleSchema, undefined, undefined, {
   findByChair (chair: ObjectId): CircleDoc {
     return this.findOne({ chair })
+  },
+  findByViceChair (viceChair: ObjectId): CircleDoc {
+    return this.findOne({ viceChair })
+  },
+  findByChairs (user: ObjectId): CircleDoc {
+    console.log(user)
+    return this.findOne({ $or: [{ chair: user }, { viceChair: user }] })
   }
 })
 

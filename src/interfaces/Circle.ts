@@ -7,4 +7,5 @@ export default interface ICircle {
   category: string;
   description: string;
   chair: ObjectId;
+  viceChair: ObjectId;
 }

@@ -24,7 +24,7 @@ class CircleApplierSelection extends Controller {
 
   private getApplications = async (req: Request, res: Response, next: NextFunction) => {
     const user = this.getUserIdentity(req)
-    const circle = await CircleModel.findByChair(user._id)
+    const circle = await CircleModel.findByChairs(user._id)
     if (!circle) throw new AccessDeniedException()
 
     const applications =
@@ -39,7 +39,8 @@ class CircleApplierSelection extends Controller {
     if (!applier) throw new StudentNotFoundException()
 
     const user = this.getUserIdentity(req)
-    const circle = await CircleModel.findByChair(user._id)
+    const circle = await CircleModel.findByChairs(user._id)
+    if (!circle) throw new AccessDeniedException()
 
     const application =
       await CircleApplicationModel.findByCircleApplier(circle._id, applier._id)

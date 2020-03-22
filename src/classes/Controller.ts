@@ -18,7 +18,7 @@ enum requiredKeys {
   createApplication = 'circle, form',
   updateApplicationForm = 'form',
   setApplierStatus = 'status',
-  createCircle = 'name, category, description, chair',
+  createCircle = 'name, category, description, chair, viceChair',
   editConfig = 'key, value',
   createAfterschool = 'name, description, grade, ' +
     'class, teacher, capacity',

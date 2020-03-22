@@ -30,7 +30,8 @@ class CircleManagementController extends Controller {
     const circle = req.body
 
     const chair = await UserModel.findStudentById(circle.chair)
-    if (!chair) throw new StudentNotFoundException()
+    const viceChair = await UserModel.findStudentById(circle.viceChair)
+    if (!chair || !viceChair) throw new StudentNotFoundException()
 
     const newCircle = await CircleModel.create(circle)
 
