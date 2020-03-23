@@ -8,4 +8,5 @@ export default interface ICircle {
   description: string;
   chair: ObjectId;
   viceChair: ObjectId;
+  videoLink: string;
 }

@@ -10,6 +10,7 @@ const circleSchema = createSchema({
   description: Type.string({ required: true }),
   chair: Type.ref(Type.objectId()).to('User', userSchema),
   viceChair: Type.ref(Type.objectId()).to('User', userSchema),
+  videoLink: Type.string({ required: true }),
   category: Type.string({
     required: true,
     validate: async (value: string) => {
