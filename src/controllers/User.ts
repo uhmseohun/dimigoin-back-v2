@@ -17,7 +17,7 @@ class UserController extends Controller {
 
   private initializeRoutes () {
     this.router.get('/', Route(['T'], this.requiredKeys.none, this.getAllUsers))
-    this.router.get('/student', Route(['T'], this.requiredKeys.none, this.getAllStudents))
+    this.router.get('/student', Route(['T', 'S'], this.requiredKeys.none, this.getAllStudents))
     this.router.get('/teacher', Route(['T'], this.requiredKeys.none, this.getAllTeachers))
     this.router.get('/reload', Route(['T'], this.requiredKeys.none, this.reloadUsers))
   }
