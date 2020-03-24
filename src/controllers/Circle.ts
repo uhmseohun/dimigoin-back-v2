@@ -27,6 +27,7 @@ class CircleController extends Controller {
       if (appliedIds.includes(circle._id)) {
         circle.applied = true
       }
+      return circle
     })
     res.json({ circles })
   }
