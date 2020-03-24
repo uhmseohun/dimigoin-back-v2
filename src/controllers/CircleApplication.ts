@@ -12,7 +12,8 @@ import { ICircleApplication } from '../interfaces'
 import { Controller } from '../classes'
 import {
   CircleApplicationModel,
-  CircleApplicationQuestionModel
+  CircleApplicationQuestionModel,
+  CircleModel
 } from '../models'
 import { ConfigKeys, CirclePeriod } from '../types'
 import Route from '../resources/RouteGenerator'
@@ -39,12 +40,16 @@ class CircleApplicationController extends Controller {
     const user = this.getUserIdentity(req)
     const applications = await CircleApplicationModel.findByApplier(user._id)
     const mappedApplications = await Promise.all(
-      applications.map(application => {
+      applications.map(async application => {
         if (period === CirclePeriod.application) application.status = 'applied'
         else if (period === CirclePeriod.interview &&
                 application.status.includes('interview')) {
           application.status = 'document-pass'
         }
+        const circle = await CircleModel.findById(application.circle)
+          .populate('chair', ['name', 'serial'])
+          .populate('viceChair', ['name', 'serial'])
+        application.circle = circle
         return application
       }))
     res.json({
