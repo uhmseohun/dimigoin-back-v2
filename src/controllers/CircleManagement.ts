@@ -27,7 +27,9 @@ class CircleManagementController extends Controller {
   }
 
   private createCircle = async (req: Request, res: Response, next: NextFunction) => {
-    const circle = req.body
+    const circle = Object.assign(req.body, {
+      imageKey: `CIRCLE_PROFILE/${req.body.name}.png`
+    })
 
     const chair = await UserModel.findStudentById(circle.chair)
     const viceChair = await UserModel.findStudentById(circle.viceChair)
