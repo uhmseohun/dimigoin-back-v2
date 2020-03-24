@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { Controller } from '../classes'
-import { CircleModel } from '../models'
+import { CircleModel, CircleApplicationModel } from '../models'
 import Route from '../resources/RouteGenerator'
 
 class CircleController extends Controller {
@@ -17,9 +17,17 @@ class CircleController extends Controller {
   }
 
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
+    const user = this.getUserIdentity(req)
+    const applications = await CircleApplicationModel.findByApplier(user._id)
+    const appliedIds = applications.map(application => application._id)
     const circles = await CircleModel.find()
       .populate('chair', ['name', 'serial'])
       .populate('viceChair', ['name', 'serial'])
+    circles.map(circle => {
+      if (appliedIds.includes(circle._id)) {
+        circle.applied = true
+      }
+    })
     res.json({ circles })
   }
 

@@ -18,7 +18,8 @@ const circleSchema = createSchema({
         await ConfigModel.findOne({ key: ConfigKeys.circleCategory })
       return category.includes(value)
     }
-  })
+  }),
+  applied: Type.boolean({ required: true, default: false })
 }, { versionKey: false, timestamps: true })
 
 type CircleDoc = ExtractDoc<typeof circleSchema>;
