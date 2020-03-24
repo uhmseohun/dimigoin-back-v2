@@ -20,13 +20,13 @@ class CircleController extends Controller {
     const user = this.getUserIdentity(req)
     const applications = await CircleApplicationModel.findByApplier(user._id)
     const appliedIds = await Promise.all(
-      applications.map(application => application._id)
+      applications.map(application => application.circle.toString())
     )
     const circleModels = await CircleModel.find()
       .populate('chair', ['name', 'serial'])
       .populate('viceChair', ['name', 'serial'])
     const circles = await Promise.all(circleModels.map(circle => {
-      if (appliedIds.includes(circle._id)) {
+      if (appliedIds.includes(circle._id.toString())) {
         circle.applied = true
       }
       return circle
