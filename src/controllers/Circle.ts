@@ -26,8 +26,10 @@ class CircleController extends Controller {
 
   private getOneCircles = async (req: Request, res: Response, next: NextFunction) => {
     const circleId = mongoose.Types.ObjectId(req.params.circleId)
-    const circles = await CircleModel.find({ _id: circleId })
-    res.json({ circles })
+    const circle = await CircleModel.findOne({ _id: circleId })
+      .populate('chair', ['name', 'serial'])
+      .populate('viceChair', ['name', 'serial'])
+    res.json({ circle })
   }
 }
 
