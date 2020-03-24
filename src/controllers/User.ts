@@ -20,6 +20,7 @@ class UserController extends Controller {
     this.router.get('/student', Route(['T', 'S'], this.requiredKeys.none, this.getAllStudents))
     this.router.get('/teacher', Route(['T'], this.requiredKeys.none, this.getAllTeachers))
     this.router.get('/reload', Route(['T'], this.requiredKeys.none, this.reloadUsers))
+    this.router.get('/me', Route('U', this.requiredKeys.none, this.decodeJWT))
   }
 
   private getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
@@ -35,6 +36,11 @@ class UserController extends Controller {
   private getAllTeachers = async (req: Request, res: Response, next: NextFunction) => {
     const teachers = await UserModel.findTeachers()
     res.json({ teachers })
+  }
+
+  private decodeJWT = async (req: Request, res: Response, next: NextFunction) => {
+    const identity = this.getUserIdentity(req)
+    res.json({ identity })
   }
 
   private reloadUsers = async (req: Request, res: Response, next: NextFunction) => {
