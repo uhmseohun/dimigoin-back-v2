@@ -4,9 +4,7 @@ name: Automatic Deploy Production
 on:
   push:
     branches: [ production ]
-  pull_request:
-    branches: [ production ]
-
+    
 jobs:
   build:
     runs-on: self-hosted
