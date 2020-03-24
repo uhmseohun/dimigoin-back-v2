@@ -19,7 +19,9 @@ class CircleController extends Controller {
   private getAllCircles = async (req: Request, res: Response, next: NextFunction) => {
     const user = this.getUserIdentity(req)
     const applications = await CircleApplicationModel.findByApplier(user._id)
-    const appliedIds = applications.map(application => application._id)
+    const appliedIds = await Promise.all(
+      applications.map(application => application._id)
+    )
     const circles = await CircleModel.find()
       .populate('chair', ['name', 'serial'])
       .populate('viceChair', ['name', 'serial'])
