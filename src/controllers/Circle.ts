@@ -22,10 +22,10 @@ class CircleController extends Controller {
     const appliedIds = await Promise.all(
       applications.map(application => application._id)
     )
-    const circles = await CircleModel.find()
+    const circleModels = await CircleModel.find()
       .populate('chair', ['name', 'serial'])
       .populate('viceChair', ['name', 'serial'])
-    await Promise.all(circles.map(circle => {
+    const circles = await Promise.all(circleModels.map(circle => {
       if (appliedIds.includes(circle._id)) {
         circle.applied = true
       }
