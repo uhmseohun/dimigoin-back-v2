@@ -29,7 +29,14 @@ class UserController extends Controller {
   }
 
   private getAllStudents = async (req: Request, res: Response, next: NextFunction) => {
-    const students = await UserModel.findStudents()
+    let students = await UserModel.findStudents()
+    const user = this.getUserIdentity(req)
+    if (user.userType === 'S') {
+      students = students.map(v => {
+        v.photo = []
+        return v
+      })
+    }
     res.json({ students })
   }
 
