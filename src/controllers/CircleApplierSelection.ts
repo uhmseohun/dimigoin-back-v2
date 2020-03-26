@@ -25,7 +25,6 @@ class CircleApplierSelection extends Controller {
   private getApplications = async (req: Request, res: Response, next: NextFunction) => {
     const user = this.getUserIdentity(req)
     const circle = await CircleModel.findByChairs(user._id)
-    if (!circle) throw new AccessDeniedException()
 
     const applications =
       await CircleApplicationModel

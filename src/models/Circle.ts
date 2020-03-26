@@ -32,7 +32,6 @@ const CircleModel = typedModel('Circle', circleSchema, undefined, undefined, {
     return this.findOne({ viceChair })
   },
   findByChairs (user: ObjectId): CircleDoc {
-    console.log(user)
     return this.findOne({ $or: [{ chair: user }, { viceChair: user }] })
   }
 })
