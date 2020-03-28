@@ -12,6 +12,7 @@ type Query {
   applicationForm: JSON!
   allApplications: [CircleApplication]!
   applications: [CircleApplication]!
+  myApplications: [CircleApplication]!
 }
 
 type Mutation {
@@ -28,10 +29,11 @@ type User {
   userType: String!
   gender: String!
   phone: String
-  class: Int!
-  grade: Int!
-  number: Int!
-  serial: Int!
+  class: Int
+  grade: Int
+  number: Int
+  serial: Int
+  photo: [String]
   createdAt: String!
   updatedAt: String!
 }
@@ -61,6 +63,7 @@ type CircleApplication {
 type AuthType {
   accessToken: String!
   refreshToken: String!
+  user: User!
 }
 
 input Application {

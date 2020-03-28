@@ -12,9 +12,11 @@ export default ({ app }: { app: express.Application }) => {
       const token = req.headers.authorization
         ? req.headers.authorization.replace("Bearer ", "")
         : null;
-      if (token) {
-        const user = await Token.verify(token);
-        return { user, isLogin: true };
+      if (token !== "null") {
+        if (token != null) {
+          const user = await Token.verify(token);
+          return { user, isLogin: true };
+        }
       }
       return { user: null, isLogin: false };
     }

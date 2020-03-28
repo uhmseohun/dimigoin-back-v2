@@ -13,10 +13,11 @@ export default {
       const identity = (await UserModel.findByIdx(idx)) as IUser;
       return {
         accessToken: Token.issue(identity, false),
-        refreshToken: Token.issue(identity, true)
+        refreshToken: Token.issue(identity, true),
+        user: identity
       };
     } catch {
-        throw new Error('해당 사용자를 찾을 수 없습니다.');
+      throw new Error("해당 사용자를 찾을 수 없습니다.");
     }
   }
 };

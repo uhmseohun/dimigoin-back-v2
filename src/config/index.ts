@@ -10,6 +10,8 @@ if (!envFound) {
 
 export default {
   port: process.env.SERVER_PORT,
+  MONGO_ID: process.env.MONGO_ID,
+  MONGO_PW: process.env.MONGO_PW,
   MONGO_PATH: process.env.MONGO_PATH,
   MONGO_NAME: process.env.MONGO_NAME,
   MONGO_PORT: process.env.MONGO_PORT,
