@@ -1,13 +1,20 @@
-import mongoose from 'mongoose';
-import { Db } from 'mongodb';
-import config from '../config';
+import mongoose from "mongoose";
+import { Db } from "mongodb";
+import config from "../config";
 
 export default async (): Promise<Db> => {
+  const { MONGO_ID, MONGO_PW, MONGO_PATH, MONGO_PORT, MONGO_NAME } = config;
+
   const mongooseOption = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
+    useCreateIndex: true
   };
-  const connection = await mongoose.connect(`mongodb://${config.MONGO_PATH}:${config.MONGO_PORT}/${config.MONGO_NAME}`, mongooseOption);
+
+  const connection = await mongoose.connect(
+    `mongodb://${MONGO_ID}:${MONGO_PW}@${MONGO_PATH}:${MONGO_PORT}/${MONGO_NAME}`,
+    mongooseOption
+  );
+
   return connection.connection.db;
 };
