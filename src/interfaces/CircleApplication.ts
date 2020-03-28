@@ -1,4 +1,5 @@
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
+import { CircleApplicationStatus } from "../types";
 
 export interface ICircleApplicationQuestion {
   question: string;
@@ -14,4 +15,9 @@ export interface ICircleApplication {
   applier: ObjectId;
   form: ICircleApplicationForm;
   status?: string;
+}
+
+export interface ICircleApplicationSetStatus {
+  applierId: string;
+  status: CircleApplicationStatus;
 }

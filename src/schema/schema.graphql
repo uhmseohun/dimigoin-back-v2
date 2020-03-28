@@ -1,0 +1,75 @@
+scalar JSON
+
+type Query {
+  me: User!
+  users: [User]!
+  user(_id: ID!): User!
+  teachers: [User]!
+  students: [User]!
+  circle(_id: ID!): Circle!
+  circles: [Circle]
+  appliedCircles: [CircleApplication]!
+  applicationForm: JSON!
+  allApplications: [CircleApplication]!
+  applications: [CircleApplication]!
+}
+
+type Mutation {
+  login(username: String!, password: String!): AuthType!
+  createApplication(input: Application): CircleApplication!
+  setApplicationStatus(input: setApplicationStatus): CircleApplication!
+}
+
+type User {
+  _id: ID!
+  idx: Int!
+  username: String!
+  name: String!
+  userType: String!
+  gender: String!
+  phone: String
+  class: Int!
+  grade: Int!
+  number: Int!
+  serial: Int!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Circle {
+  _id: ID!
+  name: String!
+  imageKey: String!
+  category: String!
+  description: String!
+  chair: User!
+  viceChair: User!
+  videoLink: String!
+  applied: Boolean
+}
+
+type CircleApplication {
+  _id: ID!
+  status: String!
+  circle: Circle!
+  form: JSON!
+  applier: User!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type AuthType {
+  accessToken: String!
+  refreshToken: String!
+}
+
+input Application {
+  circle: ID!
+  form: JSON!
+  status: String
+}
+
+input setApplicationStatus {
+  applierId: ID!
+  status: String!
+}

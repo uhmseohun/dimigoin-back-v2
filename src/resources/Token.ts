@@ -1,34 +1,36 @@
-import dotenv from 'dotenv'
-import jwt from 'jsonwebtoken'
-import { TokenVerifyFailException } from '../exceptions/Token'
-import IUser from '../interfaces/User'
+import jwt from "jsonwebtoken";
+import IUser from "../interfaces/User";
+import config from "../config";
 
-dotenv.config()
-
-export default class Token {
-  private secretKey = process.env.JWT_SECRET;
-
-  public verify (token: string): IUser {
+export default {
+  async verify(token: string) {
     try {
-      const { identity }: any = jwt.verify(token, this.secretKey)
-      return identity
+      const { identity }: any = await jwt.verify(
+        token,
+        config.jwtSecret as string
+      );
+      return identity;
     } catch (error) {
-      throw new TokenVerifyFailException(401, error.message)
+      throw new Error("토큰 검증 실패");
     }
-  }
+  },
 
-  public issue (identity: IUser, refresh: boolean) {
+  async issue(identity: IUser, refresh: boolean) {
     if (!refresh) {
-      const token = jwt.sign({ identity }, process.env.JWT_SECRET, {
-        algorithm: 'HS256',
-        expiresIn: '1w'
-      })
-      return token
+      const token = await jwt.sign({ identity }, config.jwtSecret as string, {
+        algorithm: "HS256",
+        expiresIn: "1w"
+      });
+      return token;
     } else {
-      const token = jwt.sign({
-        idx: identity.idx, refresh: true
-      }, process.env.JWT_SECRET)
-      return token
+      const token = await jwt.sign(
+        {
+          idx: identity.idx,
+          refresh: true
+        },
+        config.jwtSecret as string
+      );
+      return token;
     }
-  }
-}
+  },
+};
