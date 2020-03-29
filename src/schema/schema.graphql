@@ -48,6 +48,7 @@ type Circle {
   viceChair: User!
   videoLink: String!
   applied: Boolean
+  applier: Int
 }
 
 type CircleApplication {

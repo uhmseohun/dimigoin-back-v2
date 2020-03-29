@@ -19,7 +19,7 @@ export default {
     return circle;
   },
   async circles(_: any, {}, context: any) {
-    await Auth.isStudent(context);
+    await Auth.isLogin(context);
     const applications = await CircleApplicationModel.findByApplier(
       context.user._id
     );
