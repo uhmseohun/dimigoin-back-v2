@@ -36,9 +36,17 @@ class CircleController extends Controller {
 
   private getOneCircle = async (req: Request, res: Response, next: NextFunction) => {
     const circleId = req.params.circleId
+    const user = this.getUserIdentity(req)
     const circle = await CircleModel.findById(circleId)
       .populate('chair', ['name', 'serial'])
       .populate('viceChair', ['name', 'serial'])
+    const applicationstatus = await CircleApplicationModel.findOne({ circle: circleId, applier: user._id })
+    if (applicationstatus == null) {
+      circle.applied = false
+    }
+    if (applicationstatus != null) {
+      circle.applied = true
+    }
     res.json({ circle })
   }
 }
