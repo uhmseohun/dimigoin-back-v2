@@ -33,6 +33,7 @@ type User {
   grade: Int
   number: Int
   serial: Int
+  appliedCircles: [Circle]
   photo: [String]
   createdAt: String!
   updatedAt: String!
