@@ -1,4 +1,4 @@
-import { UserModel, CircleModel } from "../../models";
+import { UserModel, CircleModel } from '../../models';
 
 export default {
   async circle({ circle }: { circle: string }) {
@@ -8,5 +8,5 @@ export default {
   async applier({ applier }: { applier: string }) {
     const user = await UserModel.findById(applier);
     return user;
-  }
+  },
 };

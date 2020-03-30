@@ -1,5 +1,5 @@
-import { ObjectId } from "mongodb";
-import { CircleApplicationStatus } from "../types";
+import { ObjectId } from 'mongodb';
+import { CircleApplicationStatus } from '../types';
 
 export interface ICircleApplicationQuestion {
   question: string;

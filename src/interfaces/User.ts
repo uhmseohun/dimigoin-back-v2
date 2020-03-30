@@ -1,5 +1,5 @@
-import { ObjectId } from 'mongodb'
-import { UserType, Gender } from '../types'
+import { ObjectId } from 'mongodb';
+import { UserType, Gender } from '../types';
 
 export default interface IUser {
   _id: ObjectId;

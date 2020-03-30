@@ -10,7 +10,7 @@ type Query {
   circles: [Circle]
   appliedCircles: [CircleApplication]!
   applicationForm: JSON!
-  allApplications: [CircleApplication]!
+  allApplications(page: Int!): [CircleApplication]!
   applications: [CircleApplication]!
   myApplications: [CircleApplication]!
 }

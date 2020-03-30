@@ -1,6 +1,6 @@
-import { CircleApplicationModel, UserModel } from "../../models";
-import Auth from "../../resources/Auth";
-import { IContext } from "../../interfaces/IContext";
+import { CircleApplicationModel, UserModel } from '../../models';
+import Auth from '../../resources/Auth';
+import { IContext } from '../../interfaces/IContext';
 
 export default {
   async chair({ chair }: any) {
@@ -15,11 +15,11 @@ export default {
     try {
       await Auth.isTeacher(context);
       const applications = await CircleApplicationModel.findPopulatedByCircle(
-        _id
+        _id,
       );
       return applications.length;
     } catch {
       return null;
     }
-  }
+  },
 };

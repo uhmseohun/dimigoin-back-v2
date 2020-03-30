@@ -1,30 +1,30 @@
-import axios  from "axios";
+import axios from 'axios';
 import {
   IAccount,
   IStudentIdentity,
-  IUserIdentity
-} from "../interfaces/DimiAPI";
-import { UserModel } from "../models";
-import config from "../config";
+  IUserIdentity,
+} from '../interfaces/DimiAPI';
+import { UserModel } from '../models';
+import config from '../config';
 
 const DimiAPIRouter = {
-  getIdentity: "/v1/users/identify",
-  getAllUsers: "/v1/users",
-  getAllStudents: "/v1/user-students"
+  getIdentity: '/v1/users/identify',
+  getAllUsers: '/v1/users',
+  getAllStudents: '/v1/user-students',
 };
 
 const api = axios.create({
   auth: {
     username: config.DIMIAPI_ID,
-    password: config.DIMIAPI_PW
+    password: config.DIMIAPI_PW,
   },
-  baseURL: config.DIMIAPI_URL
+  baseURL: config.DIMIAPI_URL,
 });
 
 export default {
   async getIdentity(account: IAccount) {
     const { data } = await api.get(DimiAPIRouter.getIdentity, {
-      params: account
+      params: account,
     });
     return data;
   },
@@ -37,7 +37,7 @@ export default {
       userType: identity.user_type,
       gender: identity.gender,
       phone: identity.phone,
-      photo: [identity.photofile1, identity.photofile2].filter(v => v)
+      photo: [identity.photofile1, identity.photofile2].filter((v) => v),
     };
   },
 
@@ -45,18 +45,18 @@ export default {
     const { data } = await api.get(DimiAPIRouter.getAllStudents);
     const students: IStudentIdentity[] = data;
     await Promise.all(
-      students.map(async student => {
+      students.map(async (student) => {
         await UserModel.updateOne(
           { idx: student.user_id },
           {
             grade: student.grade,
             class: student.class,
             number: student.number,
-            serial: Number(student.serial)
-          }
+            serial: Number(student.serial),
+          },
         );
         return student;
-      })
+      }),
     );
-  }
+  },
 };

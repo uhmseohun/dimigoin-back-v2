@@ -1,11 +1,11 @@
-import { UserModel } from "../../models/User";
+import { UserModel } from '../../models/User';
 
 export default {
   async me(_: any, {}, context: any) {
     if (context.isLogin) {
       return context.user;
     } else {
-      throw new Error("로그인이 되어있지 않습니다.");
+      throw new Error('로그인이 되어있지 않습니다.');
     }
   },
   async users() {
@@ -23,5 +23,5 @@ export default {
   async students() {
     const students = await UserModel.findStudents();
     return students;
-  }
+  },
 };

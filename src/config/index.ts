@@ -1,6 +1,6 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const envFound = dotenv.config();
 
@@ -18,5 +18,5 @@ export default {
   jwtSecret: process.env.JWT_SECRET,
   DIMIAPI_URL: process.env.DIMIAPI_URL,
   DIMIAPI_ID: process.env.DIMIAPI_ID,
-  DIMIAPI_PW: process.env.DIMIAPI_PW
+  DIMIAPI_PW: process.env.DIMIAPI_PW,
 };

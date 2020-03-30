@@ -5,8 +5,8 @@ import resolvers from '../resolvers';
 import { GraphQLSchema } from 'graphql';
 
 const index: GraphQLSchema = makeExecutableSchema({
-    typeDefs,
-    resolvers,
+  typeDefs,
+  resolvers,
 });
 
 export default index;
