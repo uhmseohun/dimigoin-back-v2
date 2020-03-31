@@ -13,7 +13,8 @@ jobs:
     - uses: actions/checkout@v2
       
     - name: remove old package🗑 
-      run: pm2 delete 'dimigoin-back'
+      run: pm2 delete 'dimigoin-backend'
+
       
     - name: remove old package file 
       run: rm -rf ~/build/circle-gql.dimigo.in
