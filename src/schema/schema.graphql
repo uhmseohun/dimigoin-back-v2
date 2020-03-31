@@ -19,6 +19,7 @@ type Mutation {
   login(username: String!, password: String!): AuthType!
   createApplication(input: Application): CircleApplication!
   setApplicationStatus(input: setApplicationStatus): CircleApplication!
+  setApplicationInterviewTime(input: setApplicationInterviewTime): CircleApplication!
 }
 
 type User {
@@ -58,6 +59,7 @@ type CircleApplication {
   circle: Circle!
   form: JSON!
   applier: User!
+  interviewTime: String
   createdAt: String!
   updatedAt: String!
 }
@@ -77,4 +79,9 @@ input Application {
 input setApplicationStatus {
   applierId: ID!
   status: String!
+}
+
+input setApplicationInterviewTime {
+  applierId: ID!
+  interviewTime: String!
 }

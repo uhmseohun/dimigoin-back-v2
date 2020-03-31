@@ -22,6 +22,7 @@ const circleApplicationSchema = createSchema(
       default: 'applied',
       enum: CircleApplicationStatusValues,
     }),
+    interviewTime: Type.string(),
   },
   { versionKey: false, timestamps: true },
 );

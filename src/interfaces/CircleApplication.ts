@@ -21,3 +21,8 @@ export interface ICircleApplicationSetStatus {
   applierId: string;
   status: CircleApplicationStatus;
 }
+
+export interface ISetApplicationInterviewTime {
+  applierId: string;
+  interviewTime: string;
+}

@@ -7,7 +7,11 @@ import {
   UserModel,
 } from '../../models';
 import { ICircleApplication } from '../../interfaces';
-import { ICircleApplicationSetStatus } from '../../interfaces/CircleApplication';
+import {
+  ICircleApplicationSetStatus,
+  ISetApplicationInterviewTime,
+} from '../../interfaces/CircleApplication';
+
 import Auth from '../../resources/Auth';
 
 export default {
@@ -92,6 +96,32 @@ export default {
       throw new Error('현재 지원자의 상태로 설정할 수 없는 상태입니다.');
     }
     application.status = status;
+
+    const newApplication = await application.save();
+
+    return newApplication;
+  },
+  async setApplicationInterviewTime(
+    _: any,
+    { input }: { input: ISetApplicationInterviewTime },
+    context: IContext,
+  ) {
+    await Auth.isStudent(context);
+
+    const applier = await UserModel.findById(input.applierId);
+    if (!applier) throw new Error('해당 학생을 찾을 수 없습니다.');
+
+    const circle = await Auth.isChairs(context);
+
+    const application = await CircleApplicationModel.findByCircleApplier(
+      circle._id,
+      applier._id,
+    );
+    if (!application) throw new Error('해당 지원서가 존재하지 않습니다.');
+
+    const interviewTime = input.interviewTime;
+
+    application.interviewTime = interviewTime;
 
     const newApplication = await application.save();
 

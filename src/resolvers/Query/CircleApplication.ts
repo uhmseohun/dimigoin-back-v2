@@ -26,8 +26,8 @@ export default {
     const applications = await CircleApplicationModel.findPopulatedByCircle(
       circle._id,
     );
-    return applications;
-  },
+  return applications;
+},
   async myApplications(_: any, {}, context: IContext) {
     await Auth.isLogin(context);
     const period = (await getConfig())[ConfigKeys.circlePeriod];
