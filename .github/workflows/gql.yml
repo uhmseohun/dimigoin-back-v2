@@ -4,40 +4,44 @@ name: Automatic Deploy Production - GQL
 on:
   push:
     branches: [ production-gql ]
-    
+
 jobs:
   build:
     runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2
-      
-    - name: remove old package🗑 
+
+    - name: remove old package🗑
       run: pm2 delete 'dimigoin-backend'
 
-      
-    - name: remove old package file 
+    - name: remove old package file
       run: rm -rf ~/build/circle-gql.dimigo.in
 
     - name: install package ✔️
       run: yarn
-        
+
+    - name: install apollo package globally ✔️
+      run: sudo yarn global add apollo
+
     - name: genarate target folder 🗂
       run: mkdir ~/build/circle-gql.dimigo.in
-      
+
     - name: build typescript 📦
       run: tsc
-      
+
     - name: move pacakage 🎒
       run: mv * ~/build/circle-gql.dimigo.in
 
     - name: move schema 🎒
       run: cp ~/build/circle-gql.dimigo.in/src/schema/schema.graphql ~/build/circle-gql.dimigo.in/dist/schema/schema.graphql
-      
-    - name: deploy package🚀 
-      
+
+    - name: deploy package 🚀
       run: pm2 start 'node ~/build/circle-gql.dimigo.in/dist/app.js' --name dimigoin-backend
-      
+
+    - name: deploy apollo graph management 🚀
+      run: apollo service:push
+
     - name: Slack Notification failed 🙅
       if: failure()
       uses: rtCamp/action-slack-notify@v2.0.0
