@@ -8,6 +8,11 @@ const path = '/graphql';
 export default ({ app }: { app: express.Application }) => {
   const server = new ApolloServer({
     schema,
+    tracing: true,
+    cacheControl: true,
+    engine: {
+      apiKey: process.env.ENGINE_API_KEY
+    },
     context: async ({ req }) => {
       const token = req.headers.authorization
         ? req.headers.authorization.replace('Bearer ', '')
