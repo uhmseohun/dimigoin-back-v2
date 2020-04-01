@@ -40,7 +40,7 @@ jobs:
       run: pm2 start 'node ~/build/circle-gql.dimigo.in/dist/app.js' --name dimigoin-backend
 
     - name: deploy apollo graph management 🚀
-      run: apollo service:push
+      run: apollo service:push --endpoint=https://circle-gql.dimigo.in/graphql
 
     - name: Slack Notification failed 🙅
       if: failure()
