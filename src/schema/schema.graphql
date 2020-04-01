@@ -2,17 +2,29 @@ scalar JSON
 
 "기본 Query 타입입니다."
 type Query {
+  "자신의 정보를 불러옵니다."
   me: User!
+  "모든 유저 리스트를 불러옵니다."
   users: [User]!
+  "한 유저의 정보를 불러옵니다."
   user(_id: ID!): User!
+  "선생님 리스트를 불러옵니다."
   teachers: [User]!
+  "학생 리스트를 불러옵니다."
   students: [User]!
+  "한 동아리의 정보를 불러옵니다."
   circle(_id: ID!): Circle!
+  "모든 동아리 리스트를 불러옵니다."
   circles: [Circle]
+  "자신이 지원한 동아리 리스트를 불러옵니다."
   appliedCircles: [CircleApplication]!
+  "동아리 지원서의 양식을 불러옵니다."
   applicationForm: JSON!
+  "모든 동아리 지원서 리스트를 불러옵니다. 선생님만 접근 가능."
   allApplications(page: Int!): [CircleApplication]!
+  "자신이 동아리장인 동아리 지원서 리스트를 불러옵니다. 동아리장만 접근 가능."
   applications: [CircleApplication]!
+  "내가 지원 한 동아리 지원서 리스트를 불러옵니다."
   myApplications: [CircleApplication]!
 }
 
@@ -21,7 +33,9 @@ type Mutation {
   login(username: String!, password: String!): AuthType!
   createApplication(input: Application): CircleApplication!
   setApplicationStatus(input: setApplicationStatus): CircleApplication!
-  setApplicationInterviewTime(input: setApplicationInterviewTime): CircleApplication!
+  setApplicationInterviewTime(
+    input: setApplicationInterviewTime
+  ): CircleApplication!
 }
 
 "User 타입입니다."
