@@ -17,6 +17,7 @@ export default {
   async allApplications(_: any, { page }: { page: number }, context: IContext) {
     await Auth.isTeacher(context);
     const applications = await CircleApplicationModel.find()
+      .sort({ circle: 'asc' })
       .skip((page - 1) * 30)
       .limit(30);
     return applications;
@@ -26,8 +27,8 @@ export default {
     const applications = await CircleApplicationModel.findPopulatedByCircle(
       circle._id,
     );
-  return applications;
-},
+    return applications;
+  },
   async myApplications(_: any, {}, context: IContext) {
     await Auth.isLogin(context);
     const period = (await getConfig())[ConfigKeys.circlePeriod];
@@ -35,7 +36,7 @@ export default {
       context.user._id,
     );
     const mappedApplications = await Promise.all(
-      applications.map(async (application) => {
+      applications.map(async application => {
         if (period === CirclePeriod.application) application.status = 'applied';
         else if (
           period === CirclePeriod.interview &&
