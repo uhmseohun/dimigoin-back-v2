@@ -32,7 +32,7 @@ type Query {
 type Mutation {
   "로그인 Mutation 입니다."
   login(username: String!, password: String!): AuthType!
-  "동아리 지원 Mutation 입니다."
+  "동아리 지원 Mutation 입니다. *학생만 접근 가능"
   createApplication(input: Application): CircleApplication!
   "동아리 지원서의 상태를 변경합니다. *동아리장만 접근 가능"
   setApplicationStatus(input: setApplicationStatus): CircleApplication!
@@ -45,17 +45,31 @@ type Mutation {
 "User 타입입니다."
 type User {
   _id: ID!
+  "학교 API ID"
   idx: Int!
+  "학교 API username"
   username: String!
+  "이름"
   name: String!
+  """
+  유저 타입 (선생님 : "T", 학생 : "S")
+  """
   userType: String!
+  "성별"
   gender: String!
+  "휴대폰 번호"
   phone: String
+  "반"
   class: Int
+  "학년"
   grade: Int
+  "번호"
   number: Int
+  "학번"
   serial: Int
+  "지원한 동아리 리스트"
   appliedCircles: [Circle]
+  "증명사진"
   photo: [String]
   createdAt: String!
   updatedAt: String!
@@ -64,24 +78,38 @@ type User {
 "Circle(동아리) 타입입니다."
 type Circle {
   _id: ID!
+  "동아리 이름"
   name: String!
+  "동아리 로고"
   imageKey: String!
+  "카테고리"
   category: String!
+  "동아리 설명"
   description: String!
+  "동아리장"
   chair: User!
+  "부동아리장"
   viceChair: User!
+  "동아리 대표 영상 유튜브 ID"
   videoLink: String!
+  "지원 여부"
   applied: Boolean
+  "지원자 수 *선생님만 접근 가능"
   applier: Int
 }
 
 "CircleApplication(동아리 지원서) 타입입니다."
 type CircleApplication {
   _id: ID!
+  "지원서 상태"
   status: String!
+  "동아리"
   circle: Circle!
+  "지원서"
   form: JSON!
+  "지원자"
   applier: User!
+  "면접 시간. 서류 불합격 및 시간이 설정되지 않은 경우에는 null 리턴."
   interviewTime: String
   createdAt: String!
   updatedAt: String!
@@ -96,19 +124,26 @@ type AuthType {
 
 "createApplication Mutation에서 사용됩니다."
 input Application {
+  "동아리 ID"
   circle: ID!
+  "지원서"
   form: JSON!
+  "지원서 상태"
   status: String
 }
 
 "setApplicationStatus Mutation에서 사용됩니다."
 input setApplicationStatus {
+  "지원자 ID"
   applierId: ID!
+  "설정 할 지원서 상태"
   status: String!
 }
 
 "setApplicationInterviewTime Mutation에서 사용됩니다."
 input setApplicationInterviewTime {
+  "지원자 ID"
   applierId: ID!
+  "설정 할 면접 시간"
   interviewTime: String!
 }
