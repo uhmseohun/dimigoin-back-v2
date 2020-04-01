@@ -1,5 +1,6 @@
 scalar JSON
 
+"기본 Query 타입입니다."
 type Query {
   me: User!
   users: [User]!
@@ -15,6 +16,7 @@ type Query {
   myApplications: [CircleApplication]!
 }
 
+"기본 Mutation 타입입니다."
 type Mutation {
   login(username: String!, password: String!): AuthType!
   createApplication(input: Application): CircleApplication!
@@ -22,6 +24,7 @@ type Mutation {
   setApplicationInterviewTime(input: setApplicationInterviewTime): CircleApplication!
 }
 
+"User 타입입니다."
 type User {
   _id: ID!
   idx: Int!
@@ -40,6 +43,7 @@ type User {
   updatedAt: String!
 }
 
+"Circle(동아리) 타입입니다."
 type Circle {
   _id: ID!
   name: String!
@@ -53,6 +57,7 @@ type Circle {
   applier: Int
 }
 
+"CircleApplication(동아리 지원서) 타입입니다."
 type CircleApplication {
   _id: ID!
   status: String!
@@ -64,23 +69,27 @@ type CircleApplication {
   updatedAt: String!
 }
 
+"인증 타입입니다."
 type AuthType {
   accessToken: String!
   refreshToken: String!
   user: User!
 }
 
+"createApplication Mutation에서 사용됩니다."
 input Application {
   circle: ID!
   form: JSON!
   status: String
 }
 
+"setApplicationStatus Mutation에서 사용됩니다."
 input setApplicationStatus {
   applierId: ID!
   status: String!
 }
 
+"setApplicationInterviewTime Mutation에서 사용됩니다."
 input setApplicationInterviewTime {
   applierId: ID!
   interviewTime: String!
