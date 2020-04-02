@@ -1,4 +1,4 @@
-import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { createSchema, ExtractDoc, Type, typedModel } from 'ts-mongoose';
 
 const configSchema = createSchema(
   {
@@ -8,6 +8,23 @@ const configSchema = createSchema(
   { versionKey: false, timestamps: true },
 );
 
-const ConfigModel = typedModel('Config', configSchema);
+type ConfigDoc = ExtractDoc<typeof configSchema>;
+
+
+const ConfigModel = typedModel(
+  'Config',
+  configSchema,
+  undefined,
+  undefined,
+  {
+    findByKey(key: string): ConfigDoc {
+      return this.findOne({ key })
+    },
+    findByKeyAndUpdate(key: string, value: any): ConfigDoc {
+      const config = this.findOneAndUpdate({ key }, { value })
+      return config
+    }
+  }
+);
 
 export { configSchema, ConfigModel };

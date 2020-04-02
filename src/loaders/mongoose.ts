@@ -8,7 +8,8 @@ export default async (): Promise<Db> => {
   const mongooseOption = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
   };
 
   const connection = await mongoose.connect(

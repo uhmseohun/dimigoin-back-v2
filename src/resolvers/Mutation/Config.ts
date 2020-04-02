@@ -5,12 +5,7 @@ import { ConfigModel } from '../../models';
 
 export default {
   async setNotice(_: any, { notice }: { notice: string }, context: IContext) {
-    const updateNotice = await ConfigModel.findByIdAndUpdate(
-      '5e79c13d2f54140f4fa37bcb',
-      {
-        value: notice,
-      },
-    );
+    const updateNotice = await ConfigModel.findByKeyAndUpdate('NOTICE', notice)
     return updateNotice.value;
   },
 };
