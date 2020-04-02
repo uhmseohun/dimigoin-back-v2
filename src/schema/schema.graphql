@@ -26,6 +26,8 @@ type Query {
   applications: [CircleApplication]!
   "내가 지원 한 동아리 지원서 리스트를 불러옵니다. *로그인 필수"
   myApplications: [CircleApplication]!
+  "공지사항을 불러옵니다."
+  notice: String!
 }
 
 "기본 Mutation 타입입니다."
@@ -40,6 +42,8 @@ type Mutation {
   setApplicationInterviewTime(
     input: setApplicationInterviewTime
   ): CircleApplication!
+  "공지사항을 설정합니다. *선생님만 접근 가능"
+  setNotice(notice: String): String!
 }
 
 "User 타입입니다."
