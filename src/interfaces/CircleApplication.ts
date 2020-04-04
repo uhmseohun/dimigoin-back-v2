@@ -26,3 +26,7 @@ export interface ISetApplicationInterviewTime {
   applierId: string;
   interviewTime: string;
 }
+
+export interface ISetFinalCircle {
+  circle: ObjectId;
+}

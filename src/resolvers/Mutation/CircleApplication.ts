@@ -10,6 +10,7 @@ import { ICircleApplication } from '../../interfaces';
 import {
   ICircleApplicationSetStatus,
   ISetApplicationInterviewTime,
+  ISetFinalCircle
 } from '../../interfaces/CircleApplication';
 
 import Auth from '../../resources/Auth';
@@ -126,5 +127,32 @@ export default {
     const newApplication = await application.save();
 
     return newApplication;
+  },
+
+  async setFinalCircle (
+    _: any,
+    { input: selection }: { input: ISetFinalCircle },
+    context: IContext
+  ) {
+    await Auth.isStudent(context);
+    const { user } = context;
+    const applied = await CircleApplicationModel.findByApplier(user._id)
+
+    if (applied.filter((v) => v.status === 'final').length > 0)
+      throw new Error('이미 최종 선택을 한 지원자입니다.');
+
+    const final = applied.find(v => v.circle.toString() === selection.circle.toString());
+
+    if (!final) throw new Error('해당 지원서를 찾을 수 없습니다.');
+
+    const period = (await getConfig())[ConfigKeys.circlePeriod];
+
+    if (period !== CirclePeriod.final || final.status !== 'interview-pass')
+      throw new Error('최종 선택을 할 수 없는 동아리입니다.');
+
+    final.status = 'final';
+    await final.save();
+    
+    return final;
   },
 };

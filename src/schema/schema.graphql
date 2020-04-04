@@ -42,6 +42,10 @@ type Mutation {
   setApplicationInterviewTime(
     input: setApplicationInterviewTime
   ): CircleApplication!
+  "합격한 동아리를 최종 선택합니다."
+  setFinalCircle(
+    input: setFinalCircle
+  ): CircleApplication!
   "공지사항을 설정합니다. *선생님만 접근 가능"
   setNotice(notice: String): String!
 }
@@ -150,4 +154,10 @@ input setApplicationInterviewTime {
   applierId: ID!
   "설정 할 면접 시간"
   interviewTime: String!
+}
+
+"setFinalCircle Mutation에서 사용됩니다."
+input setFinalCircle {
+  "최종 선택할 동아리 ID"
+  circle: ID!
 }

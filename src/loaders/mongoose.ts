@@ -13,7 +13,7 @@ export default async (): Promise<Db> => {
   };
 
   const connection = await mongoose.connect(
-    `mongodb://${MONGO_ID}:${MONGO_PW}@${MONGO_PATH}:${MONGO_PORT}/${MONGO_NAME}`,
+    `mongodb://${MONGO_PATH}:${MONGO_PORT}/${MONGO_NAME}`,
     mongooseOption
   );
 
