@@ -29,6 +29,15 @@ export default {
     );
     return applications;
   },
+  async finalApplications(_: any, {}, context: IContext) {
+    await Auth.isChairs(context);
+    const applications =
+      await CircleApplicationModel
+        .find({ status: 'final' })
+        .populate('applier', ['name', 'serial'])
+        .populate('circle', ['name']);
+    return applications;
+  },
   async myApplications(_: any, {}, context: IContext) {
     await Auth.isLogin(context);
     const period = (await getConfig())[ConfigKeys.circlePeriod];

@@ -22,10 +22,12 @@ type Query {
   applicationForm: JSON!
   "모든 동아리 지원서 리스트를 불러옵니다. *선생님만 접근 가능."
   allApplications(page: Int!): [CircleApplication]!
-  "자신이 동아리장인 동아리 지원서 리스트를 ㄴ불러옵니다. *동아리장만 접근 가능."
+  "자신이 동아리장인 동아리 지원서 리스트를 불러옵니다. *동아리장만 접근 가능."
   applications: [CircleApplication]!
   "내가 지원 한 동아리 지원서 리스트를 불러옵니다. *로그인 필수"
   myApplications: [CircleApplication]!
+  "전체 지원서 중 최종 합격된 지원서를 불러옵니다. *동아리장만 접근 가능."
+  finalApplications: [CircleApplication]!
   "공지사항을 불러옵니다."
   notice: String!
 }
