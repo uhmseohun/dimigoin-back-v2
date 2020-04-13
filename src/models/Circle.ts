@@ -22,6 +22,7 @@ const circleSchema = createSchema(
       },
     }),
     applied: Type.boolean({ required: true, default: false }),
+    interviewLink: Type.string(),
   },
   { versionKey: false, timestamps: true },
 );

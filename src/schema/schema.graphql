@@ -106,6 +106,8 @@ type Circle {
   applied: Boolean
   "지원자 수 *선생님만 접근 가능"
   applier: Int
+  "온라인 면접 링크"
+  interviewLink: String
 }
 
 "CircleApplication(동아리 지원서) 타입입니다."
